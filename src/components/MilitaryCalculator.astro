@@ -12,7 +12,7 @@ interface Props {
 const { lang } = Astro.props;
 const c = copy[lang];
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const root = 'https://vinasig.github.io/nvqs-bmi-calculator/';
+const root = 'https://nvqs-bmi.vinasig.io.vn/';
 const canonical = root + (lang === 'en' ? 'en/' : '');
 const schema = {
   '@context': 'https://schema.org',
@@ -486,7 +486,7 @@ const recordFields = [
           <p>{c.chooseAdult}</p>
           <a
             id="other-tool"
-            href={`https://vinasig.github.io/bmi-calculator/${lang === 'en' ? 'en/' : ''}`}
+            href={`https://bmi.vinasig.io.vn/${lang === 'en' ? 'en/' : ''}`}
           >
             {c.otherLink}
           </a>

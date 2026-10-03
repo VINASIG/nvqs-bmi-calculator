@@ -34,8 +34,7 @@ for (const route of routes) {
       2,
     ),
   );
-  const canonical =
-    'https://vinasig.github.io/nvqs-bmi-calculator/' + route.path;
+  const canonical = 'https://nvqs-bmi.vinasig.io.vn/' + route.path;
   assert(html.includes('href="' + canonical + '"'));
   assert(html.includes('<html lang="' + route.language + '"'));
   assert(

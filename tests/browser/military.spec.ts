@@ -384,8 +384,7 @@ for (const lang of ['vi', 'en'] as const) {
     await open(page, app.url, lang);
     expect(await page.title()).toBe(c.title + ' | VINASIG');
     const canonical =
-      'https://vinasig.github.io/nvqs-bmi-calculator/' +
-      (lang === 'en' ? 'en/' : '');
+      'https://nvqs-bmi.vinasig.io.vn/' + (lang === 'en' ? 'en/' : '');
     await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
       'href',
       canonical,
@@ -393,8 +392,7 @@ for (const lang of ['vi', 'en'] as const) {
     await expect(page.locator('link[hreflang]')).toHaveCount(3);
     await expect(page.locator('#other-tool')).toHaveAttribute(
       'href',
-      'https://vinasig.github.io/bmi-calculator/' +
-        (lang === 'en' ? 'en/' : ''),
+      'https://bmi.vinasig.io.vn/' + (lang === 'en' ? 'en/' : ''),
     );
     await expect(page.locator('body')).toHaveAttribute('data-tool', 'military');
     await expand(page);

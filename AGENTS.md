@@ -11,6 +11,10 @@ Read README.md, docs/PRODUCT.md, docs/RESEARCH.md, docs/BRAND.md and docs/TOOLCH
 - Keep immutable before captures and reports in ignored output/; record durable audits in docs/audits/. Before authorized publication inspect the staged diff, then verify remote HEAD, exact-commit CI, deployment and live pages. Preserve unrelated work and sibling repositories.
 - Report real devices, screen readers, field metrics and independent SI-agent trials as NOT_RUN unless observed.
 
+## Canonical domain
+
+The owner authorized the custom-domain migration on 4 October 2026. Publish this site at https://nvqs-bmi.vinasig.io.vn/ with an origin-root base. Preserve that domain in canonical/social metadata, sitemap, robots, package homepage, preview and browser assertions. Keep GitHub repository/source links intact. Read docs/DOMAIN.md. GitHub Actions deploys through the repository Pages custom-domain setting; a CNAME file alone does not configure an Actions deployment.
+
 <!-- VINASIG STANDARDS BEGIN -->
 ## VINASIG SI agent standards 0.1.0
 

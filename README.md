@@ -1,6 +1,6 @@
 # VINASIG Vietnam Military BMI & Physique
 
-[Vietnam Military BMI & Physique](https://vinasig.github.io/nvqs-bmi-calculator/) is an independent, bilingual Astro tool that computes locally without collecting measurements.
+[Vietnam Military BMI & Physique](https://nvqs-bmi.vinasig.io.vn/) is an independent, bilingual Astro tool that computes locally without collecting measurements.
 
 Check Vietnamese military physique scores, exact BMI recruitment exclusions, recorded measurements and citizens’ review options. This is a partial physique reference, not an overall health examination.
 
@@ -44,6 +44,10 @@ CI verifies Ubuntu and Windows with Chromium, Firefox and WebKit, then deploys o
 - [Specialization verification](docs/audits/2026-10-03-specialization.md)
 
 VINASIG SI agent guidance is in `AGENTS.md` and the pinned local standards snapshot. Read [LICENSES.md](LICENSES.md) for the software, documentation, font and identity scopes.
+
+## Canonical domain
+
+The public site uses [nvqs-bmi.vinasig.io.vn](https://nvqs-bmi.vinasig.io.vn/) at the origin root. GitHub Pages remains the deployment service. [Domain maintenance](docs/DOMAIN.md) records DNS, HTTPS, search submission and verification boundaries.
 
 ## License scopes
 
