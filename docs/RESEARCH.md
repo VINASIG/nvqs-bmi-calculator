@@ -17,6 +17,8 @@ State out-of-range exclusion directly. A generic disclaimer must not imply anoth
 
 **Appendix I Section IV.1.a** rounds height, weight and chest to whole units, fractions from 0.5 upward. Verified examples include 152.5 cm → 153 cm, 158.49 cm → 158 cm, 46.5 kg → 47 kg and 51.49 kg → 51 kg. Show raw and scoring measurements. BMI arithmetic uses entered values exactly; no unverified official BMI rounding practice is claimed.
 
+**Appendix I Section IV.1.b** describes chest measurement and BMI separately. BMI equals weight (kg) divided by squared height (m); chest is not part of that formula. Chest is an independent male-table physique indicator in Section I. For example, 170 cm / 55 kg yields BMI approximately 19.03 whether chest is omitted, 81 cm or 70 cm. A 70 cm chest scores 6 and raises the reference physique grade to 6, while BMI and its direct recruitment criterion remain unchanged. The UI and unit/browser regressions distinguish these outcomes explicitly.
+
 [Circular 106/2025 publication](https://xaydungchinhsach.chinhphu.vn/thong-tu-so-106-2025-tt-bqp-sua-doi-bo-sung-quy-dinh-ve-tieu-chuan-suc-khoe-kham-suc-khoe-nghia-vu-quan-su-119251004201237596.htm) and [signed PDF](https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/10/106-bqp.pdf) were checked. Relevant signed pages 3–8 were rendered and opened. Effective **30 September 2025**, it changes other provisions/forms, not the Section I physique table or Section IV.1.a rounding.
 
 ### BMI 18.0 to below 18.5

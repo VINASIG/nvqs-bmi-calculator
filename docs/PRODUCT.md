@@ -10,6 +10,8 @@ Direct text inputs accept centimeters/kilograms and up to three decimal places, 
 
 Score the entered male/female physique table, height, weight, BMI and optional male chest. Show each score and the highest-score reference grade. Separate this from the exact BMI exclusion in Circular 68/2025 and from the overall medical examination. Explain the 18.0–below-18.5 mismatch and the literal sub-tenth gaps in the printed table.
 
+BMI needs only height and weight: weight in kilograms divided by squared height in meters. The main form states that formula and separates optional chest behind a visual divider with its own explanation. Chest can change the male-table physique grade but never changes BMI or the separate BMI-criterion conclusion. Leaving it blank still produces BMI and a reference grade from the entered indicators.
+
 Provide illustrative boundary uncertainty, arithmetic distance to both recruitment thresholds, safe adult-health reference weights and general health guidance. The recruitment threshold weights are measurement checks, never weight-change recommendations.
 
 A separate disclosure compares self-measured and recorded values, including score effects. Another creates a local text download or printable personal record with optional measurement date (not birth date), witness and method. Native select intentionally uses platform keyboard/touch behavior for two legal scoring tables. Date, witness and notes are optional and are never submitted or saved. The personal record is not an official examination form, medical certificate or recruitment conclusion. Static citizens-rights guidance covers accurate records, public information, correction requests, complaints and medical reassessment through the commune council.

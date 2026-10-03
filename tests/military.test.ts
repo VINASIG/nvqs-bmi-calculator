@@ -100,6 +100,24 @@ await test('highest score decides grade and chest is optional and male-only', ()
   assert.equal(chestMeasurement('abc', 'female'), null);
   assert.equal(chestMeasurement('abc', 'male'), 'decimal');
 });
+await test('chest changes physique scoring but never BMI or its recruitment criterion', () => {
+  const answer = calculate('170', '55');
+  assert(answer.ok);
+  const originalBmi = { ...answer.measurements.bmi };
+  const baseline = physique(answer.measurements, 'male');
+  for (const [chest, grade] of [
+    [null, 1],
+    [81_000n, 1],
+    [70_000n, 6],
+  ] as const) {
+    const result = physique(answer.measurements, 'male', chest);
+    assert.equal(result.grade, grade);
+    assert.deepEqual(answer.measurements.bmi, originalBmi);
+    assert.equal(result.outsideBmi, baseline.outsideBmi);
+    assert.equal(bmiConclusion(result, 'vi'), bmiConclusion(baseline, 'vi'));
+    assert.equal(bmiConclusion(result, 'en'), bmiConclusion(baseline, 'en'));
+  }
+});
 for (const [w, criterion] of [
   ['71.999', 'below'],
   ['72', 'within'],

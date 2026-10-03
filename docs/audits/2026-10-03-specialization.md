@@ -2,6 +2,8 @@
 
 Date: **3 October 2026**. Scope: the independent product in `VINASIG/nvqs-bmi-calculator`. This audit records local checks before publication; exact-commit CI and live deployment are subsequent publication checks.
 
+The subsequent clarification of BMI inputs and optional chest has a separate [audit](2026-10-03-chest-clarification.md). Counts and measurements below describe the initial specialization checks.
+
 ## Product and source decisions
 
 - This new repository contains `MilitaryCalculator.astro`, military-specific copy, scoring/presentation/client code and tests. Vietnamese `/` and English `/en/` are actual translations. The separate adult repository has an absolute reciprocal link at the bottom. There is no combined UI, mode switch or shared conclusion component; only a copy of pure arithmetic is common.

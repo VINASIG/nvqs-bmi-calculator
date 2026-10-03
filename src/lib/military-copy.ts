@@ -23,14 +23,16 @@ export const copy = {
     intro:
       'Công cụ tham khảo tiêu chuẩn tuyển quân vào Quân đội Việt Nam. Chấm các chỉ tiêu thể lực đã nhập; không thay thế khám sức khỏe đầy đủ hoặc hồ sơ chính thức.',
     formTitle: 'Số đo bạn tự đo',
+    bmiFormula:
+      'Chỉ cần chiều cao và cân nặng để tính BMI: cân nặng (kg) ÷ [chiều cao (m)]².',
     height: 'Chiều cao (cm)',
     weight: 'Cân nặng (kg)',
-    chest: 'Vòng ngực (cm, tùy chọn)',
+    chest: 'Bổ sung vòng ngực (cm, tùy chọn)',
     table: 'Bảng thể lực',
     male: 'Bảng nam',
     female: 'Bảng nữ',
     chestHint:
-      'Bảng nam dùng vòng ngực trung bình khi hít vào và thở ra. Bảng nữ không chấm vòng ngực.',
+      'Vòng ngực chỉ dùng chấm điểm thể lực của bảng nam, không dùng tính BMI. Có thể để trống. Nếu nhập, dùng trung bình số đo khi hít vào và thở ra tối đa. Bảng nữ không chấm chỉ tiêu này.',
     hint: 'Nhập trực tiếp, dấu phẩy hoặc dấu chấm, tối đa 3 chữ số thập phân.',
     calculate: 'Đối chiếu thể lực',
     clear: 'Xóa',
@@ -48,13 +50,13 @@ export const copy = {
     done: 'Đã đối chiếu các chỉ tiêu được nhập.',
     exact: 'BMI dùng để so sánh',
     rounding:
-      'BMI hiển thị 1 chữ số thập phân; so sánh ngưỡng trên giá trị chính xác. Chiều cao, cân nặng, vòng ngực khi chấm điểm được làm tròn đến đơn vị nguyên, phần lẻ từ 0,5 làm tròn lên (Phụ lục I, Mục IV.1.a, TT 105/2023). BMI tính từ số đo bạn nhập.',
+      'BMI hiển thị 1 chữ số thập phân; so sánh ngưỡng trên giá trị chính xác. Chiều cao, cân nặng, vòng ngực khi chấm điểm được làm tròn đến đơn vị nguyên, phần lẻ từ 0,5 làm tròn lên (Phụ lục I, Mục IV.1.a, TT 105/2023). BMI chỉ tính từ chiều cao và cân nặng bạn nhập, không dùng vòng ngực.',
     grade: 'Loại sức khỏe tham khảo theo thể lực đã nhập',
     score: 'điểm',
     rounded: 'Chấm với số đo làm tròn',
     drivers: 'Chỉ tiêu quyết định loại',
     missing:
-      'Chưa có vòng ngực: kết quả chỉ dựa trên chiều cao, cân nặng và BMI. Vòng ngực của bảng nam có thể làm loại thay đổi.',
+      'Chưa có vòng ngực: loại thể lực tham khảo chỉ dựa trên chiều cao, cân nặng và BMI. Thêm vòng ngực có thể làm loại thể lực thay đổi; BMI và kết luận riêng theo tiêu chí BMI vẫn giữ nguyên.',
     eligible:
       'Các chỉ tiêu thể lực đã nhập đáp ứng loại 1, 2 hoặc 3 theo điểm a khoản 3 Điều 4 TT 148/2018 (sửa bởi TT 68/2025). Điều này chưa kết luận đủ mọi điều kiện nhập ngũ.',
     ineligible:
@@ -165,14 +167,16 @@ export const copy = {
     intro:
       'A reference for recruitment into the Vietnamese military. Scores the entered physique indicators; does not replace a complete health examination or official record.',
     formTitle: 'Your own measurements',
+    bmiFormula:
+      'Only height and weight are needed for BMI: weight (kg) ÷ [height (m)]².',
     height: 'Height (cm)',
     weight: 'Weight (kg)',
-    chest: 'Chest (cm, optional)',
+    chest: 'Additional chest measurement (cm, optional)',
     table: 'Physique table',
     male: 'Male table',
     female: 'Female table',
     chestHint:
-      'The male table uses the average chest measurement on inhaling and exhaling. The female table does not score chest.',
+      'Chest is a separate male-table physique indicator, not a BMI input. You can leave it blank. If entered, use the average measurement at maximum inhalation and exhalation. The female table does not score it.',
     hint: 'Type directly, with a point or comma and up to 3 decimal places.',
     calculate: 'Check physique',
     clear: 'Clear',
@@ -190,13 +194,13 @@ export const copy = {
     done: 'Entered indicators checked.',
     exact: 'BMI used for comparison',
     rounding:
-      'BMI displays 1 decimal place; thresholds use the exact value. Height, weight and chest scores use whole units, with fractions of 0.5 rounded up (Circular 105/2023, Appendix I, Section IV.1.a). BMI is calculated from the entered measurements.',
+      'BMI displays 1 decimal place; thresholds use the exact value. Height, weight and chest scores use whole units, with fractions of 0.5 rounded up (Circular 105/2023, Appendix I, Section IV.1.a). BMI uses only the entered height and weight, never chest.',
     grade: 'Reference health grade from entered physique indicators',
     score: 'score',
     rounded: 'Scored with rounded measurement',
     drivers: 'Indicators determining the grade',
     missing:
-      'Chest was not entered: only height, weight and BMI were scored. A male-table chest score can change the grade.',
+      'Chest was not entered: the reference physique grade uses only height, weight and BMI. Adding chest can change the physique grade; BMI and the separate BMI-criterion conclusion remain unchanged.',
     eligible:
       'Entered physique indicators meet grade 1, 2 or 3 under Article 4(3)(a) of Circular 148/2018, amended by Circular 68/2025. This does not establish all recruitment requirements.',
     ineligible:

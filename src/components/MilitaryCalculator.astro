@@ -32,7 +32,6 @@ const schema = {
 const mainFields = [
   { id: 'height', label: c.height, placeholder: '170', required: true },
   { id: 'weight', label: c.weight, placeholder: '55', required: true },
-  { id: 'chest', label: c.chest, placeholder: '81', required: false },
 ];
 const recordFields = [
   {
@@ -135,11 +134,14 @@ const recordFields = [
             <form id="bmi-form" novalidate autocomplete="off">
               <div class="field">
                 <label for="table">{c.table}</label>
-                <select id="table" aria-describedby="chest-hint">
+                <select id="table">
                   <option value="male">{c.male}</option>
                   <option value="female">{c.female}</option>
                 </select>
               </div>
+              <p class="supporting measurement-fields" id="bmi-formula">
+                {c.bmiFormula}
+              </p>
               <div class="fields measurement-fields">
                 {mainFields.map((field) => (
                   <div class="field" id={`${field.id}-field`}>
@@ -151,18 +153,30 @@ const recordFields = [
                       maxlength="12"
                       placeholder={field.placeholder}
                       required={field.required}
-                      aria-describedby={`measurement-hint ${field.id}-error`}
+                      aria-describedby={`bmi-formula measurement-hint ${field.id}-error`}
                     />
                     <p class="field-error" id={`${field.id}-error`} hidden></p>
                   </div>
                 ))}
               </div>
-              <p class="supporting" id="chest-hint">
-                {c.chestHint}
-              </p>
               <p class="supporting" id="measurement-hint">
                 {c.hint}
               </p>
+              <div class="field result-section" id="chest-field">
+                <label for="chest">{c.chest}</label>
+                <p class="supporting" id="chest-hint">
+                  {c.chestHint}
+                </p>
+                <input
+                  id="chest"
+                  type="text"
+                  inputmode="decimal"
+                  maxlength="12"
+                  placeholder="81"
+                  aria-describedby="chest-hint measurement-hint chest-error"
+                />
+                <p class="field-error" id="chest-error" hidden></p>
+              </div>
               <div class="form-actions">
                 <button id="calculate" type="submit" class="primary" disabled>
                   {c.calculate}
@@ -261,7 +275,7 @@ const recordFields = [
                       maxlength="12"
                       placeholder={field.placeholder}
                       required={field.required}
-                      aria-describedby={`comparison-intro ${field.id}-error`}
+                      aria-describedby={`${field.id === 'record-chest' ? 'chest-hint ' : 'bmi-formula '}comparison-intro ${field.id}-error`}
                     />
                     <p class="field-error" id={`${field.id}-error`} hidden></p>
                   </div>

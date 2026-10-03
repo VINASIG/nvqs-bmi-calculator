@@ -236,6 +236,13 @@ for (const lang of ['vi', 'en'] as const) {
     page,
   }) => {
     await open(page, app.url, lang);
+    await expect(page.locator('#bmi-formula')).toHaveText(c.bmiFormula);
+    await expect(page.locator('#chest-hint')).toHaveText(c.chestHint);
+    await expect(page.locator('#chest')).toHaveAttribute(
+      'aria-describedby',
+      'chest-hint measurement-hint chest-error',
+    );
+    await expect(page.locator('#chest')).not.toHaveAttribute('required', '');
     for (const [h, w] of [
       ['0', '65'],
       ['1.70', '65'],
@@ -253,8 +260,24 @@ for (const lang of ['vi', 'en'] as const) {
     await page.locator('#chest').fill('bad');
     await input(page, lang, '170', '55');
     await expect(page.locator('#chest-error')).toBeVisible();
-    await page.locator('#chest').fill('70');
+    await page.locator('#chest').fill('');
     await page.locator('#calculate').click();
+    await expect(page.locator('#category')).toContainText('1');
+    await expect(page.locator('#missing-chest')).toBeVisible();
+    const baselineBmi = await page.locator('#bmi-value').textContent();
+    const baselineExactBmi = await page.locator('#exact-bmi').textContent();
+    for (const chest of ['81', '70']) {
+      await page.locator('#chest').fill(chest);
+      await page.locator('#calculate').click();
+      await expect(page.locator('#bmi-value')).toHaveText(baselineBmi ?? '');
+      await expect(page.locator('#exact-bmi')).toHaveText(
+        baselineExactBmi ?? '',
+      );
+      await expect(page.locator('#bmi-criterion')).toHaveText(c.bmiWithin);
+      await expect(page.locator('#category')).toContainText(
+        chest === '81' ? '1' : '6',
+      );
+    }
     await expect(page.locator('#category')).toContainText('6');
     await expect(page.locator('#drivers')).toContainText(
       lang === 'vi' ? 'Vòng ngực' : 'Chest',
