@@ -32,6 +32,10 @@ This is a local verification record. Current-head CI and GitHub Pages publicatio
 
 The final instruction review found that `docs/PRODUCT.md` still described the earlier abbreviated Vietnamese placeholder prefix. It now documents the natural example wording already implemented under LANG-004 and LANG-005. Historical audits retain their description of the earlier controls. Calculation, legal conclusions, input values, controls and artwork are unchanged by this documentation correction.
 
+## CI resource isolation
+
+The first header run passed 368 of 369 cases on each host. Windows reported `ERR_NO_BUFFER_SPACE` before loading a Chromium page. Ubuntu timed out in a Firefox accessibility flow and reported incomplete trace cleanup. The two affected cases subsequently passed on both Chromium and Firefox locally, with unchanged assertions. Original job logs are retained in ignored output, and the original run's artifacts remain available on GitHub. Browser jobs now isolate each engine on Ubuntu and Windows, retaining the full six-combination matrix, zero retries and existing timeouts. Linux Chromium retains the existing performance budgets and Pages packaging, with deployment depending on all six jobs. A workflow unit regression checks the declared matrix and deployment dependency.
+
 ## Additional completed gates
 
 The final adopted snapshot passed the project's source checks and 54 unit tests. The final production build and its applicable generated-HTML, metadata, deployment-path and original-asset checks passed.
