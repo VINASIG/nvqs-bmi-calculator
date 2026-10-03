@@ -43,4 +43,10 @@ CI verifies Ubuntu and Windows with Chromium, Firefox and WebKit, then deploys o
 - [Verification coverage](tests/README.md)
 - [Specialization verification](docs/audits/2026-10-03-specialization.md)
 
-VINASIG SI agent guidance is in `AGENTS.md` and the pinned local standards snapshot. Public visibility does not grant a license; see `LICENSE_STATUS.md`.
+VINASIG SI agent guidance is in `AGENTS.md` and the pinned local standards snapshot. Read [LICENSES.md](LICENSES.md) for the software, documentation, font and identity scopes.
+
+## License scopes
+
+VINASIG-authored software uses **AGPL-3.0-or-later**. Authored documentation uses **CC-BY-SA-4.0**. Commercial use is allowed under those standard licenses. Fonts and third-party components retain their original terms. Official VINASIG identity assets follow the separate brand policy.
+
+Read [LICENSE](LICENSE), [LICENSES.md](LICENSES.md), [VINASIG Brand Usage Policy](BRAND_POLICY.md) and [the licensing review](docs/audits/licensing-2026-10-04.md) for exact scopes, rationale and remaining review.
