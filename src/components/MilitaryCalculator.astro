@@ -108,13 +108,24 @@ const recordFields = [
     </a>
     <div class="app-shell">
       <header class="site-header">
-        <a class="brand" href="https://github.com/VINASIG" aria-label="VINASIG">
-          <img
-            src={`${base}brand/primary-color.svg`}
-            width="132"
-            height="34"
-            alt="VINASIG"
-          />
+        <a
+          class="brand"
+          href="https://github.com/VINASIG"
+          aria-label="VINASIG"
+          data-brand-logo
+        >
+          <picture>
+            <source
+              media="(prefers-color-scheme: dark)"
+              srcset={`${base}brand/reversed.svg`}
+            />
+            <img
+              src={`${base}brand/primary-color.svg`}
+              width="540"
+              height="140"
+              alt="VINASIG"
+            />
+          </picture>
         </a>
         <nav aria-label={c.navigation}>
           <a
