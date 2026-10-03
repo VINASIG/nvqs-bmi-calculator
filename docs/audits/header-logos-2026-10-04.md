@@ -28,6 +28,10 @@ Immutable initial header screenshots are under ignored `output/responsive/header
 
 This is a local verification record. Current-head CI and GitHub Pages publication are verified separately before task completion. No font, business calculation, generated output, private data or original logo artwork was changed by the header work.
 
+## Documentation consistency follow-up
+
+The final instruction review found that `docs/PRODUCT.md` still described the earlier abbreviated Vietnamese placeholder prefix. It now documents the natural example wording already implemented under LANG-004 and LANG-005. Historical audits retain their description of the earlier controls. Calculation, legal conclusions, input values, controls and artwork are unchanged by this documentation correction.
+
 ## Additional completed gates
 
 The final adopted snapshot passed the project's source checks and 54 unit tests. The final production build and its applicable generated-HTML, metadata, deployment-path and original-asset checks passed.

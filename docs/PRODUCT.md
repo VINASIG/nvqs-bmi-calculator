@@ -6,7 +6,7 @@ This repository contains **one independent tool**: Vietnam Military BMI & Physiq
 
 Direct text inputs accept centimeters/kilograms and up to three decimal places, with a point or comma. No sliders, accounts, date of birth, analytics, remote computation, input URL parameters or persistent health storage. Reload, locale navigation, history restoration and Clear remove measurements and stale results. Scripts must enable calculation only after loading; absent or blocked scripts cannot submit measurements. Static explanations, source links, navigation and disclosure controls remain available without JavaScript.
 
-Measurement fields start empty. Their muted, smaller placeholders carry `VD:` / `e.g.` prefixes to distinguish examples from entered values. Neither placeholder numbers nor the optional calendar supply a measurement default.
+Measurement fields start empty. Their muted, smaller placeholders use localized example wording, such as "Ví dụ 170" in Vietnamese and "For example 170" in English, to distinguish examples from entered values. Neither placeholder numbers nor the optional calendar supply a measurement default.
 
 ## Specialized behavior
 
