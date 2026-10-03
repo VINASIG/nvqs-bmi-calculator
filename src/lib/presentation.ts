@@ -30,9 +30,9 @@ export function gradeLabel(
 ): string {
   const value =
     result.grade === null
-      ? `${String(result.minimum)}–${String(result.maximum)}`
+      ? `${String(result.minimum)}-${String(result.maximum)}`
       : String(result.grade);
-  return `${copy[lang].grade}: ${value}${result.grade === null ? ' (?)' : ''}`;
+  return `${copy[lang].grade} ${value}${result.grade === null ? (lang === 'vi' ? ' - cần bổ sung chỉ tiêu' : ' - more indicators needed') : ''}`;
 }
 export function scoreLines(
   result: ReturnType<typeof physique>,
@@ -45,7 +45,7 @@ export function scoreLines(
     if (typeof item.value !== 'bigint')
       return `${label} ${exactDisplay(item.value, bmiThresholds, lang)} → ${c.score} ${score}`;
     const unit = item.indicator === 'weight' ? 'kg' : 'cm';
-    return `${label} ${displayMeasurement(item.value, lang)} ${unit} → ${c.score} ${score} (${c.rounded}: ${String(roundMeasurement(item.value))} ${unit})`;
+    return `${label} ${displayMeasurement(item.value, lang)} ${unit} → ${c.score} ${score}. ${c.rounded} ${String(roundMeasurement(item.value))} ${unit}.`;
   });
 }
 export function physiqueConclusion(
@@ -81,7 +81,7 @@ export function thresholdDistance(
     numerator: difference < 0n ? -difference : difference,
     denominator: threshold.denominator * 1000n,
   };
-  return `${formatRatio(threshold, lang, 3)} kg (${copy[lang].distance}: ≈ ${formatRatio(magnitude, lang, 3)} kg)`;
+  return `${formatRatio(threshold, lang, 3)} kg. ${copy[lang].distance} ≈ ${formatRatio(magnitude, lang, 3)} kg`;
 }
 export function adviceText(bmi: Ratio, lang: Locale): string {
   return compare(bmi, 185n) < 0
@@ -110,15 +110,15 @@ export function measurementRecord(
   return [
     c.sheetTitle,
     c.recordNotice,
-    `${c.date}: ${details.date || c.blank}`,
-    `${c.table}: ${table === 'male' ? c.male : c.female}`,
-    `${c.height}: ${displayMeasurement(measurements.height, lang)}`,
-    `${c.weight}: ${displayMeasurement(measurements.weight, lang)}`,
-    `${c.chest}: ${chest === null ? c.blank : displayMeasurement(chest, lang)}`,
-    `BMI: ${exactDisplay(measurements.bmi, bmiThresholds, lang)}`,
+    `${c.date} ${details.date || c.blank}`,
+    `${c.table} ${table === 'male' ? c.male : c.female}`,
+    `${c.height} ${displayMeasurement(measurements.height, lang)}`,
+    `${c.weight} ${displayMeasurement(measurements.weight, lang)}`,
+    `${c.chest} ${chest === null ? c.blank : displayMeasurement(chest, lang)}`,
+    `BMI ${exactDisplay(measurements.bmi, bmiThresholds, lang)}`,
     c.rounding,
-    `${c.witness}: ${details.witness.trim() || c.blank}`,
-    `${c.method}: ${details.method.trim() || c.methodDefault}`,
+    `${c.witness} ${details.witness.trim() || c.blank}`,
+    `${c.method} ${details.method.trim() || c.methodDefault}`,
     c.limitation,
     sources.physique,
     sources.recruitment,

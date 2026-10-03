@@ -239,7 +239,7 @@ const recordFields = [
                 <span class="bmi-unit">kg/m²</span>
               </p>
               <p class="supporting">
-                {c.exact}: <span id="exact-bmi"></span>
+                {c.exact} <span id="exact-bmi"></span>
               </p>
               <p class="category" id="category"></p>
               <ul id="score-list" class="score-list"></ul>
@@ -256,8 +256,8 @@ const recordFields = [
                 {c.tableGap}
               </p>
               <p class="supporting">
-                <a href={sources.recruitment}>TT 68/2025/TT-BQP</a> ·{' '}
-                <a href={sources.physique}>TT 105/2023/TT-BQP</a>
+                <a href={sources.recruitment}>Thông tư 68/2025/TT-BQP</a> -{' '}
+                <a href={sources.physique}>Thông tư 105/2023/TT-BQP</a>
               </p>
             </div>
             <p class="result-scope">{c.limitation}</p>
@@ -276,7 +276,7 @@ const recordFields = [
               <section class="result-section" aria-labelledby="advice-heading">
                 <h3 id="advice-heading">{c.adviceTitle}</h3>
                 <p>
-                  {c.reference}: <strong id="weight-range"></strong>
+                  {c.reference} <strong id="weight-range"></strong>
                 </p>
                 <p class="supporting">{c.referenceNote}</p>
                 <p id="weight-distance"></p>
@@ -410,8 +410,10 @@ const recordFields = [
             </section>
             <p>{c.rounding}</p>
             <p>
-              <a href={sources.physique}>TT 105/2023/TT-BQP</a> ·{' '}
-              <a href={sources.amendment}>TT 106/2025/TT-BQP</a>
+              <a href={sources.physique}>Thông tư 105/2023/TT-BQP</a> -{' '}
+              <a href={sources.amendment}>
+                {lang === 'vi' ? 'Thông tư' : 'Circular'} 106/2025/TT-BQP
+              </a>
             </p>
             <p class="supporting">{c.reviewed}</p>
           </details>
@@ -421,7 +423,7 @@ const recordFields = [
             <p>{c.lowGap}</p>
             <p>{c.examText}</p>
             <p>
-              <a href={sources.recruitment}>TT 68/2025/TT-BQP</a> ·{' '}
+              <a href={sources.recruitment}>Thông tư 68/2025/TT-BQP</a> -{' '}
               <a href={sources.review}>
                 {lang === 'vi'
                   ? 'Hướng dẫn của Bộ Quốc phòng'
@@ -437,10 +439,10 @@ const recordFields = [
             <p>
               <a href={sources.law}>
                 {lang === 'vi'
-                  ? 'Luật NVQS hiện hành (bản hợp nhất 133/2026)'
-                  : 'Current law (consolidated text 133/2026)'}
+                  ? 'Luật Nghĩa vụ quân sự hiện hành - bản hợp nhất 133/2026'
+                  : 'Current law - consolidated text 133/2026'}
               </a>{' '}
-              · <a href={sources.recruitment}>TT 68/2025/TT-BQP</a> ·{' '}
+              - <a href={sources.recruitment}>Thông tư 68/2025/TT-BQP</a> -{' '}
               <a href={sources.review}>
                 {lang === 'vi'
                   ? 'Hướng dẫn giám định sức khỏe'
@@ -457,8 +459,8 @@ const recordFields = [
             <p>
               <a href={sources.health}>
                 {lang === 'vi'
-                  ? 'NHS: tăng cân lành mạnh'
-                  : 'NHS: healthy weight gain'}
+                  ? 'Cách tăng cân lành mạnh của NHS'
+                  : 'Healthy weight gain from NHS'}
               </a>
             </p>
           </details>

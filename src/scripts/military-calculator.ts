@@ -167,7 +167,7 @@ form.addEventListener('submit', (event) => {
   set(
     'drivers',
     scored.drivers.length
-      ? `${c.drivers}: ${scored.drivers.map((key) => indicatorLabels[lang][key]).join(', ')}.`
+      ? `${c.drivers} - ${scored.drivers.map((key) => indicatorLabels[lang][key]).join(', ')}.`
       : c.uncertain,
   );
   node('missing-chest', HTMLElement).hidden = !scored.missingChest;
@@ -178,24 +178,24 @@ form.addEventListener('submit', (event) => {
   const boundary = boundaryCheck(measurements);
   set(
     'threshold-distance',
-    `BMI 18${lang === 'vi' ? ',0' : '.0'}: ${thresholdDistance(boundary.lowerWeight, measurements.weight, lang)}. BMI ${lang === 'vi' ? '29,9' : '29.9'}: ${thresholdDistance(boundary.upperWeight, measurements.weight, lang)}.`,
+    `BMI 18${lang === 'vi' ? ',0' : '.0'} ${lang === 'vi' ? 'tương ứng' : 'corresponds to'} ${thresholdDistance(boundary.lowerWeight, measurements.weight, lang)}. BMI ${lang === 'vi' ? '29,9' : '29.9'} ${lang === 'vi' ? 'tương ứng' : 'corresponds to'} ${thresholdDistance(boundary.upperWeight, measurements.weight, lang)}.`,
   );
   set('boundary-warning', boundary.borderline ? c.borderline : c.stable);
   const reference = healthyReference(measurements);
   set(
     'weight-range',
-    `${displayMeasurement(reference.lower, lang)}–${displayMeasurement(reference.upper, lang)} kg`,
+    `${displayMeasurement(reference.lower, lang)}-${displayMeasurement(reference.upper, lang)} kg`,
   );
   set(
     'weight-distance',
-    `${c.distance}: BMI ${lang === 'vi' ? '18,5' : '18.5'} — ${displayMeasurement(reference.distanceToLower, lang)} kg; BMI ${lang === 'vi' ? '24,9' : '24.9'} — ${displayMeasurement(reference.distanceToUpper, lang)} kg.`,
+    `${c.distance} ${lang === 'vi' ? 'tới' : 'to'} BMI ${lang === 'vi' ? '18,5' : '18.5'} ${lang === 'vi' ? 'là' : 'is'} ${displayMeasurement(reference.distanceToLower, lang)} kg. ${c.distance} ${lang === 'vi' ? 'tới' : 'to'} BMI ${lang === 'vi' ? '24,9' : '24.9'} ${lang === 'vi' ? 'là' : 'is'} ${displayMeasurement(reference.distanceToUpper, lang)} kg.`,
   );
   set(
     'weight-change',
     compare(measurements.bmi, 185n) < 0
-      ? `${c.gain}: ${displayMeasurement(reference.increaseToLower, lang)} kg.`
+      ? `${c.gain} ${displayMeasurement(reference.increaseToLower, lang)} kg.`
       : compare(measurements.bmi, 250n) >= 0
-        ? `${c.lose}: ${displayMeasurement(reference.decreaseToUpper, lang)} kg.`
+        ? `${c.lose} ${displayMeasurement(reference.decreaseToUpper, lang)} kg.`
         : c.maintain,
   );
   set('health-advice', adviceText(measurements.bmi, lang));
@@ -223,24 +223,24 @@ recordForm.addEventListener('submit', (event) => {
     return;
   }
   const differences = [
-    `${indicatorLabels[lang].height}: ${signedMeasurement(recorded.measurements.height - own.measurements.height, lang)} cm`,
-    `${indicatorLabels[lang].weight}: ${signedMeasurement(recorded.measurements.weight - own.measurements.weight, lang)} kg`,
+    `${indicatorLabels[lang].height} ${signedMeasurement(recorded.measurements.height - own.measurements.height, lang)} cm`,
+    `${indicatorLabels[lang].weight} ${signedMeasurement(recorded.measurements.weight - own.measurements.weight, lang)} kg`,
   ];
   const chestComplete = own.chest !== null && recorded.chest !== null;
   if (own.chest !== null && recorded.chest !== null)
     differences.push(
-      `${indicatorLabels[lang].chest}: ${signedMeasurement(recorded.chest - own.chest, lang)} cm`,
+      `${indicatorLabels[lang].chest} ${signedMeasurement(recorded.chest - own.chest, lang)} cm`,
     );
-  set('measurement-differences', differences.join(' · '));
+  set('measurement-differences', differences.join('. '));
   node('comparison-missing', HTMLElement).hidden =
     selectedTable() === 'female' || chestComplete;
   set(
     'self-outcome',
-    `${c.self}: ${outcome(own.measurements, selectedTable(), own.chest, lang)}`,
+    `${c.self}. ${outcome(own.measurements, selectedTable(), own.chest, lang)}`,
   );
   set(
     'record-outcome',
-    `${c.record}: ${outcome(recorded.measurements, selectedTable(), recorded.chest, lang)}`,
+    `${c.record}. ${outcome(recorded.measurements, selectedTable(), recorded.chest, lang)}`,
   );
   comparison.hidden = false;
   recordStatus.textContent = c.done;

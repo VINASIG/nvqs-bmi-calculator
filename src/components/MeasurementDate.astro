@@ -17,7 +17,7 @@ const c = copy[lang];
       type="text"
       inputmode="numeric"
       maxlength="10"
-      placeholder="YYYY-MM-DD"
+      placeholder={lang === 'vi' ? 'Năm-tháng-ngày' : 'Year-month-day'}
       autocomplete="off"
       aria-describedby="date-hint date-error"
     />

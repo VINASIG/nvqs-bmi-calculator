@@ -217,10 +217,10 @@ for (const lang of ['vi', 'en'] as const) {
     }
     await input(page, lang, '200', '99.8');
     await expect(page.locator('#table-gap')).toBeVisible();
-    await expect(page.locator('#category')).toContainText('1–2');
+    await expect(page.locator('#category')).toContainText('1-2');
     await input(page, lang, '170', '50');
     await expect(page.locator('#weight-range')).toHaveText(
-      lang === 'vi' ? '53,5–71,9 kg' : '53.5–71.9 kg',
+      lang === 'vi' ? '53,5-71,9 kg' : '53.5-71.9 kg',
     );
     await expect(page.locator('#weight-change')).toContainText(
       lang === 'vi' ? '3,5 kg' : '3.5 kg',
