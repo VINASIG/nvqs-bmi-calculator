@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /nvqs-bmi-calculator/
+Sitemap: https://vinasig.github.io/nvqs-bmi-calculator/sitemap.xml

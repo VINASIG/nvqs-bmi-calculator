@@ -1,0 +1,464 @@
+---
+import { Calculator } from '@lucide/astro';
+import { copy, sources } from '../lib/military-copy.ts';
+import { sourceTable } from '../lib/military.ts';
+import type { Locale } from '../lib/math.ts';
+import '../styles/tokens.css';
+import '../styles/app.css';
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const c = copy[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const root = 'https://vinasig.github.io/nvqs-bmi-calculator/';
+const canonical = root + (lang === 'en' ? 'en/' : '');
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: c.title,
+  url: canonical,
+  description: c.description,
+  inLanguage: lang,
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Web browser',
+  isAccessibleForFree: true,
+  publisher: {
+    '@type': 'Organization',
+    name: 'VINASIG',
+    url: 'https://github.com/VINASIG',
+  },
+};
+const mainFields = [
+  { id: 'height', label: c.height, placeholder: '170', required: true },
+  { id: 'weight', label: c.weight, placeholder: '55', required: true },
+  { id: 'chest', label: c.chest, placeholder: '81', required: false },
+];
+const recordFields = [
+  {
+    id: 'record-height',
+    label: c.recordHeight,
+    placeholder: '170',
+    required: true,
+  },
+  {
+    id: 'record-weight',
+    label: c.recordWeight,
+    placeholder: '55',
+    required: true,
+  },
+  {
+    id: 'record-chest',
+    label: c.recordChest,
+    placeholder: '81',
+    required: false,
+  },
+];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{c.title} | VINASIG</title>
+    <meta name="description" content={c.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="vi" href={root} />
+    <link rel="alternate" hreflang="en" href={`${root}en/`} />
+    <link rel="alternate" hreflang="x-default" href={root} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${c.title} | VINASIG`} />
+    <meta property="og:description" content={c.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'vi' ? 'vi_VN' : 'en_US'} />
+    <link rel="icon" type="image/svg+xml" href={`${base}brand/mark.svg`} />
+    {[16, 32, 48].map((size) => (
+      <link
+        rel="icon"
+        type="image/png"
+        sizes={`${size}x${size}`}
+        href={`${base}brand/favicon-${size}.png`}
+      />
+    ))}
+    <link
+      rel="preload"
+      href={`${base}fonts/SpaceGrotesk-VariableFont_wght.woff2`}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href={`${base}fonts/font.css`} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body data-tool="military" data-language={lang}>
+    <a class="skip-link" href="#calculator">
+      {c.skip}
+    </a>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="https://github.com/VINASIG" aria-label="VINASIG">
+          <img
+            src={`${base}brand/primary-color.svg`}
+            width="132"
+            height="34"
+            alt="VINASIG"
+          />
+        </a>
+        <nav aria-label={c.navigation}>
+          <a
+            href={base}
+            lang="vi"
+            aria-current={lang === 'vi' ? 'page' : undefined}
+          >
+            Tiếng Việt
+          </a>
+          <a
+            href={`${base}en/`}
+            lang="en"
+            aria-current={lang === 'en' ? 'page' : undefined}
+          >
+            English
+          </a>
+        </nav>
+      </header>
+      <main>
+        <div class="intro">
+          <h1>{c.title}</h1>
+          <p class="lead">{c.lead}</p>
+          <p>{c.intro}</p>
+        </div>
+        <div class="workspace" id="calculator">
+          <section class="editor" aria-labelledby="form-heading">
+            <h2 id="form-heading">{c.formTitle}</h2>
+            <form id="bmi-form" novalidate autocomplete="off">
+              <div class="field">
+                <label for="table">{c.table}</label>
+                <select id="table" aria-describedby="chest-hint">
+                  <option value="male">{c.male}</option>
+                  <option value="female">{c.female}</option>
+                </select>
+              </div>
+              <div class="fields measurement-fields">
+                {mainFields.map((field) => (
+                  <div class="field" id={`${field.id}-field`}>
+                    <label for={field.id}>{field.label}</label>
+                    <input
+                      id={field.id}
+                      type="text"
+                      inputmode="decimal"
+                      maxlength="12"
+                      placeholder={field.placeholder}
+                      required={field.required}
+                      aria-describedby={`measurement-hint ${field.id}-error`}
+                    />
+                    <p class="field-error" id={`${field.id}-error`} hidden></p>
+                  </div>
+                ))}
+              </div>
+              <p class="supporting" id="chest-hint">
+                {c.chestHint}
+              </p>
+              <p class="supporting" id="measurement-hint">
+                {c.hint}
+              </p>
+              <div class="form-actions">
+                <button id="calculate" type="submit" class="primary" disabled>
+                  {c.calculate}
+                </button>
+                <button type="reset" class="quiet">
+                  {c.clear}
+                </button>
+              </div>
+              <p class="supporting privacy">{c.privacy}</p>
+              <p
+                class="status supporting"
+                id="status"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <noscript>
+                <p>{c.noScript}</p>
+              </noscript>
+            </form>
+          </section>
+          <section class="preview" aria-labelledby="result-heading">
+            <h2 id="result-heading" tabindex="-1">
+              {c.resultTitle}
+            </h2>
+            <div id="empty-result" class="empty-result">
+              <Calculator size={32} aria-hidden="true" />
+              <p>{c.empty}</p>
+            </div>
+            <div id="result" hidden>
+              <p class="bmi-value">
+                <span id="bmi-value"></span>
+                <span class="bmi-unit">kg/m²</span>
+              </p>
+              <p class="supporting">
+                {c.exact}: <span id="exact-bmi"></span>
+              </p>
+              <p class="category" id="category"></p>
+              <ul id="score-list" class="score-list"></ul>
+              <p id="drivers"></p>
+              <p id="missing-chest" class="supporting" hidden>
+                {c.missing}
+              </p>
+              <p id="physique-criterion"></p>
+              <p id="bmi-criterion"></p>
+              <p id="low-gap" hidden>
+                {c.lowGap}
+              </p>
+              <p id="table-gap" class="supporting" hidden>
+                {c.tableGap}
+              </p>
+              <p class="supporting">
+                <a href={sources.recruitment}>TT 68/2025/TT-BQP</a> ·{' '}
+                <a href={sources.physique}>TT 105/2023/TT-BQP</a>
+              </p>
+            </div>
+            <p class="result-scope">{c.limitation}</p>
+          </section>
+          <div id="result-details" class="workspace-addendum" hidden>
+            <div class="result-grid">
+              <section
+                class="result-section"
+                aria-labelledby="boundary-heading"
+              >
+                <h3 id="boundary-heading">{c.boundaryTitle}</h3>
+                <p class="supporting">{c.boundaryNote}</p>
+                <p id="threshold-distance"></p>
+                <p id="boundary-warning"></p>
+              </section>
+              <section class="result-section" aria-labelledby="advice-heading">
+                <h3 id="advice-heading">{c.adviceTitle}</h3>
+                <p>
+                  {c.reference}: <strong id="weight-range"></strong>
+                </p>
+                <p class="supporting">{c.referenceNote}</p>
+                <p id="weight-distance"></p>
+                <p id="weight-change"></p>
+                <p id="health-advice"></p>
+                <p class="supporting">{c.adviceDisclaimer}</p>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          <details id="comparison-details">
+            <summary>{c.comparisonTitle}</summary>
+            <p>{c.comparisonIntro}</p>
+            <form id="comparison-form" novalidate autocomplete="off">
+              <div class="fields">
+                {recordFields.map((field) => (
+                  <div class="field" id={`${field.id}-field`}>
+                    <label for={field.id}>{field.label}</label>
+                    <input
+                      id={field.id}
+                      type="text"
+                      inputmode="decimal"
+                      maxlength="12"
+                      placeholder={field.placeholder}
+                      required={field.required}
+                      aria-describedby={`comparison-intro ${field.id}-error`}
+                    />
+                    <p class="field-error" id={`${field.id}-error`} hidden></p>
+                  </div>
+                ))}
+              </div>
+              <p id="comparison-intro" class="supporting">
+                {c.hint}
+              </p>
+              <div class="form-actions">
+                <button id="compare" type="submit" class="primary" disabled>
+                  {c.compare}
+                </button>
+              </div>
+              <p id="comparison-status" role="status" class="supporting"></p>
+            </form>
+            <section
+              id="comparison-result"
+              class="result-section"
+              hidden
+              aria-labelledby="comparison-heading"
+            >
+              <h3 id="comparison-heading" tabindex="-1">
+                {c.comparisonResult}
+              </h3>
+              <p id="measurement-differences"></p>
+              <p id="comparison-missing" hidden>
+                {c.comparisonMissing}
+              </p>
+              <p id="self-outcome"></p>
+              <p id="record-outcome"></p>
+            </section>
+          </details>
+          <details id="print-details">
+            <summary>{c.printTitle}</summary>
+            <p>{c.recordNotice}</p>
+            <p>{c.methodDefault}</p>
+            <div class="fields">
+              <div class="field">
+                <label for="measurement-date">{c.date}</label>
+                <input id="measurement-date" type="date" />
+              </div>
+              <div class="field">
+                <label for="witness">{c.witness}</label>
+                <input
+                  id="witness"
+                  type="text"
+                  maxlength="120"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="field measurement-fields">
+              <label for="method">{c.method}</label>
+              <textarea
+                id="method"
+                rows="3"
+                maxlength="1200"
+                autocomplete="off"
+              ></textarea>
+            </div>
+            <div class="form-actions">
+              <button id="print" type="button" class="primary" disabled>
+                {c.print}
+              </button>
+              <button id="download" type="button" class="quiet" disabled>
+                {c.download}
+              </button>
+            </div>
+            <p id="print-status" role="status" class="supporting"></p>
+          </details>
+          <details id="table-details">
+            <summary>{c.tableTitle}</summary>
+            <p>{c.tableIntro}</p>
+            <section
+              class="table-scroll"
+              tabindex="0"
+
+              aria-label={c.tableCaption}
+            >
+              <table>
+                <caption>{c.tableCaption}</caption>
+                <thead>
+                  <tr>
+                    {c.headers.map((header) => (
+                      <th scope="col">{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sourceTable.map((row) => (
+                    <tr>
+                      {row.map((cell, index) =>
+                        index === 0 ? (
+                          <th scope="row">{cell}</th>
+                        ) : (
+                          <td>
+                            {lang === 'en'
+                              ? cell.replace('hoặc', 'or').replaceAll(',', '.')
+                              : cell}
+                          </td>
+                        ),
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+            <p>{c.rounding}</p>
+            <p>
+              <a href={sources.physique}>TT 105/2023/TT-BQP</a> ·{' '}
+              <a href={sources.amendment}>TT 106/2025/TT-BQP</a>
+            </p>
+            <p class="supporting">{c.reviewed}</p>
+          </details>
+          <details id="legal-details">
+            <summary>{c.legalTitle}</summary>
+            <p>{c.legalText}</p>
+            <p>{c.lowGap}</p>
+            <p>{c.examText}</p>
+            <p>
+              <a href={sources.recruitment}>TT 68/2025/TT-BQP</a> ·{' '}
+              <a href={sources.review}>
+                {lang === 'vi'
+                  ? 'Hướng dẫn của Bộ Quốc phòng'
+                  : 'Ministry of Defence guidance'}
+              </a>
+            </p>
+          </details>
+          <details id="rights-details">
+            <summary>{c.rightsTitle}</summary>
+            <p>{c.rightsLaw}</p>
+            <p>{c.disclosure}</p>
+            <p>{c.complaint}</p>
+            <p>
+              <a href={sources.law}>
+                {lang === 'vi'
+                  ? 'Luật NVQS hiện hành (bản hợp nhất 133/2026)'
+                  : 'Current law (consolidated text 133/2026)'}
+              </a>{' '}
+              · <a href={sources.recruitment}>TT 68/2025/TT-BQP</a> ·{' '}
+              <a href={sources.review}>
+                {lang === 'vi'
+                  ? 'Hướng dẫn giám định sức khỏe'
+                  : 'Medical assessment guidance'}
+              </a>
+            </p>
+            <p class="supporting">{c.englishNote}</p>
+          </details>
+          <details>
+            <summary>{c.adviceTitle}</summary>
+            <p>{c.underAdvice}</p>
+            <p>{c.overAdvice}</p>
+            <p>{c.adviceDisclaimer}</p>
+            <p>
+              <a href={sources.health}>
+                {lang === 'vi'
+                  ? 'NHS: tăng cân lành mạnh'
+                  : 'NHS: healthy weight gain'}
+              </a>
+            </p>
+          </details>
+          <details>
+            <summary>{c.privacyTitle}</summary>
+            <p>{c.privacyText}</p>
+          </details>
+        </div>
+        <section class="tool-choice" aria-labelledby="choice-heading">
+          <h2 id="choice-heading">{c.chooseTitle}</h2>
+          <p>{c.chooseMilitary}</p>
+          <p>{c.chooseAdult}</p>
+          <a
+            id="other-tool"
+            href={`https://vinasig.github.io/bmi-calculator/${lang === 'en' ? 'en/' : ''}`}
+          >
+            {c.otherLink}
+          </a>
+        </section>
+      </main>
+      <footer class="site-footer">
+        <p>{c.footer}</p>
+        <a href="https://github.com/VINASIG/nvqs-bmi-calculator">
+          {c.sourceLink}
+        </a>
+      </footer>
+    </div>
+    <article
+      id="print-sheet"
+      class="print-sheet"
+      hidden
+      aria-labelledby="sheet-heading"
+    >
+      <h1 id="sheet-heading">{c.sheetTitle}</h1>
+      <p>{c.recordNotice}</p>
+      <pre id="sheet-content"></pre>
+    </article>
+    <script>
+      import '../scripts/military-calculator.ts';
+    </script>
+  </body>
+</html>
