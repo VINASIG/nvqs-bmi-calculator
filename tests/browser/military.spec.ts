@@ -226,7 +226,10 @@ for (const lang of ['vi', 'en'] as const) {
       lang === 'vi' ? '3,5 kg' : '3.5 kg',
     );
     await expect(page.locator('#health-advice')).toHaveText(c.underAdvice);
-    await page.locator('#table').selectOption('female');
+    await page
+      .locator('label')
+      .filter({ has: page.locator('#table-female') })
+      .click();
     await expect(page.locator('#chest')).toBeHidden();
     await input(page, lang, '155', '45');
     await expect(page.locator('#category')).toContainText('2');
@@ -284,7 +287,7 @@ for (const lang of ['vi', 'en'] as const) {
     );
     await expect(page.locator('#missing-chest')).toBeHidden();
   });
-  test(`keyboard touch and native table selector ${lang}`, async ({
+  test(`keyboard touch and styled native table radios ${lang}`, async ({
     browser,
   }, info) => {
     const context = await browser.newContext({
@@ -297,16 +300,19 @@ for (const lang of ['vi', 'en'] as const) {
       const skip = page.getByRole('link', { name: c.skip });
       await page.keyboard.press('Tab');
       if (process.platform === 'win32' && info.project.name === 'webkit') {
-        // This port skips links by default, but tabs to the native select.
-        await expect(page.locator('#table')).toBeFocused();
+        // This port skips links by default; explicitly exercise the skip link.
+        await expect(skip).not.toBeFocused();
         await skip.focus();
       }
       await expect(skip).toBeFocused();
       await page.keyboard.press('Enter');
       await page.keyboard.press('Tab');
-      await expect(page.locator('#table')).toBeFocused();
+      if (process.platform === 'win32' && info.project.name === 'webkit')
+        await page.locator('#table-male').focus();
+      await expect(page.locator('#table-male')).toBeFocused();
       await page.keyboard.press('ArrowDown');
-      await expect(page.locator('#table')).toHaveValue('female');
+      await expect(page.locator('#table-female')).toBeChecked();
+      await expect(page.locator('#table-female')).toBeFocused();
       await page.keyboard.press('Tab');
       await expect(page.locator('#height')).toBeFocused();
       await page.keyboard.type('155');
@@ -316,9 +322,12 @@ for (const lang of ['vi', 'en'] as const) {
       await expect(page.locator('#result')).toBeVisible();
       await page.locator('summary').first().tap();
       await expect(page.locator('details').first()).toHaveAttribute('open', '');
-      await page.locator('#table').selectOption('female');
       await expect(page.locator('#chest')).toBeHidden();
-      await page.locator('#table').selectOption('male');
+      await page
+        .locator('label')
+        .filter({ has: page.locator('#table-male') })
+        .tap();
+      await expect(page.locator('#table-male')).toBeChecked();
       await expect(page.locator('#chest')).toBeVisible();
       await capture(
         page,
@@ -366,6 +375,7 @@ for (const lang of ['vi', 'en'] as const) {
         await expect(page.locator('#result')).toBeHidden();
         await expect(page.locator('#compare')).toBeDisabled();
         await expect(page.locator('#print')).toBeDisabled();
+        await expect(page.locator('#date-open')).toBeDisabled();
       } finally {
         await context.close();
       }

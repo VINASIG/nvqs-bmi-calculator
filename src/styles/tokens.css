@@ -85,6 +85,11 @@
   --color-surface-hover: #f2edeb;
   --color-text: #292526;
   --color-text-muted: #70696a;
+  --color-input-placeholder: color-mix(
+    in srgb,
+    var(--color-text-muted) 94%,
+    var(--color-surface)
+  );
   --color-text-inverse: #f7f4f1;
   --color-text-on-dark-muted: #e3dcda;
   --color-border: #e1dedd;
@@ -121,6 +126,11 @@
     --color-surface-hover: #3c3537;
     --color-text: #f7f4f1;
     --color-text-muted: #cecaca;
+    --color-input-placeholder: color-mix(
+      in srgb,
+      var(--color-text-muted) 70%,
+      var(--color-surface)
+    );
     --color-border: #534b4d;
     --color-info: #bdcddd;
     --color-info-background: #26303d;

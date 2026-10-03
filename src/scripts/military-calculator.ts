@@ -13,6 +13,7 @@ import {
   physique,
 } from '../lib/military.ts';
 import type { Table } from '../lib/military.ts';
+import { installMeasurementDate } from './measurement-date.ts';
 import { copy, indicatorLabels, inputError } from '../lib/military-copy.ts';
 import {
   adviceText,
@@ -36,7 +37,9 @@ const lang: Locale = document.documentElement.lang === 'en' ? 'en' : 'vi';
 const c = copy[lang];
 const form = node('bmi-form', HTMLFormElement);
 const recordForm = node('comparison-form', HTMLFormElement);
-const table = node('table', HTMLSelectElement);
+const tableMale = node('table-male', HTMLInputElement);
+const tableFemale = node('table-female', HTMLInputElement);
+const measurementDate = installMeasurementDate(lang);
 const inputs = {
   height: node('height', HTMLInputElement),
   weight: node('weight', HTMLInputElement),
@@ -76,7 +79,7 @@ function set(id: string, value: string): void {
   node(id, HTMLElement).textContent = value;
 }
 function selectedTable(): Table {
-  return table.value === 'female' ? 'female' : 'male';
+  return tableFemale.checked ? 'female' : 'male';
 }
 function clearErrors(group: typeof inputs, prefix = ''): void {
   for (const key of ['height', 'weight', 'chest'] as const) {
@@ -250,6 +253,10 @@ function prepareRecord(): string | null {
     status.textContent = c.error;
     return null;
   }
+  if (!measurementDate.validate()) {
+    set('print-status', c.error);
+    return null;
+  }
   const text = measurementRecord(
     answer.measurements,
     selectedTable(),
@@ -301,13 +308,16 @@ function updateTable(): void {
   }
   invalidate(c.edited);
 }
-table.addEventListener('change', updateTable);
+for (const table of [tableMale, tableFemale])
+  table.addEventListener('change', updateTable);
 function resetAll(): void {
   recordForm.reset();
   date.value = '';
   witness.value = '';
   method.value = '';
-  table.value = 'male';
+  tableMale.checked = true;
+  tableFemale.checked = false;
+  measurementDate.reset();
   for (const key of ['height', 'weight', 'chest'] as const)
     inputs[key].value = '';
   updateTable();

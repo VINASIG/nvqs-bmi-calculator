@@ -1,5 +1,6 @@
 ---
 import { Calculator } from '@lucide/astro';
+import MeasurementDate from './MeasurementDate.astro';
 import { copy, sources } from '../lib/military-copy.ts';
 import { sourceTable } from '../lib/military.ts';
 import type { Locale } from '../lib/math.ts';
@@ -30,26 +31,36 @@ const schema = {
   },
 };
 const mainFields = [
-  { id: 'height', label: c.height, placeholder: '170', required: true },
-  { id: 'weight', label: c.weight, placeholder: '55', required: true },
+  {
+    id: 'height',
+    label: c.height,
+    placeholder: c.heightExample,
+    required: true,
+  },
+  {
+    id: 'weight',
+    label: c.weight,
+    placeholder: c.weightExample,
+    required: true,
+  },
 ];
 const recordFields = [
   {
     id: 'record-height',
     label: c.recordHeight,
-    placeholder: '170',
+    placeholder: c.heightExample,
     required: true,
   },
   {
     id: 'record-weight',
     label: c.recordWeight,
-    placeholder: '55',
+    placeholder: c.weightExample,
     required: true,
   },
   {
     id: 'record-chest',
     label: c.recordChest,
-    placeholder: '81',
+    placeholder: c.chestExample,
     required: false,
   },
 ];
@@ -132,13 +143,30 @@ const recordFields = [
           <section class="editor" aria-labelledby="form-heading">
             <h2 id="form-heading">{c.formTitle}</h2>
             <form id="bmi-form" novalidate autocomplete="off">
-              <div class="field">
-                <label for="table">{c.table}</label>
-                <select id="table">
-                  <option value="male">{c.male}</option>
-                  <option value="female">{c.female}</option>
-                </select>
-              </div>
+              <fieldset id="table" class="table-field">
+                <legend>{c.table}</legend>
+                <div class="table-options">
+                  <label class="table-option">
+                    <input
+                      id="table-male"
+                      type="radio"
+                      name="physique-table"
+                      value="male"
+                      checked
+                    />
+                    <span>{c.male}</span>
+                  </label>
+                  <label class="table-option">
+                    <input
+                      id="table-female"
+                      type="radio"
+                      name="physique-table"
+                      value="female"
+                    />
+                    <span>{c.female}</span>
+                  </label>
+                </div>
+              </fieldset>
               <p class="supporting measurement-fields" id="bmi-formula">
                 {c.bmiFormula}
               </p>
@@ -172,7 +200,7 @@ const recordFields = [
                   type="text"
                   inputmode="decimal"
                   maxlength="12"
-                  placeholder="81"
+                  placeholder={c.chestExample}
                   aria-describedby="chest-hint measurement-hint chest-error"
                 />
                 <p class="field-error" id="chest-error" hidden></p>
@@ -313,10 +341,7 @@ const recordFields = [
             <p>{c.recordNotice}</p>
             <p>{c.methodDefault}</p>
             <div class="fields">
-              <div class="field">
-                <label for="measurement-date">{c.date}</label>
-                <input id="measurement-date" type="date" />
-              </div>
+              <MeasurementDate lang={lang} />
               <div class="field">
                 <label for="witness">{c.witness}</label>
                 <input

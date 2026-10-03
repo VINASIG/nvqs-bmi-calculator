@@ -1,0 +1,101 @@
+---
+import { CalendarDays, ChevronLeft, ChevronRight, X } from '@lucide/astro';
+import { copy } from '../lib/military-copy.ts';
+import type { Locale } from '../lib/math.ts';
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const c = copy[lang];
+---
+
+<div class="field">
+  <label for="measurement-date">{c.date}</label>
+  <div class="date-input">
+    <input
+      id="measurement-date"
+      type="text"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="YYYY-MM-DD"
+      autocomplete="off"
+      aria-describedby="date-hint date-error"
+    />
+    <button
+      id="date-open"
+      class="date-icon quiet"
+      type="button"
+      aria-label={c.dateOpen}
+      aria-haspopup="dialog"
+      aria-controls="date-dialog"
+      disabled
+    >
+      <CalendarDays size={20} aria-hidden="true" />
+    </button>
+  </div>
+  <p id="date-hint" class="supporting date-hint">
+    {c.dateHint}
+  </p>
+  <p id="date-error" class="field-error" hidden></p>
+</div>
+
+<dialog
+  id="date-dialog"
+  class="date-dialog"
+  aria-labelledby="date-title"
+  aria-describedby="date-help"
+>
+  <div class="date-title-row">
+    <h2 id="date-title">{c.dateTitle}</h2>
+    <button
+      id="date-close"
+      class="date-icon quiet"
+      type="button"
+      aria-label={c.dateClose}
+    >
+      <X size={20} aria-hidden="true" />
+    </button>
+  </div>
+  <div class="date-month-row">
+    <button
+      id="date-previous"
+      class="date-icon quiet"
+      type="button"
+      aria-label={c.datePrevious}
+    >
+      <ChevronLeft size={20} aria-hidden="true" />
+    </button>
+    <p id="date-month" aria-live="polite" aria-atomic="true"></p>
+    <button
+      id="date-next"
+      class="date-icon quiet"
+      type="button"
+      aria-label={c.dateNext}
+    >
+      <ChevronRight size={20} aria-hidden="true" />
+    </button>
+  </div>
+  <table class="date-grid" role="grid" aria-labelledby="date-month">
+    <thead>
+      <tr>
+        {c.weekdays.map((day) => (
+          <th scope="col">
+            <abbr title={day[1]}>{day[0]}</abbr>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody id="date-days"></tbody>
+  </table>
+  <div class="date-footer">
+    <button id="date-today" class="quiet" type="button">
+      {c.dateToday}
+    </button>
+    <button id="date-clear" class="quiet" type="button">
+      {c.dateClear}
+    </button>
+  </div>
+  <p id="date-help" class="supporting date-help">
+    {c.dateHelp}
+  </p>
+</dialog>

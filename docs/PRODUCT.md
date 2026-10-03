@@ -6,6 +6,8 @@ This repository contains **one independent tool**: Vietnam Military BMI & Physiq
 
 Direct text inputs accept centimeters/kilograms and up to three decimal places, with a point or comma. No sliders, accounts, date of birth, analytics, remote computation, input URL parameters or persistent health storage. Reload, locale navigation, history restoration and Clear remove measurements and stale results. Scripts must enable calculation only after loading; absent or blocked scripts cannot submit measurements. Static explanations, source links, navigation and disclosure controls remain available without JavaScript.
 
+Measurement fields start empty. Their muted, smaller placeholders carry `VD:` / `e.g.` prefixes to distinguish examples from entered values. Neither placeholder numbers nor the optional calendar supply a measurement default.
+
 ## Specialized behavior
 
 Score the entered male/female physique table, height, weight, BMI and optional male chest. Show each score and the highest-score reference grade. Separate this from the exact BMI exclusion in Circular 68/2025 and from the overall medical examination. Explain the 18.0–below-18.5 mismatch and the literal sub-tenth gaps in the printed table.
@@ -14,7 +16,7 @@ BMI needs only height and weight: weight in kilograms divided by squared height 
 
 Provide illustrative boundary uncertainty, arithmetic distance to both recruitment thresholds, safe adult-health reference weights and general health guidance. The recruitment threshold weights are measurement checks, never weight-change recommendations.
 
-A separate disclosure compares self-measured and recorded values, including score effects. Another creates a local text download or printable personal record with optional measurement date (not birth date), witness and method. Native select intentionally uses platform keyboard/touch behavior for two legal scoring tables. Date, witness and notes are optional and are never submitted or saved. The personal record is not an official examination form, medical certificate or recruitment conclusion. Static citizens-rights guidance covers accurate records, public information, correction requests, complaints and medical reassessment through the commune council.
+A separate disclosure compares self-measured and recorded values, including score effects. Another creates a local text download or printable personal record with optional measurement date (not birth date), witness and method. Two styled native radio choices select the legal scoring table with standard keyboard behavior and full-label touch targets. The optional date accepts a real `YYYY-MM-DD` value or a localized calendar in a native modal dialog. The calendar uses the same Space Grotesk and semantic colors, supports keyboard navigation, restores focus when dismissed and fits narrow/enlarged-text viewports. Date, witness and notes are never submitted or saved. The personal record is not an official examination form, medical certificate or recruitment conclusion. Static citizens-rights guidance covers accurate records, public information, correction requests, complaints and medical reassessment through the commune council.
 
 ## Design and publication
 

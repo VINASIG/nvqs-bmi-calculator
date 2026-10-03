@@ -54,7 +54,7 @@ export async function capture(
   scriptEnabled = true,
   scroll = true,
 ): Promise<void> {
-  const folder = 'output/responsive/specialization-2026-10-03/after';
+  const folder = 'output/responsive/controls-2026-10-03/layout';
   await mkdir(folder, { recursive: true });
   if (scriptEnabled) {
     await page.evaluate(async (shouldScroll) => {
@@ -80,7 +80,25 @@ export async function capture(
       ]
         .filter((e) => e.getBoundingClientRect().width > 0)
         .map((e) => {
-          const r = e.getBoundingClientRect();
+          // A visually hidden native radio is operated through its full label.
+          // Measure that real pointer/touch target, not the 1 px focusable input.
+          const target =
+            e instanceof HTMLInputElement && e.type === 'radio'
+              ? (e.closest('label') ?? e)
+              : e;
+          const r = target.getBoundingClientRect();
+          const wordLines: number[] = [];
+          if (e instanceof HTMLInputElement && e.type === 'radio') {
+            const text = target.querySelector('span')?.firstChild;
+            if (text?.nodeType === Node.TEXT_NODE) {
+              for (const match of (text.textContent ?? '').matchAll(/\S+/g)) {
+                const range = document.createRange();
+                range.setStart(text, match.index);
+                range.setEnd(text, match.index + match[0].length);
+                wordLines.push(range.getClientRects().length);
+              }
+            }
+          }
           return {
             id: e.id,
             tag: e.tagName,
@@ -88,6 +106,7 @@ export async function capture(
             right: r.right,
             width: r.width,
             height: r.height,
+            wordLines,
           };
         }),
     }));
@@ -102,6 +121,7 @@ export async function capture(
       expect(control.right).toBeLessThanOrEqual(bounds.width + 1);
       if (['INPUT', 'SELECT', 'BUTTON', 'SUMMARY'].includes(control.tag))
         expect(control.height).toBeGreaterThanOrEqual(44);
+      for (const lines of control.wordLines) expect(lines).toBe(1);
     }
     await mkdir('output/checks', { recursive: true });
     await writeFile(
@@ -166,6 +186,51 @@ export async function privacy(
       session: sessionStorage.length,
     })),
   ).toEqual({ local: 0, session: 0 });
+}
+export async function placeholderContrast(
+  page: Page,
+  id: string,
+): Promise<void> {
+  const result = await page.locator('#' + id).evaluate((e) => {
+    const style = getComputedStyle(e);
+    const placeholder = getComputedStyle(e, '::placeholder');
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Color measurement needs a 2D context');
+    function luminance(color: string): number {
+      if (!context) throw new Error('Missing color measurement context');
+      context.fillStyle = color;
+      context.fillRect(0, 0, 1, 1);
+      const linear = Array.from(context.getImageData(0, 0, 1, 1).data)
+        .slice(0, 3)
+        .map((channel) => {
+          const value = channel / 255;
+          return value <= 0.04045
+            ? value / 12.92
+            : ((value + 0.055) / 1.055) ** 2.4;
+        });
+      return linear.reduce(
+        (sum, value, index) =>
+          sum + value * ([0.2126, 0.7152, 0.0722][index] ?? 0),
+        0,
+      );
+    }
+    const foreground = luminance(placeholder.color);
+    const background = luminance(style.backgroundColor);
+    return {
+      color: placeholder.color,
+      entered: style.color,
+      font: parseFloat(placeholder.fontSize),
+      enteredFont: parseFloat(style.fontSize),
+      contrast:
+        (Math.max(foreground, background) + 0.05) /
+        (Math.min(foreground, background) + 0.05),
+    };
+  });
+  expect(result.color).not.toBe(result.entered);
+  expect(result.font).toBeLessThan(result.enteredFont);
+  expect(result.contrast).toBeGreaterThanOrEqual(4.5);
 }
 export async function immutableBefore(filename: string): Promise<void> {
   let exists = false;
