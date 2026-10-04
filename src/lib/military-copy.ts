@@ -16,6 +16,7 @@ export const sources = {
 };
 export const copy = {
   vi: {
+    brandHome: 'Trang chủ VINASIG',
     title: 'BMI & Phân loại sức khỏe NVQS',
     description:
       'Đối chiếu BMI tuyển quân, điểm thể lực và số đo trong hồ sơ khám NVQS. Có căn cứ pháp lý, phiếu tự đo và hướng dẫn yêu cầu kiểm tra lại. Tính tại chỗ, không lưu dữ liệu.',
@@ -183,6 +184,7 @@ export const copy = {
     otherLink: 'Mở BMI sức khỏe',
   },
   en: {
+    brandHome: 'VINASIG home',
     title: 'Vietnam Military BMI & Physique',
     description:
       'Check Vietnam military recruitment BMI thresholds, physique scores and recorded measurements. Includes official sources, a self-measurement record and review guidance. No data collection.',
