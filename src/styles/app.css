@@ -631,6 +631,7 @@ details p {
 .date-grid th {
   height: 2.5rem;
   font-size: 0.75rem;
+  overflow-wrap: anywhere;
 }
 
 .date-grid abbr {
@@ -638,10 +639,10 @@ details p {
 }
 
 .date-day {
-  width: calc(100% - 4px);
+  width: calc(100% - 2px);
   min-height: 44px;
   padding: 0.3em 0;
-  margin-inline: 2px;
+  margin-inline: 1px;
   border-radius: var(--radius-sm);
   background: var(--color-surface);
   color: var(--color-text);

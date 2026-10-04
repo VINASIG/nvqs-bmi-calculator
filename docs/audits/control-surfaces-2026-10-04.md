@@ -12,6 +12,10 @@ The offline installer applied the reviewed bundle from agent-standards commit `0
 
 ## Browser verification
 
+The first exact-commit CI run also reproduced a WebKit calendar defect at 320 px and 200 percent text. The authored scrollbar reduced the seven-column content width. Vietnamese weekday headings overflowed their cells and two-digit day labels lost their inner space. Weekday cells now wrap long words, while day buttons reclaim two pixels from their outer margins. The original overflow, text-fit and touch-size assertions remain unchanged. Immutable before images and geometry are retained under `before-calendar-fit/`.
+
+The calendar/interface repair passed 102 focused browser cases across Chromium, Firefox and WebKit, including narrow layouts, enlarged text, both locales/themes, keyboard and touch behavior. The result calculation and medical/legal source material were not changed.
+
 The local production-preview sweep covered 20 Chromium cases over routes `/`, `en/` in both languages and both themes. It used 360 x 800, 390 x 844, 768 x 1024, 1024 x 768 and 1440 x 900. Each case traversed the whole page scroll range, captured full-page images or all segments of a long page, and checked page width, runtime errors, interface copy, control surfaces, ordinary indicators and the header.
 
 A separate 24-capture state review exercised the changed and retained controls at 390 x 844 in Chromium, Firefox and WebKit, both locales and themes. Opened images and contact sheets were inspected.
