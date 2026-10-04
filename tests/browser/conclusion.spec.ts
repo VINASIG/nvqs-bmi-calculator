@@ -79,6 +79,14 @@ for (const lang of ['vi', 'en'] as const)
           '',
         );
         await expect(page.locator('#score-list li')).toHaveCount(3);
+        if (lang === 'en') {
+          await expect(page.locator('#score-list li').first()).toContainText(
+            'receives 1 point.',
+          );
+          await expect(page.locator('#score-list li').last()).toContainText(
+            'receives 4 points.',
+          );
+        }
         await capture(
           page,
           `${lang}-${theme}-${String(width)}x${String(height)}-${info.project.name}-scoring-open`,

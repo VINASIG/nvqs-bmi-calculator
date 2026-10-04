@@ -44,4 +44,6 @@ Cold-navigation median LCP was 1804.089 ms mobile / 402.772 ms desktop in Vietna
 
 Publication follows the existing all-six-job Ubuntu/Windows and browser matrix, then Pages deployment. The handoff verifies the exact pushed revision, workflow result and live checks under `output/clear-conclusions-publication.json` and `output/clear-conclusions-live.json`. Live screenshots are kept separately under `output/responsive/clear-conclusions-2026-10-05/live/`.
 
+The initial published change passed all six verification jobs, Pages deployment and 72 live states. Final copy review corrected singular/plural English score wording inside the detailed explanation. Unit and browser assertions now distinguish “1 point” from “4 points”. The follow-up reruns source checks, all 92 unit tests, build and the affected 72-case conclusion matrix locally. Exact-revision CI reruns the complete browser/OS matrix before publication and the handoff repeats all 72 live states. Earlier publication/live evidence is preserved with an `adbdad1` suffix. The original full local 570-case run remains valid evidence for the main change, while follow-up reports are recorded separately.
+
 Real devices, screen-reader sessions, field performance and independent SI-agent user trials are NOT_RUN. Browser engines provide emulated viewport evidence only.

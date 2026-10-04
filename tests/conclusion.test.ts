@@ -59,6 +59,18 @@ for (const lang of ['vi', 'en'] as const) {
         ? /đều được chấm 1 điểm/
         : /All entered measurements receive 1 point/,
     );
+    if (lang === 'en') {
+      assert(
+        scoreLines(scored('170', '55'), lang).every((line) =>
+          line.includes('receives 1 point.'),
+        ),
+      );
+      assert(
+        scoreLines(scored('170', '50'), lang).some((line) =>
+          line.includes('receives 4 points.'),
+        ),
+      );
+    }
     assert.match(
       gradeExplanation(scored('170', '50'), lang),
       lang === 'vi' ? /BMI được chấm 4 điểm/ : /BMI receives 4 points/,

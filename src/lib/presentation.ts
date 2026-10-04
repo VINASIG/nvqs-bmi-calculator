@@ -78,7 +78,7 @@ export function scoreLines(
           : 'no score explicitly assigned in the table'
         : lang === 'vi'
           ? `được chấm ${String(item.score)} điểm`
-          : `receives ${String(item.score)} points`;
+          : `receives ${String(item.score)} ${item.score === 1 ? 'point' : 'points'}`;
     if (typeof item.value !== 'bigint')
       return `${label} ${exactDisplay(item.value, bmiThresholds, lang)} ${score}.`;
     const unit = item.indicator === 'weight' ? 'kg' : 'cm';
