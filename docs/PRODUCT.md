@@ -6,6 +6,8 @@ This repository contains **one independent tool**: Vietnam Military BMI & Physiq
 
 Direct text inputs accept centimeters/kilograms and up to three decimal places, with a point or comma. No sliders, accounts, date of birth, analytics, remote computation, input URL parameters or persistent health storage. Reload, locale navigation, history restoration and Clear remove measurements and stale results. Scripts must enable calculation only after loading; absent or blocked scripts cannot submit measurements. Static explanations, source links, navigation and disclosure controls remain available without JavaScript.
 
+Entering valid height and weight immediately updates BMI, the physique reference and related conclusions without a Calculate button. Table selection and optional chest measurements also update the physique result. The record comparison updates whenever either measurement group changes, without a Compare button. Incomplete or invalid input clears the affected results and any prepared print sheet. Updates preserve input focus and scroll position. Errors appear after blur or explicit Enter validation. IME composition postpones calculation until composition ends. Measurement inputs, table choices and actions start disabled until their client handlers are installed. Legal scoring, exact thresholds and health advice remain unchanged. Printing and downloading remain explicit actions.
+
 Measurement fields start empty. Their muted, smaller placeholders use localized example wording, such as "Ví dụ 170" in Vietnamese and "For example 170" in English, to distinguish examples from entered values. Neither placeholder numbers nor the optional calendar supply a measurement default.
 
 ## Specialized behavior

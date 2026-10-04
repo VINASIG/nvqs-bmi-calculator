@@ -37,6 +37,7 @@ const lang: Locale = document.documentElement.lang === 'en' ? 'en' : 'vi';
 const c = copy[lang];
 const form = node('bmi-form', HTMLFormElement);
 const recordForm = node('comparison-form', HTMLFormElement);
+const clear = node('clear', HTMLButtonElement);
 const tableMale = node('table-male', HTMLInputElement);
 const tableFemale = node('table-female', HTMLInputElement);
 const measurementDate = installMeasurementDate(lang);
@@ -75,6 +76,20 @@ const dynamicIds = [
   'weight-change',
   'health-advice',
 ] as const;
+const validated = new Set<HTMLInputElement>();
+let composing = false;
+let clearing = false;
+clear.addEventListener('pointerdown', () => {
+  clearing = true;
+});
+window.addEventListener('pointerup', () => {
+  window.setTimeout(() => {
+    clearing = false;
+  }, 0);
+});
+window.addEventListener('pointercancel', () => {
+  clearing = false;
+});
 function set(id: string, value: string): void {
   node(id, HTMLElement).textContent = value;
 }
@@ -116,12 +131,14 @@ function invalidate(message = ''): void {
 function read(
   group: typeof inputs,
   prefix = '',
+  validateAll = false,
 ): { measurements: Measurements; chest: bigint | null } | null {
   clearErrors(group, prefix);
   const answer = calculate(group.height.value, group.weight.value);
   const chest = chestMeasurement(group.chest.value, selectedTable());
   let first: HTMLInputElement | undefined;
   for (const key of ['height', 'weight', 'chest'] as const) {
+    if (validateAll) validated.add(group[key]);
     const error =
       key === 'chest'
         ? typeof chest === 'string'
@@ -130,7 +147,7 @@ function read(
         : !answer.ok
           ? answer.errors[key]
           : undefined;
-    if (error) {
+    if (error && validated.has(group[key])) {
       group[key].setAttribute('aria-invalid', 'true');
       const p = node(prefix + key + '-error', HTMLParagraphElement);
       p.hidden = false;
@@ -139,18 +156,23 @@ function read(
     }
   }
   if (!answer.ok || typeof chest === 'string') {
-    first?.focus();
+    if (validateAll) first?.focus();
     return null;
   }
   return { measurements: answer.measurements, chest };
 }
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+function refresh(validateAll = false): void {
   invalidate();
-  const answer = read(inputs);
+  if (composing) return;
+  const answer = read(inputs, '', validateAll);
   if (!answer) {
-    status.textContent = c.error;
-    status.dataset['state'] = 'error';
+    if (
+      Object.values(inputs).some((input) => input.hasAttribute('aria-invalid'))
+    ) {
+      status.textContent = c.error;
+      status.dataset['state'] = 'error';
+    }
+    refreshComparison();
     return;
   }
   const { measurements, chest } = answer;
@@ -202,24 +224,21 @@ form.addEventListener('submit', (event) => {
   empty.hidden = true;
   result.hidden = false;
   details.hidden = false;
-  status.textContent = c.done;
-  const heading = node('result-heading', HTMLHeadingElement);
-  heading.focus({ preventScroll: true });
-  if (window.innerWidth <= 760)
-    heading.scrollIntoView({ behavior: 'instant', block: 'start' });
-});
-recordForm.addEventListener('submit', (event) => {
-  event.preventDefault();
+  status.textContent = `BMI ${formatRatio(measurements.bmi, lang)}. ${c.done}`;
+  refreshComparison();
+}
+function refreshComparison(validateAll = false): void {
   invalidateComparison();
-  const own = read(inputs);
-  if (!own) {
-    status.textContent = c.error;
-    recordStatus.textContent = c.error;
-    return;
-  }
-  const recorded = read(records, 'record-');
-  if (!recorded) {
-    recordStatus.textContent = c.error;
+  if (composing) return;
+  const own = read(inputs, '', validateAll);
+  const recorded = read(records, 'record-', validateAll);
+  if (!own || !recorded) {
+    if (
+      Object.values(records).some((input) => input.hasAttribute('aria-invalid'))
+    )
+      recordStatus.textContent = c.error;
+    else if (Object.values(records).some((input) => input.value))
+      recordStatus.textContent = c.comparisonWaiting;
     return;
   }
   const differences = [
@@ -243,11 +262,25 @@ recordForm.addEventListener('submit', (event) => {
     `${c.record}. ${outcome(recorded.measurements, selectedTable(), recorded.chest, lang)}`,
   );
   comparison.hidden = false;
-  recordStatus.textContent = c.done;
-  node('comparison-heading', HTMLHeadingElement).focus({ preventScroll: true });
+  recordStatus.textContent = `${c.done} ${differences.join('. ')}.`;
+}
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  refresh(true);
 });
+recordForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  refreshComparison(true);
+});
+for (const inputForm of [form, recordForm])
+  inputForm.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+      event.preventDefault();
+      if (!event.isComposing) inputForm.requestSubmit();
+    }
+  });
 function prepareRecord(): string | null {
-  const answer = read(inputs);
+  const answer = read(inputs, '', true);
   if (!answer) {
     set('print-status', c.error);
     status.textContent = c.error;
@@ -286,12 +319,29 @@ node('download', HTMLButtonElement).addEventListener('click', () => {
     URL.revokeObjectURL(url);
   }, 1000);
 });
-for (const input of Object.values(inputs))
-  input.addEventListener('input', () => {
-    invalidate(c.edited);
-  });
-for (const input of Object.values(records))
-  input.addEventListener('input', invalidateComparison);
+for (const [group, update] of [
+  [inputs, refresh],
+  [records, refreshComparison],
+] as const)
+  for (const input of Object.values(group)) {
+    input.addEventListener('input', () => {
+      validated.delete(input);
+      update();
+    });
+    input.addEventListener('blur', (event) => {
+      if (clearing || event.relatedTarget === clear) return;
+      validated.add(input);
+      update();
+    });
+    input.addEventListener('compositionstart', () => {
+      composing = true;
+      invalidate();
+    });
+    input.addEventListener('compositionend', () => {
+      composing = false;
+      refresh();
+    });
+  }
 for (const input of [date, witness, method])
   input.addEventListener('input', () => {
     sheet.hidden = true;
@@ -306,11 +356,14 @@ function updateTable(): void {
     input.disabled = female;
     if (female) input.value = '';
   }
-  invalidate(c.edited);
+  refresh();
 }
 for (const table of [tableMale, tableFemale])
   table.addEventListener('change', updateTable);
 function resetAll(): void {
+  clearing = false;
+  composing = false;
+  validated.clear();
   recordForm.reset();
   date.value = '';
   witness.value = '';
@@ -334,5 +387,18 @@ window.addEventListener('pageshow', (event) => {
   if (event.persisted) resetAll();
 });
 resetAll();
-for (const id of ['calculate', 'compare', 'print', 'download'])
+for (const input of [
+  ...Object.values(inputs),
+  ...Object.values(records),
+  tableMale,
+  tableFemale,
+])
+  input.disabled = false;
+for (const id of ['clear', 'print', 'download'])
   node(id, HTMLButtonElement).disabled = false;
+for (const submit of document.querySelectorAll<HTMLButtonElement>(
+  '[data-enter-submit]',
+))
+  submit.disabled = false;
+form.dataset['ready'] = 'true';
+recordForm.dataset['ready'] = 'true';

@@ -6,6 +6,8 @@ Check Vietnamese military physique scores, exact BMI recruitment exclusions, rec
 
 The separate [bmi-calculator](https://github.com/VINASIG/bmi-calculator) serves the other purpose. Each website has a purpose guide and links to the matching language of the other tool.
 
+Height, weight and optional physique indicators update the result automatically. Recorded measurements also update the comparison immediately. Printing and downloading the personal record remain explicit actions.
+
 ## Run locally
 
 Use Node 24.21.0 and npm 12.2.0 (pinned in the repository).
@@ -42,6 +44,7 @@ CI verifies Ubuntu and Windows with Chromium, Firefox and WebKit, then deploys o
 - [Toolchain](docs/TOOLCHAIN.md)
 - [Verification coverage](tests/README.md)
 - [Specialization verification](docs/audits/2026-10-03-specialization.md)
+- [Automatic input verification](docs/audits/automatic-input-2026-10-04.md)
 
 VINASIG SI agent guidance is in `AGENTS.md` and the pinned local standards snapshot. Read [LICENSES.md](LICENSES.md) for the software, documentation, font and identity scopes.
 

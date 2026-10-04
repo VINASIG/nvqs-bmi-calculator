@@ -164,6 +164,7 @@ const recordFields = [
                       name="physique-table"
                       value="male"
                       checked
+                      disabled
                     />
                     <span>{c.male}</span>
                   </label>
@@ -173,6 +174,7 @@ const recordFields = [
                       type="radio"
                       name="physique-table"
                       value="female"
+                      disabled
                     />
                     <span>{c.female}</span>
                   </label>
@@ -192,6 +194,7 @@ const recordFields = [
                       maxlength="12"
                       placeholder={field.placeholder}
                       required={field.required}
+                      disabled
                       aria-describedby={`bmi-formula measurement-hint ${field.id}-error`}
                     />
                     <p class="field-error" id={`${field.id}-error`} hidden></p>
@@ -201,6 +204,10 @@ const recordFields = [
               <p class="supporting" id="measurement-hint">
                 {c.hint}
               </p>
+              <p class="supporting">{c.automatic}</p>
+              <button type="submit" hidden disabled data-enter-submit>
+                {lang === 'vi' ? 'Kiểm tra số đo' : 'Check measurements'}
+              </button>
               <div class="field result-section" id="chest-field">
                 <label for="chest">{c.chest}</label>
                 <p class="supporting" id="chest-hint">
@@ -212,15 +219,13 @@ const recordFields = [
                   inputmode="decimal"
                   maxlength="12"
                   placeholder={c.chestExample}
+                  disabled
                   aria-describedby="chest-hint measurement-hint chest-error"
                 />
                 <p class="field-error" id="chest-error" hidden></p>
               </div>
               <div class="form-actions">
-                <button id="calculate" type="submit" class="primary" disabled>
-                  {c.calculate}
-                </button>
-                <button type="reset" class="quiet">
+                <button id="clear" type="reset" class="quiet" disabled>
                   {c.clear}
                 </button>
               </div>
@@ -314,6 +319,7 @@ const recordFields = [
                       maxlength="12"
                       placeholder={field.placeholder}
                       required={field.required}
+                      disabled
                       aria-describedby={`${field.id === 'record-chest' ? 'chest-hint ' : 'bmi-formula '}comparison-intro ${field.id}-error`}
                     />
                     <p class="field-error" id={`${field.id}-error`} hidden></p>
@@ -323,11 +329,12 @@ const recordFields = [
               <p id="comparison-intro" class="supporting">
                 {c.hint}
               </p>
-              <div class="form-actions">
-                <button id="compare" type="submit" class="primary" disabled>
-                  {c.compare}
-                </button>
-              </div>
+              <p class="supporting">{c.automaticComparison}</p>
+              <button type="submit" hidden disabled data-enter-submit>
+                {lang === 'vi'
+                  ? 'Kiểm tra số đo trong hồ sơ'
+                  : 'Check recorded measurements'}
+              </button>
               <p id="comparison-status" role="status" class="supporting"></p>
             </form>
             <section

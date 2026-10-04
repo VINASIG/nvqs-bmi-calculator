@@ -1,5 +1,11 @@
 # Verification coverage
 
+## Automatic input regression
+
+`tests/browser/automatic-input.spec.ts` checks calculation without a button, incomplete input, valid edits, focus and scroll preservation, immediate stale-result removal, blur validation, recovery, Clear, IME composition, decimal commas and Enter without navigation. Additional cases check automatic recorded-measurement differences, updates from either measurement group and table/chest changes without altering BMI. Both locales, both themes, all five required sizes and 320 px with 200% text run in all three engines. Evidence is saved to `output/responsive/automatic-input-2026-10-04/after` and must be opened.
+
+Existing browser helpers now enter measurements without submitting. Explicit Enter remains for keyboard validation scenarios. Manual-button and automatic-result-focus expectations were updated for the owner's requested interaction. Exact scoring, recruitment thresholds, advice, privacy, print, accessibility and geometry assertions remain required.
+
 ## Calendar internal spacing regression
 
 `tests/browser/calendar-spacing.spec.ts` measures all four internal gutters separately from the popup's viewport bounds. Calendar rows, day buttons and the final scrolled help text must remain at least 16 CSS px inside the surface. The regression checks selection and focus in the first and last columns, 44 px day heights, readable day text, Escape and restored focus across 14 widths, 100%/200% text, both languages/themes and Chromium/Firefox/WebKit. Open top and bottom screenshots alongside the geometry results.

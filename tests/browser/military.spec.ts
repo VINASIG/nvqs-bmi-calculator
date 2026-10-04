@@ -31,7 +31,7 @@ for (const lang of ['vi', 'en'] as const) {
         }, text);
         const name = `military-${lang}-${String(width)}x${String(height)}-${info.project.name}-text-${String(text)}`;
         await capture(page, name + '-idle');
-        await page.locator('#calculate').click();
+        await page.locator('#height').press('Enter');
         await expect(page.locator('#height')).toBeFocused();
         await expect(page.locator('#height-error')).toBeVisible();
         await expect(page.locator('#weight-error')).toBeVisible();
@@ -42,7 +42,7 @@ for (const lang of ['vi', 'en'] as const) {
         );
         await expect(page.locator('#category')).toContainText('4');
         await expect(page.locator('#bmi-criterion')).toHaveText(c.bmiOutside);
-        await expect(page.locator('#result-heading')).toBeFocused();
+        await expect(page.locator('#result-heading')).not.toBeFocused();
         await capture(page, name + '-success');
         await expand(page);
         await input(page, lang, '170', '52.6');
@@ -50,7 +50,7 @@ for (const lang of ['vi', 'en'] as const) {
         await expect(page.locator('#bmi-criterion')).toHaveText(c.bmiWithin);
         await page.locator('#record-height').fill('170');
         await page.locator('#record-weight').fill('55');
-        await page.locator('#compare').click();
+        await page.locator('#record-height').press('Enter');
         await expect(page.locator('#comparison-result')).toBeVisible();
         await capture(page, name + '-boundary-comparison-notes-open');
         await page.locator('#witness').fill('A'.repeat(120));
@@ -98,7 +98,7 @@ for (const lang of ['vi', 'en'] as const) {
             await open(page, app.url, lang);
             await expect(page.locator('input[type=range]')).toHaveCount(0);
             await axe(page);
-            await page.locator('#calculate').click();
+            await page.locator('#height').press('Enter');
             await axe(page);
             await expand(page);
             for (const weight of [
@@ -119,7 +119,6 @@ for (const lang of ['vi', 'en'] as const) {
             await input(page, lang, '170.125', '65.875');
             await page.locator('#record-height').fill('171.125');
             await page.locator('#record-weight').fill('66.875');
-            await page.locator('#compare').click();
             await page.locator('#witness').fill('Privacy fixture');
             await page.locator('#measurement-date').fill('2026-10-03');
             await axe(page);
@@ -153,6 +152,15 @@ for (const lang of ['vi', 'en'] as const) {
                 .evaluate((e) => (e as HTMLImageElement).naturalWidth),
             ).toBeGreaterThan(0);
             await page.locator('#weight').fill('66');
+            await expect(page.locator('#result')).toBeVisible();
+            await expect(page.locator('#bmi-value')).toHaveText(
+              lang === 'vi' ? '22,8' : '22.8',
+            );
+            await expect(page.locator('#comparison-result')).toBeVisible();
+            await expect(
+              page.locator('#measurement-differences'),
+            ).toContainText(lang === 'vi' ? '+0,875 kg' : '+0.875 kg');
+            await page.locator('#weight').fill('');
             await expect(page.locator('#result')).toBeHidden();
             await expect(page.locator('#comparison-result')).toBeHidden();
             for (const id of [
@@ -264,14 +272,12 @@ for (const lang of ['vi', 'en'] as const) {
     await input(page, lang, '170', '55');
     await expect(page.locator('#chest-error')).toBeVisible();
     await page.locator('#chest').fill('');
-    await page.locator('#calculate').click();
     await expect(page.locator('#category')).toContainText('1');
     await expect(page.locator('#missing-chest')).toBeVisible();
     const baselineBmi = await page.locator('#bmi-value').textContent();
     const baselineExactBmi = await page.locator('#exact-bmi').textContent();
     for (const chest of ['81', '70']) {
       await page.locator('#chest').fill(chest);
-      await page.locator('#calculate').click();
       await expect(page.locator('#bmi-value')).toHaveText(baselineBmi ?? '');
       await expect(page.locator('#exact-bmi')).toHaveText(
         baselineExactBmi ?? '',
@@ -355,9 +361,16 @@ for (const lang of ['vi', 'en'] as const) {
         });
         if (mode === 'blocked') await page.route('**/*.js', (r) => r.abort());
         await page.goto(app.url + (lang === 'en' ? 'en/' : ''));
-        await expect(page.locator('#calculate')).toBeDisabled();
-        await page.locator('#height').fill('177.777');
-        await page.locator('#weight').fill('77.777');
+        await expect(page.locator('#calculate')).toHaveCount(0);
+        await expect(page.locator('#height')).toBeDisabled();
+        await expect(page.locator('#weight')).toBeDisabled();
+        await page.evaluate(() => {
+          const height = document.querySelector<HTMLInputElement>('#height');
+          const weight = document.querySelector<HTMLInputElement>('#weight');
+          if (!height || !weight) throw new Error('Missing test inputs');
+          height.value = '177.777';
+          weight.value = '77.777';
+        });
         for (const key of ['height', 'weight', 'chest'])
           await expect(page.locator('#' + key)).not.toHaveAttribute(
             'name',
@@ -373,7 +386,8 @@ for (const lang of ['vi', 'en'] as const) {
           requests.some((r) => r.includes('177.777') || r.includes('77.777')),
         ).toBe(false);
         await expect(page.locator('#result')).toBeHidden();
-        await expect(page.locator('#compare')).toBeDisabled();
+        await expect(page.locator('#compare')).toHaveCount(0);
+        await expect(page.locator('#record-height')).toBeDisabled();
         await expect(page.locator('#print')).toBeDisabled();
         await expect(page.locator('#date-open')).toBeDisabled();
       } finally {
@@ -420,18 +434,23 @@ for (const lang of ['vi', 'en'] as const) {
     await open(page, app.url, lang);
     await input(page, lang, '170', '52.6');
     await expand(page);
-    await page.locator('#compare').click();
+    await page.locator('#record-height').press('Enter');
     await expect(page.locator('#record-height-error')).toBeVisible();
     await page.locator('#record-height').fill('170');
     await page.locator('#record-weight').fill('55');
-    await page.locator('#compare').click();
     await expect(page.locator('#measurement-differences')).toContainText(
       lang === 'vi' ? '+2,4 kg' : '+2.4 kg',
     );
     await expect(page.locator('#self-outcome')).toContainText(c.ineligible);
     await expect(page.locator('#record-outcome')).toContainText(c.eligible);
     await page.locator('#record-weight').fill('56');
+    await expect(page.locator('#comparison-result')).toBeVisible();
+    await expect(page.locator('#measurement-differences')).toContainText(
+      lang === 'vi' ? '+3,4 kg' : '+3.4 kg',
+    );
+    await page.locator('#record-weight').fill('');
     await expect(page.locator('#comparison-result')).toBeHidden();
+    await expect(page.locator('#record-outcome')).toBeEmpty();
     await page.locator('#measurement-date').fill('2026-10-03');
     await page.locator('#witness').fill('<script>not executed</script>');
     await page.locator('#method').fill('A'.repeat(1200));
@@ -489,7 +508,7 @@ for (const reduced of ['no-preference', 'reduce'] as const)
   test(`motion reversal ${reduced}`, async ({ page }, info) => {
     await page.emulateMedia({ reducedMotion: reduced });
     await open(page, app.url, 'vi');
-    const button = page.locator('#calculate');
+    const button = page.locator('#clear');
     await button.hover();
     const css = await button.evaluate((e) => ({
       duration: getComputedStyle(e).transitionDuration,

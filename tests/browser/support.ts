@@ -27,7 +27,8 @@ export async function open(
   lang: Locale,
 ): Promise<void> {
   await page.goto(url + (lang === 'en' ? 'en/' : ''));
-  await expect(page.locator('#calculate')).toBeEnabled();
+  await expect(page.locator('#bmi-form')).toHaveAttribute('data-ready', 'true');
+  await expect(page.locator('#height')).toBeEnabled();
   await expect(page.locator('html')).toHaveAttribute('lang', lang);
 }
 export async function input(
@@ -42,7 +43,7 @@ export async function input(
   await page
     .getByRole('textbox', { name: copy[lang].weight, exact: true })
     .fill(weight);
-  await page.locator('#calculate').click();
+  await page.locator('#weight').blur();
 }
 export async function expand(page: Page): Promise<void> {
   for (const summary of await page.locator('summary').all())
@@ -54,7 +55,7 @@ export async function capture(
   scriptEnabled = true,
   scroll = true,
 ): Promise<void> {
-  const folder = 'output/responsive/controls-2026-10-03/layout';
+  const folder = 'output/responsive/automatic-input-2026-10-04/after';
   await mkdir(folder, { recursive: true });
   if (scriptEnabled) {
     await page.evaluate(async (shouldScroll) => {

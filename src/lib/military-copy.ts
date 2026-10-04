@@ -38,7 +38,7 @@ export const copy = {
     chestHint:
       'Vòng ngực chỉ dùng chấm điểm thể lực của bảng nam, không dùng tính BMI. Có thể để trống. Nếu nhập, dùng trung bình số đo khi hít vào và thở ra tối đa. Bảng nữ không chấm chỉ tiêu này.',
     hint: 'Nhập trực tiếp, dấu phẩy hoặc dấu chấm, tối đa 3 chữ số thập phân.',
-    calculate: 'Đối chiếu thể lực',
+    automatic: 'Kết quả tự cập nhật khi nhập số đo hoặc đổi bảng thể lực.',
     clear: 'Xóa',
     privacy: 'Xử lý tại chỗ. Không gửi hay lưu số đo.',
     resultTitle: 'Kết quả đối chiếu',
@@ -50,7 +50,6 @@ export const copy = {
     noScript:
       'Bật JavaScript để tính tại chỗ. Bảng tiêu chuẩn và hướng dẫn vẫn đọc được khi tắt JavaScript.',
     error: 'Kiểm tra các số đo được đánh dấu.',
-    edited: 'Số đo đã thay đổi. Đối chiếu lại để có kết quả mới.',
     done: 'Đã đối chiếu các chỉ tiêu được nhập.',
     exact: 'BMI dùng để so sánh',
     rounding:
@@ -107,7 +106,9 @@ export const copy = {
     recordHeight: 'Chiều cao trong hồ sơ tính bằng cm',
     recordWeight: 'Cân nặng trong hồ sơ tính bằng kg',
     recordChest: 'Vòng ngực trong hồ sơ tính bằng cm nếu có',
-    compare: 'So sánh số đo',
+    automaticComparison: 'Chênh lệch tự cập nhật khi nhập số đo trong hồ sơ.',
+    comparisonWaiting:
+      'Nhập đủ chiều cao và cân nặng ở cả hai bên để đối chiếu.',
     comparisonResult: 'Chênh lệch hồ sơ − tự đo',
     self: 'Số đo bạn tự đo cho kết quả sau',
     record: 'Số đo trong hồ sơ cho kết quả sau',
@@ -206,7 +207,8 @@ export const copy = {
     chestHint:
       'Chest is a separate male-table physique indicator, not a BMI input. You can leave it blank. If entered, use the average measurement at maximum inhalation and exhalation. The female table does not score it.',
     hint: 'Type directly, with a point or comma and up to 3 decimal places.',
-    calculate: 'Check physique',
+    automatic:
+      'Your result updates automatically as you enter measurements or change the physique table.',
     clear: 'Clear',
     privacy: 'Local processing. Measurements are never sent or saved.',
     resultTitle: 'Your comparison',
@@ -218,7 +220,6 @@ export const copy = {
     noScript:
       'Enable JavaScript to calculate locally. Standards and guidance remain readable without JavaScript.',
     error: 'Check the highlighted measurements.',
-    edited: 'Measurements changed. Calculate again for an updated result.',
     done: 'Entered indicators checked.',
     exact: 'BMI used for comparison',
     rounding:
@@ -275,7 +276,10 @@ export const copy = {
     recordHeight: 'Recorded height in cm',
     recordWeight: 'Recorded weight in kg',
     recordChest: 'Recorded chest in cm if available',
-    compare: 'Compare measurements',
+    automaticComparison:
+      'The comparison updates automatically as you enter recorded measurements.',
+    comparisonWaiting:
+      'Enter height and weight on both sides to compare the measurements.',
     comparisonResult: 'Difference between the record and your own measurement',
     self: 'Your own measurements give the following result',
     record: 'Measurements in the examination record give the following result',

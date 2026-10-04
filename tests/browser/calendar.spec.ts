@@ -249,7 +249,7 @@ for (const lang of ['vi', 'en'] as const) {
           }
         const name = `placeholder-${lang}-390x844-${theme}-${info.project.name}`;
         await capture(page, name + '-empty');
-        await page.locator('#calculate').click();
+        await page.locator('#height').press('Enter');
         await expect(page.locator('#result')).toBeHidden();
         await expect(page.locator('#height-error')).toBeVisible();
         await expect(page.locator('#weight-error')).toBeVisible();
