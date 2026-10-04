@@ -1,5 +1,9 @@
 # Verification coverage
 
+## Calendar internal spacing regression
+
+`tests/browser/calendar-spacing.spec.ts` measures all four internal gutters separately from the popup's viewport bounds. Calendar rows, day buttons and the final scrolled help text must remain at least 16 CSS px inside the surface. The regression checks selection and focus in the first and last columns, 44 px day heights, readable day text, Escape and restored focus across 14 widths, 100%/200% text, both languages/themes and Chromium/Firefox/WebKit. Open top and bottom screenshots alongside the geometry results.
+
 CI runs Chromium, Firefox and WebKit in separate jobs on both Ubuntu and Windows. All six jobs must pass before Pages deployment. Each job installs and selects its own engine to bound temporary trace storage, socket use and browser resource pressure. The complete project matrix remains in Playwright configuration, which rejects a CI subset supplied through BROWSER_ENGINES. There are no retries or disabled tests.
 
 Unit tests cover exact decimal math, invalid input, rounding and every specialized category/score boundary. The two repositories have independent product tests and independent browser entry points. Only pure arithmetic is duplicated.

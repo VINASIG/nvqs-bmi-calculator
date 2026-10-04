@@ -10,6 +10,7 @@ Read README.md, docs/PRODUCT.md, docs/RESEARCH.md, docs/BRAND.md and docs/TOOLCH
 - Run npm run check, npm test, npm run build, Playwright and performance checks. Inspect screenshots at all standard sizes, 320 px, breakpoint neighbors, intermediate widths and enlarged text. Check both locales, invalid input, result bands, keyboard, touch, dark/reduced motion, offline and script failure. Preserve assets, notices and all quality gates.
 - Keep immutable before captures and reports in ignored output/; record durable audits in docs/audits/. Before authorized publication inspect the staged diff, then verify remote HEAD, exact-commit CI, deployment and live pages. Preserve unrelated work and sibling repositories.
 - Report real devices, screen readers, field metrics and independent SI-agent trials as NOT_RUN unless observed.
+- Calendar content needs at least 16 CSS px of internal padding on every side, using the adopted spacing tokens. Measure actual content and first/last-column day buttons against the inner border, including selected and focused states. Scroll to the last content and check its bottom inset. Keep these checks at 320 px, 200% text, both locales/themes and all supported engines. Viewport containment alone does not establish a safe internal gutter.
 
 ## Canonical domain
 
