@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 import { startServer } from '../../scripts/serve.ts';
 import {
   inspectInterface,
+  inspectControlSurfaces,
   inspectHeaderBrand,
 } from '../../.vinasig/standards/templates/web/interface.mjs';
 import { captureFullPage } from '../../.vinasig/standards/templates/web/responsive.mjs';
@@ -38,6 +39,9 @@ for (const route of ['', 'en/'])
           });
           await page.goto(new URL(route, app.url).href);
           await captureFullPage(page, info, 'initial');
+          expect(
+            await page.locator('button,input,summary,[role=combobox]').count(),
+          ).toBeGreaterThan(0);
           expect(await page.evaluate(inspectHeaderBrand)).toEqual([]);
           const brand = page.locator('[data-brand-logo]');
           await brand.focus();
@@ -46,6 +50,7 @@ for (const route of ['', 'en/'])
           await brand.hover();
           expect(await page.evaluate(inspectHeaderBrand)).toEqual([]);
           expect(await page.evaluate(inspectInterface)).toEqual([]);
+          expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
           for (const disclosure of await page.locator('details').all()) {
             if (
               (await disclosure.isVisible()) &&
@@ -55,14 +60,17 @@ for (const route of ['', 'en/'])
           }
           await captureFullPage(page, info, 'expanded');
           expect(await page.evaluate(inspectInterface)).toEqual([]);
+          expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
           {
             await page.locator('#calculate').click();
             expect(await page.evaluate(inspectInterface)).toEqual([]);
+            expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
             for (const weight of ['50', '55', '95']) {
               await page.locator('#height').fill('170');
               await page.locator('#weight').fill(weight);
               await page.locator('#calculate').click();
               expect(await page.evaluate(inspectInterface)).toEqual([]);
+              expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
             }
             await captureFullPage(page, info, 'result');
             {
@@ -70,6 +78,7 @@ for (const route of ['', 'en/'])
               await page.locator('#record-weight').fill('52');
               await page.locator('#compare').click();
               expect(await page.evaluate(inspectInterface)).toEqual([]);
+              expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
               await captureFullPage(page, info, 'comparison');
             }
           }
