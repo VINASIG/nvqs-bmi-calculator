@@ -2,7 +2,6 @@
 import { Calculator, Trash } from '@lucide/astro';
 import ThemeInit from './ThemeInit.astro';
 import SitePreferences from './SitePreferences.astro';
-import MeasurementDate from './MeasurementDate.astro';
 import { copy, sources } from '../lib/military-copy.ts';
 import { sourceTable } from '../lib/military.ts';
 import type { Locale } from '../lib/math.ts';
@@ -45,26 +44,6 @@ const mainFields = [
     label: c.weight,
     placeholder: c.weightExample,
     required: true,
-  },
-];
-const recordFields = [
-  {
-    id: 'record-height',
-    label: c.recordHeight,
-    placeholder: c.heightExample,
-    required: true,
-  },
-  {
-    id: 'record-weight',
-    label: c.recordWeight,
-    placeholder: c.weightExample,
-    required: true,
-  },
-  {
-    id: 'record-chest',
-    label: c.recordChest,
-    placeholder: c.chestExample,
-    required: false,
   },
 ];
 ---
@@ -255,8 +234,6 @@ const recordFields = [
                 <span id="bmi-value"></span>
                 <span class="bmi-unit">kg/m²</span>
               </p>
-              <p class="category" id="category"></p>
-              <ul id="score-list" class="score-list"></ul>
               <p id="drivers"></p>
               <p id="missing-chest" class="supporting" hidden>
                 {c.missing}
@@ -273,6 +250,13 @@ const recordFields = [
                 <a href={sources.recruitment}>Thông tư 68/2025/TT-BQP</a> -{' '}
                 <a href={sources.physique}>Thông tư 105/2023/TT-BQP</a>
               </p>
+              <details id="scoring-explanation">
+                <summary>{c.scoringTitle}</summary>
+                <p>{c.scoringIntro}</p>
+                <ul id="score-list" class="score-list"></ul>
+                <p>{c.physiqueRule}</p>
+                <p>{c.rounding}</p>
+              </details>
               <details id="bmi-explanation">
                 <summary>{c.bmiExplanation}</summary>
                 <p>{c.bmiNote}</p>
@@ -280,6 +264,14 @@ const recordFields = [
                   {c.exact} <span id="exact-bmi"></span>
                 </p>
               </details>
+              <section
+                class="result-section result-summary"
+                aria-labelledby="conclusion-heading"
+              >
+                <h3 id="conclusion-heading">{c.conclusionTitle}</h3>
+                <p class="category" id="category"></p>
+                <p class="supporting" id="conclusion-scope"></p>
+              </section>
             </div>
             <p class="result-scope">{c.limitation}</p>
           </section>
@@ -313,91 +305,6 @@ const recordFields = [
           </div>
         </div>
         <div class="notes">
-          <details id="comparison-details">
-            <summary>{c.comparisonTitle}</summary>
-            <p>{c.comparisonIntro}</p>
-            <form id="comparison-form" novalidate autocomplete="off">
-              <div class="fields">
-                {recordFields.map((field) => (
-                  <div class="field" id={`${field.id}-field`}>
-                    <label for={field.id}>{field.label}</label>
-                    <input
-                      id={field.id}
-                      type="text"
-                      inputmode="decimal"
-                      maxlength="12"
-                      placeholder={field.placeholder}
-                      required={field.required}
-                      disabled
-                      aria-describedby={`${field.id === 'record-chest' ? 'chest-hint ' : 'bmi-formula '}comparison-intro ${field.id}-error`}
-                    />
-                    <p class="field-error" id={`${field.id}-error`} hidden></p>
-                  </div>
-                ))}
-              </div>
-              <p id="comparison-intro" class="supporting">
-                {c.hint}
-              </p>
-              <p class="supporting">{c.automaticComparison}</p>
-              <button type="submit" hidden disabled data-enter-submit>
-                {lang === 'vi'
-                  ? 'Kiểm tra số đo trong hồ sơ'
-                  : 'Check recorded measurements'}
-              </button>
-              <p id="comparison-status" role="status" class="supporting"></p>
-            </form>
-            <section
-              id="comparison-result"
-              class="result-section"
-              hidden
-              aria-labelledby="comparison-heading"
-            >
-              <h3 id="comparison-heading" tabindex="-1">
-                {c.comparisonResult}
-              </h3>
-              <p id="measurement-differences"></p>
-              <p id="comparison-missing" hidden>
-                {c.comparisonMissing}
-              </p>
-              <p id="self-outcome"></p>
-              <p id="record-outcome"></p>
-            </section>
-          </details>
-          <details id="print-details">
-            <summary>{c.printTitle}</summary>
-            <p>{c.recordNotice}</p>
-            <p>{c.methodDefault}</p>
-            <div class="fields">
-              <MeasurementDate lang={lang} />
-              <div class="field">
-                <label for="witness">{c.witness}</label>
-                <input
-                  id="witness"
-                  type="text"
-                  maxlength="120"
-                  autocomplete="off"
-                />
-              </div>
-            </div>
-            <div class="field measurement-fields">
-              <label for="method">{c.method}</label>
-              <textarea
-                id="method"
-                rows="3"
-                maxlength="1200"
-                autocomplete="off"
-              ></textarea>
-            </div>
-            <div class="form-actions">
-              <button id="print" type="button" class="primary" disabled>
-                {c.print}
-              </button>
-              <button id="download" type="button" class="quiet" disabled>
-                {c.download}
-              </button>
-            </div>
-            <p id="print-status" role="status" class="supporting"></p>
-          </details>
           <details id="table-details">
             <summary>{c.tableTitle}</summary>
             <p>{c.tableIntro}</p>
@@ -515,16 +422,6 @@ const recordFields = [
         </a>
       </footer>
     </div>
-    <article
-      id="print-sheet"
-      class="print-sheet"
-      hidden
-      aria-labelledby="sheet-heading"
-    >
-      <h1 id="sheet-heading">{c.sheetTitle}</h1>
-      <p>{c.recordNotice}</p>
-      <pre id="sheet-content"></pre>
-    </article>
     <script>
       import '../scripts/military-calculator.ts';
     </script>

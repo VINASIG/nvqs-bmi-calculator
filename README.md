@@ -2,11 +2,11 @@
 
 [Vietnam Military BMI & Physique](https://nvqs-bmi.vinasig.io.vn/) is an independent, bilingual Astro tool that computes locally without collecting measurements.
 
-Check Vietnamese military physique scores, exact BMI recruitment exclusions, recorded measurements and citizens’ review options. This is a partial physique reference, not an overall health examination.
+Check Vietnamese military physique scores and exact BMI recruitment exclusions, then read one clear enlistment eligibility summary. This is a partial physique reference, not an overall health examination. Static guidance explains accurate official measurements and citizens’ review options.
 
 The separate [bmi-calculator](https://github.com/VINASIG/bmi-calculator) serves the other purpose. Each website has a purpose guide and links to the matching language of the other tool.
 
-Height, weight and optional physique indicators update the result automatically. Recorded measurements also update the comparison immediately. Printing and downloading the personal record remain explicit actions.
+Height, weight and optional chest update the result automatically. The final summary states whether the entered BMI and physical measurements meet enlistment requirements. Score details and rounding explanations stay in closed disclosures. Record comparison and personal print/export records were retired at the owner’s request.
 
 ## Run locally
 
@@ -47,6 +47,7 @@ CI verifies Ubuntu and Windows with Chromium, Firefox and WebKit, then deploys o
 - [Automatic input verification](docs/audits/automatic-input-2026-10-04.md)
 - [Clear all interface verification](docs/audits/inline-errors-clear-2026-10-04.md)
 - [Plain-language BMI guidance verification](docs/audits/plain-language-2026-10-04.md)
+- [Clear enlistment conclusions and retired records](docs/audits/clear-conclusions-2026-10-05.md)
 
 VINASIG SI agent guidance is in `AGENTS.md` and the pinned local standards snapshot. Read [LICENSES.md](LICENSES.md) for the software, documentation, font and identity scopes.
 

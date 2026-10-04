@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "AGPL-3.0-or-later",
-  "description": "Vietnam military physique scoring, BMI recruitment criteria and measurement-record comparison.",
+  "description": "Vietnam military BMI, physical scoring and clear enlistment eligibility from entered measurements.",
   "repository": {
     "type": "git",
     "url": "https://github.com/VINASIG/nvqs-bmi-calculator.git"

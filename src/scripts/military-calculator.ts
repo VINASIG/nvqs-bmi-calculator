@@ -3,18 +3,16 @@ import type { Locale, Measurements } from '../lib/math.ts';
 import { boundaryCheck, chestMeasurement, physique } from '../lib/military.ts';
 import type { Table } from '../lib/military.ts';
 import { healthGuidance } from '../lib/health-guidance.ts';
-import { installMeasurementDate } from './measurement-date.ts';
-import { copy, indicatorLabels, inputError } from '../lib/military-copy.ts';
+import { copy, inputError } from '../lib/military-copy.ts';
 import {
   adviceText,
   bmiConclusion,
   bmiThresholds,
-  gradeLabel,
-  measurementRecord,
-  outcome,
+  callupSummary,
+  callupScope,
+  gradeExplanation,
   physiqueConclusion,
   scoreLines,
-  signedMeasurement,
   thresholdDistance,
 } from '../lib/presentation.ts';
 
@@ -26,35 +24,23 @@ function node<T extends HTMLElement>(id: string, type: { new (): T }): T {
 const lang: Locale = document.documentElement.lang === 'en' ? 'en' : 'vi';
 const c = copy[lang];
 const form = node('bmi-form', HTMLFormElement);
-const recordForm = node('comparison-form', HTMLFormElement);
 const clear = node('clear', HTMLButtonElement);
 const tableMale = node('table-male', HTMLInputElement);
 const tableFemale = node('table-female', HTMLInputElement);
-const measurementDate = installMeasurementDate(lang);
 const inputs = {
   height: node('height', HTMLInputElement),
   weight: node('weight', HTMLInputElement),
   chest: node('chest', HTMLInputElement),
 };
-const records = {
-  height: node('record-height', HTMLInputElement),
-  weight: node('record-weight', HTMLInputElement),
-  chest: node('record-chest', HTMLInputElement),
-};
 const result = node('result', HTMLDivElement);
 const details = node('result-details', HTMLElement);
 const empty = node('empty-result', HTMLDivElement);
 const status = node('status', HTMLParagraphElement);
-const recordStatus = node('comparison-status', HTMLParagraphElement);
-const comparison = node('comparison-result', HTMLElement);
-const sheet = node('print-sheet', HTMLElement);
-const date = node('measurement-date', HTMLInputElement);
-const witness = node('witness', HTMLInputElement);
-const method = node('method', HTMLTextAreaElement);
 const dynamicIds = [
   'bmi-value',
   'exact-bmi',
   'category',
+  'conclusion-scope',
   'score-list',
   'drivers',
   'physique-criterion',
@@ -94,17 +80,6 @@ function clearErrors(group: typeof inputs, prefix = ''): void {
     error.hidden = true;
   }
 }
-function invalidateComparison(): void {
-  comparison.hidden = true;
-  for (const id of [
-    'measurement-differences',
-    'self-outcome',
-    'record-outcome',
-  ])
-    set(id, '');
-  recordStatus.textContent = '';
-  clearErrors(records, 'record-');
-}
 function invalidate(message = ''): void {
   result.hidden = true;
   details.hidden = true;
@@ -113,10 +88,6 @@ function invalidate(message = ''): void {
   clearErrors(inputs);
   status.textContent = message;
   status.removeAttribute('data-state');
-  invalidateComparison();
-  sheet.hidden = true;
-  set('sheet-content', '');
-  set('print-status', '');
 }
 function read(
   group: typeof inputs,
@@ -162,26 +133,21 @@ function refresh(validateAll = false): void {
       status.textContent = c.error;
       status.dataset['state'] = 'error';
     }
-    refreshComparison();
     return;
   }
   const { measurements, chest } = answer;
   const scored = physique(measurements, selectedTable(), chest);
   set('bmi-value', formatRatio(measurements.bmi, lang));
   set('exact-bmi', exactDisplay(measurements.bmi, bmiThresholds, lang));
-  set('category', gradeLabel(scored, lang));
+  set('category', callupSummary(scored, lang));
+  set('conclusion-scope', callupScope(scored, lang));
   const list = node('score-list', HTMLUListElement);
   for (const line of scoreLines(scored, lang)) {
     const item = document.createElement('li');
     item.textContent = line;
     list.append(item);
   }
-  set(
-    'drivers',
-    scored.drivers.length
-      ? `${c.drivers} - ${scored.drivers.map((key) => indicatorLabels[lang][key]).join(', ')}.`
-      : c.uncertain,
-  );
+  set('drivers', gradeExplanation(scored, lang));
   node('missing-chest', HTMLElement).hidden = !scored.missingChest;
   node('low-gap', HTMLElement).hidden = !scored.lowBmiGap;
   node('table-gap', HTMLElement).hidden = !scored.tableGap;
@@ -202,137 +168,35 @@ function refresh(validateAll = false): void {
   result.hidden = false;
   details.hidden = false;
   status.textContent = `BMI ${formatRatio(measurements.bmi, lang)}. ${c.done}`;
-  refreshComparison();
-}
-function refreshComparison(validateAll = false): void {
-  invalidateComparison();
-  if (composing) return;
-  const own = read(inputs, '', validateAll);
-  const recorded = read(records, 'record-', validateAll);
-  if (!own || !recorded) {
-    if (
-      Object.values(records).some((input) => input.hasAttribute('aria-invalid'))
-    )
-      recordStatus.textContent = c.error;
-    else if (Object.values(records).some((input) => input.value))
-      recordStatus.textContent = c.comparisonWaiting;
-    return;
-  }
-  const differences = [
-    `${indicatorLabels[lang].height} ${signedMeasurement(recorded.measurements.height - own.measurements.height, lang)} cm`,
-    `${indicatorLabels[lang].weight} ${signedMeasurement(recorded.measurements.weight - own.measurements.weight, lang)} kg`,
-  ];
-  const chestComplete = own.chest !== null && recorded.chest !== null;
-  if (own.chest !== null && recorded.chest !== null)
-    differences.push(
-      `${indicatorLabels[lang].chest} ${signedMeasurement(recorded.chest - own.chest, lang)} cm`,
-    );
-  set('measurement-differences', differences.join('. '));
-  node('comparison-missing', HTMLElement).hidden =
-    selectedTable() === 'female' || chestComplete;
-  set(
-    'self-outcome',
-    `${c.self}. ${outcome(own.measurements, selectedTable(), own.chest, lang)}`,
-  );
-  set(
-    'record-outcome',
-    `${c.record}. ${outcome(recorded.measurements, selectedTable(), recorded.chest, lang)}`,
-  );
-  comparison.hidden = false;
-  recordStatus.textContent = `${c.done} ${differences.join('. ')}.`;
 }
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   refresh(true);
 });
-recordForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  refreshComparison(true);
-});
-for (const inputForm of [form, recordForm])
-  inputForm.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
-      event.preventDefault();
-      if (!event.isComposing) inputForm.requestSubmit();
-    }
-  });
-function prepareRecord(): string | null {
-  const answer = read(inputs, '', true);
-  if (!answer) {
-    set('print-status', c.error);
-    status.textContent = c.error;
-    return null;
-  }
-  if (!measurementDate.validate()) {
-    set('print-status', c.error);
-    return null;
-  }
-  const text = measurementRecord(
-    answer.measurements,
-    selectedTable(),
-    answer.chest,
-    lang,
-    { date: date.value, witness: witness.value, method: method.value },
-  );
-  set('sheet-content', text.split('\n\n').slice(2).join('\n\n'));
-  sheet.hidden = false;
-  set('print-status', c.done);
-  return text;
-}
-node('print', HTMLButtonElement).addEventListener('click', () => {
-  if (prepareRecord() !== null) window.print();
-});
-node('download', HTMLButtonElement).addEventListener('click', () => {
-  const text = prepareRecord();
-  if (text === null) return;
-  const url = URL.createObjectURL(
-    new Blob([text], { type: 'text/plain;charset=utf-8' }),
-  );
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'vinasig-self-measurements.txt';
-  link.click();
-  window.setTimeout(() => {
-    URL.revokeObjectURL(url);
-  }, 1000);
-});
-for (const [group, update] of [
-  [inputs, refresh],
-  [records, refreshComparison],
-] as const)
-  for (const input of Object.values(group)) {
-    input.addEventListener('input', () => {
-      validated.delete(input);
-      update();
-    });
-    input.addEventListener('blur', (event) => {
-      if (clearing || event.relatedTarget === clear) return;
-      validated.add(input);
-      update();
-    });
-    input.addEventListener('compositionstart', () => {
-      composing = true;
-      invalidate();
-    });
-    input.addEventListener('compositionend', () => {
-      composing = false;
-      refresh();
-    });
-  }
-for (const input of [date, witness, method])
+for (const input of Object.values(inputs)) {
   input.addEventListener('input', () => {
-    sheet.hidden = true;
-    set('sheet-content', '');
-    set('print-status', '');
+    validated.delete(input);
+    refresh();
   });
+  input.addEventListener('blur', (event) => {
+    if (clearing || event.relatedTarget === clear) return;
+    validated.add(input);
+    refresh();
+  });
+  input.addEventListener('compositionstart', () => {
+    composing = true;
+    invalidate();
+  });
+  input.addEventListener('compositionend', () => {
+    composing = false;
+    refresh();
+  });
+}
 function updateTable(): void {
   const female = selectedTable() === 'female';
-  for (const prefix of ['', 'record-']) {
-    node(prefix + 'chest-field', HTMLElement).hidden = female;
-    const input = node(prefix + 'chest', HTMLInputElement);
-    input.disabled = female;
-    if (female) input.value = '';
-  }
+  node('chest-field', HTMLElement).hidden = female;
+  inputs.chest.disabled = female;
+  if (female) inputs.chest.value = '';
   refresh();
 }
 for (const table of [tableMale, tableFemale])
@@ -341,18 +205,19 @@ function resetAll(): void {
   clearing = false;
   composing = false;
   validated.clear();
-  recordForm.reset();
-  date.value = '';
-  witness.value = '';
-  method.value = '';
   tableMale.checked = true;
   tableFemale.checked = false;
-  measurementDate.reset();
   for (const key of ['height', 'weight', 'chest'] as const)
     inputs[key].value = '';
   updateTable();
   invalidate();
 }
+form.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+    event.preventDefault();
+    if (!event.isComposing) form.requestSubmit();
+  }
+});
 form.addEventListener('reset', () => {
   resetAll();
   window.setTimeout(() => {
@@ -364,18 +229,11 @@ window.addEventListener('pageshow', (event) => {
   if (event.persisted) resetAll();
 });
 resetAll();
-for (const input of [
-  ...Object.values(inputs),
-  ...Object.values(records),
-  tableMale,
-  tableFemale,
-])
+for (const input of [...Object.values(inputs), tableMale, tableFemale])
   input.disabled = false;
-for (const id of ['clear', 'print', 'download'])
-  node(id, HTMLButtonElement).disabled = false;
+for (const id of ['clear']) node(id, HTMLButtonElement).disabled = false;
 for (const submit of document.querySelectorAll<HTMLButtonElement>(
   '[data-enter-submit]',
 ))
   submit.disabled = false;
 form.dataset['ready'] = 'true';
-recordForm.dataset['ready'] = 'true';

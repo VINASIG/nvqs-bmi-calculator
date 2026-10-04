@@ -17,13 +17,13 @@ export const sources = {
 export const copy = {
   vi: {
     brandHome: 'Trang chủ VINASIG',
-    title: 'BMI & Phân loại sức khỏe NVQS',
+    title: 'BMI nghĩa vụ quân sự',
     description:
-      'Đối chiếu BMI tuyển quân, điểm thể lực và số đo trong hồ sơ khám NVQS. Có căn cứ pháp lý, phiếu tự đo và hướng dẫn yêu cầu kiểm tra lại. Tính tại chỗ, không lưu dữ liệu.',
-    lead: 'Hiểu tiêu chuẩn. Đối chiếu số đo.',
+      'Tính BMI và kiểm tra yêu cầu thể lực nghĩa vụ quân sự từ chiều cao, cân nặng và vòng ngực nếu có. Kết luận dễ hiểu, có căn cứ quy định. Tính tại chỗ, không lưu số đo.',
+    lead: 'Hiểu BMI và yêu cầu thể lực khi tuyển quân.',
     intro:
-      'Công cụ tham khảo tiêu chuẩn tuyển quân vào Quân đội Việt Nam. Chấm các chỉ tiêu thể lực đã nhập. Không thay thế khám sức khỏe đầy đủ hoặc hồ sơ chính thức.',
-    formTitle: 'Số đo bạn tự đo',
+      'Kiểm tra chiều cao, cân nặng và BMI theo quy định tuyển quân vào Quân đội Việt Nam. Công cụ giúp hiểu phần thể lực, không thay thế việc khám sức khỏe đầy đủ.',
+    formTitle: 'Số đo của bạn',
     bmiFormula:
       'BMI chỉ dùng chiều cao và cân nặng. Lấy cân nặng tính bằng kg chia cho bình phương chiều cao tính bằng mét.',
     height: 'Chiều cao tính bằng cm',
@@ -41,52 +41,62 @@ export const copy = {
     automatic: 'Kết quả tự cập nhật khi nhập số đo hoặc đổi bảng thể lực.',
     clear: 'Xóa tất cả',
     privacy: 'Xử lý tại chỗ. Không gửi hay lưu số đo.',
-    resultTitle: 'Kết quả đối chiếu',
-    empty: 'Nhập số đo để xem BMI và điểm thể lực.',
-    skip: 'Đến công cụ đối chiếu',
+    resultTitle: 'Kết quả',
+    empty: 'Nhập chiều cao và cân nặng để xem kết quả.',
+    skip: 'Đến công cụ tính BMI',
     navigation: 'Ngôn ngữ',
     footer: 'Một công cụ của VINASIG.',
     sourceLink: 'Mã nguồn',
     noScript:
       'Bật JavaScript để tính tại chỗ. Bảng tiêu chuẩn và hướng dẫn vẫn đọc được khi tắt JavaScript.',
     error: 'Kiểm tra các số đo được đánh dấu.',
-    done: 'Đã đối chiếu các chỉ tiêu được nhập.',
+    done: 'Đã cập nhật kết quả theo số đo bạn nhập.',
     exact: 'BMI chi tiết hơn là',
     bmiExplanation: 'Vì sao số BMI được làm tròn?',
     bmiNote:
       'Số BMI ở trên được làm tròn cho dễ đọc. Việc xét điều kiện và chấm điểm BMI vẫn dùng số đầy đủ, nên kết quả không đổi chỉ vì làm tròn.',
     rounding:
       'BMI hiển thị 1 chữ số thập phân. So sánh ngưỡng trên giá trị chính xác. Chiều cao, cân nặng, vòng ngực khi chấm điểm được làm tròn đến đơn vị nguyên, phần lẻ từ 0,5 làm tròn lên - Phụ lục I, Mục IV.1.a, Thông tư 105/2023. BMI chỉ tính từ chiều cao và cân nặng bạn nhập, không dùng vòng ngực.',
-    grade: 'Loại sức khỏe tham khảo theo thể lực đã nhập',
     score: 'điểm',
     rounded: 'Chấm với số đo làm tròn',
-    drivers: 'Chỉ tiêu quyết định loại',
+    conclusionTitle: 'Kết luận về việc gọi nhập ngũ',
+    callupMet: 'Đủ điều kiện về BMI và thể lực để gọi nhập ngũ',
+    callupRejected: 'Không đủ điều kiện gọi nhập ngũ theo số đo đã nhập',
+    callupMetScope:
+      'Kết luận này xét BMI và các số đo thể lực bạn đã nhập. Đạt phần này có nghĩa là có thể được tuyển, chưa có nghĩa là sẽ bị gọi nhập ngũ. Các yêu cầu sức khỏe khác vẫn cần được kiểm tra khi khám chính thức.',
+    callupRejectedScope:
+      'Với số đo này, có ít nhất một yêu cầu về BMI hoặc thể lực không đạt. Nếu số đo được ghi nhận chính thức đúng như đã nhập, bạn không đủ điều kiện nhập ngũ theo yêu cầu này. Hãy kiểm tra số đo được ghi đúng khi khám. Kết quả này không hủy giấy gọi đi khám.',
+    scoringTitle: 'Vì sao có kết quả này?',
+    scoringIntro:
+      'Mỗi số đo được chấm từ 1 đến 6 điểm theo bảng quy định. Điểm cao nhất được dùng làm loại thể lực. Vì vậy, chỉ một số đo bị chấm 4 điểm thì phần thể lực đã tương ứng loại 4, dù các số đo khác được chấm 1 hoặc 2 điểm.',
+    physiqueRule:
+      'Tiêu chuẩn tuyển quân yêu cầu sức khỏe loại 1, 2 hoặc 3 theo điểm a khoản 3 Điều 4 Thông tư 148/2018 - sửa bởi Thông tư 68/2025. Cách cho điểm và phân loại được quy định tại Điều 6 Thông tư 105/2023.',
     missing:
-      'Chưa có vòng ngực. Loại thể lực tham khảo chỉ dựa trên chiều cao, cân nặng và BMI. Thêm vòng ngực có thể làm loại thể lực thay đổi. BMI và kết luận riêng theo tiêu chí BMI vẫn giữ nguyên.',
+      'Bạn chưa nhập vòng ngực, nên kết quả mới xét chiều cao, cân nặng và BMI. Bổ sung vòng ngực có thể làm kết quả thể lực thay đổi. Vòng ngực không dùng để tính BMI.',
     eligible:
-      'Các chỉ tiêu thể lực đã nhập đáp ứng loại 1, 2 hoặc 3 theo điểm a khoản 3 Điều 4 Thông tư 148/2018 - sửa bởi Thông tư 68/2025. Điều này chưa kết luận đủ mọi điều kiện nhập ngũ.',
+      'Các số đo đã nhập phù hợp với yêu cầu thể lực loại 1, 2 hoặc 3. Những phần khám khác vẫn cần được đánh giá.',
     ineligible:
-      'Thể lực thuộc loại 4, 5 hoặc 6 nên không đáp ứng tiêu chuẩn tuyển loại 1, 2, 3 tại điểm a khoản 3 Điều 4 Thông tư 148/2018 - sửa bởi Thông tư 68/2025.',
+      'Tiêu chuẩn tuyển quân yêu cầu sức khỏe loại 1, 2 hoặc 3. Kết quả thể lực loại 4, 5 hoặc 6 không đáp ứng yêu cầu này.',
     uncertain:
-      'Bảng in để lại khoảng giữa hai mốc thập phân. Cần cơ quan khám làm rõ điểm BMI trước khi chốt loại thể lực.',
+      'Chưa thể chốt loại thể lực vì bảng quy định không ghi rõ điểm cho số BMI này. Cần cơ quan khám xác nhận cách chấm.',
     bmiWithin:
-      'Theo số đo đã nhập, BMI nằm từ 18,0 đến 29,9 nên không bị loại trực tiếp bởi tiêu chí BMI tại điểm c khoản 3 Điều 4 Thông tư 148/2018 - sửa bởi Thông tư 68/2025. Vẫn phải đáp ứng tiêu chuẩn loại 1, 2, 3.',
+      'BMI của bạn từ 18,0 đến 29,9, nên đạt yêu cầu riêng về BMI theo điểm c khoản 3 Điều 4 Thông tư 148/2018 - sửa bởi Thông tư 68/2025. Kết quả thể lực vẫn cần đáp ứng loại 1, 2 hoặc 3.',
     bmiOutside:
       'Theo điểm c khoản 3 Điều 4 Thông tư 148/2018/TT-BQP - sửa bởi Thông tư 68/2025/TT-BQP, chỉ số BMI nhỏ hơn 18,0 hoặc lớn hơn 29,9 thuộc trường hợp không gọi nhập ngũ vào Quân đội.',
     lowGap:
-      'BMI từ 18,0 đến dưới 18,5 không bị tiêu chí BMI của Thông tư 68/2025 loại trực tiếp, nhưng điểm BMI là 4 theo bảng thể lực Thông tư 105/2023, nên không đáp ứng tiêu chuẩn tuyển loại 1, 2, 3.',
+      'BMI từ 18,0 đến dưới 18,5 đạt yêu cầu riêng về BMI, nhưng được chấm 4 điểm trong bảng thể lực của Thông tư 105/2023. Vì vậy, kết quả này không đáp ứng yêu cầu tuyển sức khỏe loại 1, 2 hoặc 3.',
     tableGap:
-      'BMI chưa làm tròn nằm trong khoảng không được ghi tường minh giữa hai dòng của bảng. Công cụ không tự gán điểm bằng một quy tắc làm tròn BMI chưa có căn cứ. Các điểm số đo khác và ngưỡng không gọi nhập ngũ vẫn được đối chiếu độc lập.',
+      'BMI tính được nằm giữa hai khoảng ghi trong bảng quy định. Công cụ không tự chọn điểm BMI khi chưa có căn cứ. Cần cơ quan khám làm rõ cách chấm. Các số đo khác và điều kiện riêng về BMI vẫn được kiểm tra.',
     limitation:
-      'Đây là loại thể lực tham khảo, không phải loại sức khỏe tổng thể. Khám mắt, răng-hàm-mặt, tai-mũi-họng, tim mạch, thần kinh, tâm thần và các chỉ tiêu khác có thể làm điểm cao hơn, tức sức khỏe xếp loại kém hơn. Khi số đo trong hồ sơ khác thực tế, cần yêu cầu đo lại chính thức và ghi nhận đúng số đo.',
-    boundaryTitle: 'Ngưỡng BMI và vùng biên',
-    distance: 'Khoảng cách số học đến ngưỡng',
+      'Công cụ mới tính phần thể lực. Loại sức khỏe cuối cùng còn phụ thuộc khám mắt, tim mạch và các phần khám khác. Kết luận chính thức dùng số đo được ghi nhận khi khám.',
+    boundaryTitle: 'Khi số đo gần mốc BMI',
+    distance: 'Chênh lệch với cân nặng đã nhập',
     boundaryNote:
-      'Các mốc kg bên dưới chỉ để kiểm tra số đo, không phải mục tiêu thay đổi cân nặng. Giả định dao động ±0,5 cm và ±0,5 kg là minh họa sai số, không phải dung sai pháp lý.',
+      'Các mốc cân nặng này để kiểm tra số đo, không phải mục tiêu tăng hay giảm cân. Ví dụ bên dưới xét sai lệch 0,5 cm và 0,5 kg theo cả hai chiều. Đây không phải mức sai số do pháp luật cho phép.',
     borderline:
-      'Vùng biên: trong giả định sai số này, BMI có thể ở hai bên ngưỡng. Đề nghị đo lại chính thức, đối chiếu và ghi nhận số đo trong hồ sơ.',
+      'Bạn đang gần mốc BMI. Sai lệch nhỏ khi đo có thể làm kết quả vượt qua mốc này. Nên yêu cầu đo lại chính thức và kiểm tra số đo được ghi.',
     stable:
-      'Trong giả định sai số minh họa này, BMI không đổi phía so với ngưỡng 18,0 và 29,9. Vẫn cần đối chiếu số đo chính thức.',
+      'Trong ví dụ sai lệch số đo ở trên, BMI vẫn nằm cùng phía với hai mốc 18,0 và 29,9. Kết quả khám dùng số đo chính thức.',
     adviceTitle: 'Cân nặng và lời khuyên',
     reference: 'Với chiều cao của bạn, cân nặng tham khảo là',
     weightMethod: 'Cách tính khoảng cân nặng',
@@ -104,52 +114,6 @@ export const copy = {
       'Tiếp tục ăn uống đa dạng và vận động phù hợp. Nếu cân nặng thay đổi dù bạn không định tăng hay giảm, hãy hỏi bác sĩ. BMI bình thường không có nghĩa là đã đạt mọi yêu cầu khám sức khỏe nghĩa vụ quân sự.',
     adviceDisclaimer:
       'Khoảng này để tham khảo, không phải số cân bạn bắt buộc phải đạt. Lời khuyên không thay thế việc khám bác sĩ hoặc hướng dẫn riêng từ chuyên gia dinh dưỡng.',
-    comparisonTitle: 'Đối chiếu với hồ sơ khám',
-    comparisonIntro:
-      'Dùng số tự đo ở trên và nhập số đã ghi trong hồ sơ. Chênh lệch không tự chứng minh có vi phạm. Hãy kiểm tra điều kiện đo và yêu cầu đo lại, ghi nhận hoặc đính chính khi có sai sót.',
-    recordHeight: 'Chiều cao trong hồ sơ tính bằng cm',
-    recordWeight: 'Cân nặng trong hồ sơ tính bằng kg',
-    recordChest: 'Vòng ngực trong hồ sơ tính bằng cm nếu có',
-    automaticComparison: 'Chênh lệch tự cập nhật khi nhập số đo trong hồ sơ.',
-    comparisonWaiting:
-      'Nhập đủ chiều cao và cân nặng ở cả hai bên để đối chiếu.',
-    comparisonResult: 'Chênh lệch hồ sơ − tự đo',
-    self: 'Số đo bạn tự đo cho kết quả sau',
-    record: 'Số đo trong hồ sơ cho kết quả sau',
-    comparisonMissing:
-      'Chưa đủ số đo vòng ngực ở cả hai bên để so sánh chỉ tiêu này.',
-    printTitle: 'Phiếu tự đo để đối chiếu',
-    date: 'Ngày tự đo nếu có',
-    dateHint: 'Nhập năm-tháng-ngày hoặc chọn trên lịch. Ví dụ 2026-10-03.',
-    dateError: 'Nhập ngày có thật theo thứ tự năm-tháng-ngày, hoặc để trống.',
-    dateOpen: 'Mở lịch chọn ngày tự đo',
-    dateTitle: 'Chọn ngày tự đo',
-    dateClose: 'Đóng lịch',
-    datePrevious: 'Tháng trước',
-    dateNext: 'Tháng sau',
-    dateToday: 'Hôm nay',
-    dateClear: 'Xóa ngày',
-    dateHelp:
-      'Dùng phím mũi tên để chọn ngày, Page Up và Page Down đổi tháng. Enter chọn, Escape đóng.',
-    weekdays: [
-      ['Nhật', 'Chủ nhật'],
-      ['Hai', 'Thứ hai'],
-      ['Ba', 'Thứ ba'],
-      ['Tư', 'Thứ tư'],
-      ['Năm', 'Thứ năm'],
-      ['Sáu', 'Thứ sáu'],
-      ['Bảy', 'Thứ bảy'],
-    ],
-    witness: 'Người chứng kiến nếu có',
-    method: 'Cách đo và ghi chú nếu có',
-    print: 'In phiếu tự đo',
-    download: 'Tải phiếu văn bản',
-    recordNotice:
-      'Phiếu tự ghi số đo, không phải phiếu khám chính thức, chứng nhận y tế hoặc kết luận tuyển quân. Không lưu hay gửi thông tin. Bạn tự chọn giữ bản tải xuống hoặc bản in.',
-    sheetTitle: 'VINASIG - Phiếu tự ghi số đo',
-    blank: 'Không ghi',
-    methodDefault:
-      'Đo chiều cao khi đi chân trần và đứng thẳng trên nền phẳng. Đo cân nặng bằng cân đặt trên nền phẳng, kiểm tra cân và ghi điều kiện đo. Đo vòng ngực nam ngang núm vú, lấy trung bình khi hít vào và thở ra. Ghi thời điểm, trang phục và dụng cụ để đối chiếu.',
     tableTitle: 'Bảng điểm thể lực và quy tắc',
     tableIntro:
       'Phụ lục I, Mục I Thông tư 105/2023/TT-BQP. Mỗi chỉ tiêu cho điểm 1-6. Điểm cao nhất quyết định loại thể lực tham khảo. Thông tư 106/2025/TT-BQP không sửa bảng này hoặc quy tắc làm tròn số đo tại Mục IV.1.a.',
@@ -174,29 +138,29 @@ export const copy = {
     disclosure:
       'Điểm đ khoản 3 Điều 6 Thông tư 148/2018 - sửa bởi Thông tư 68/2025 yêu cầu Ủy ban nhân dân cấp xã công khai chỉ tiêu, tiêu chuẩn, danh sách thuộc diện gọi, tạm hoãn, miễn, đủ điều kiện, kết quả sơ tuyển và phân loại sức khỏe, danh sách trúng tuyển tại trụ sở và cổng thông tin điện tử. Bạn có thể đối chiếu thông tin và gửi yêu cầu kiểm tra, đính chính số đo sai.',
     complaint:
-      'Nếu không đồng ý với kết luận khám sức khỏe, gửi yêu cầu giám định sức khỏe đến Hội đồng NVQS cấp xã để lập hồ sơ chuyển Hội đồng giám định y khoa cấp tỉnh theo hướng dẫn của Bộ Quốc phòng. Với dấu hiệu vi phạm, gửi khiếu nại hoặc tố cáo kèm thông tin, tài liệu thực tế tới Ủy ban nhân dân/cơ quan có thẩm quyền. Điểm e khoản 1 Điều 6 quy định địa phương phải tiếp nhận và giải quyết. Phiếu tự đo là tài liệu đối chiếu, không tự thay thế kết luận khám.',
+      'Nếu không đồng ý với kết luận khám sức khỏe, gửi yêu cầu giám định sức khỏe đến Hội đồng nghĩa vụ quân sự cấp xã để lập hồ sơ chuyển Hội đồng giám định y khoa cấp tỉnh theo hướng dẫn của Bộ Quốc phòng. Với dấu hiệu vi phạm, gửi khiếu nại hoặc tố cáo kèm thông tin, tài liệu thực tế tới cơ quan có thẩm quyền. Điểm e khoản 1 Điều 6 quy định địa phương phải tiếp nhận và giải quyết.',
     privacyTitle: 'Quyền riêng tư',
     privacyText:
-      'Tất cả phép tính, so sánh và tạo phiếu chạy trong trình duyệt. Không tài khoản, cookie, analytics, lưu trữ số đo hay số đo trong URL. Đổi ngôn ngữ, xóa hoặc tải lại để bỏ dữ liệu. Cần mạng ở lần tải trang đầu.',
+      'BMI và kết quả được tính trong trình duyệt. Không có tài khoản, theo dõi hoạt động, lưu số đo hay đưa số đo vào đường dẫn. Đổi ngôn ngữ, xóa hoặc tải lại để bỏ dữ liệu. Cần mạng ở lần tải trang đầu.',
     reviewed:
-      'Đối chiếu nguồn ngày 03/10/2026. Thông tư 68/2025 hiệu lực 01/07/2025. Thông tư 105/2023 hiệu lực 01/01/2024. Thông tư 106/2025 hiệu lực 30/09/2025.',
+      'Đối chiếu cách trình bày với nguồn ngày 05-10-2026. Thông tư 68/2025 hiệu lực 01-07-2025. Thông tư 105/2023 hiệu lực 01-01-2024. Thông tư 106/2025 hiệu lực 30-09-2025.',
     englishNote: 'Văn bản tiếng Việt là căn cứ đối chiếu.',
     chooseTitle: 'Bạn nên dùng công cụ nào?',
     chooseMilitary:
-      'Dùng công cụ này để đối chiếu tiêu chuẩn thể lực tuyển quân Việt Nam và số đo hồ sơ.',
+      'Dùng công cụ này để kiểm tra BMI và yêu cầu thể lực khi tuyển quân Việt Nam.',
     chooseAdult:
       'Để tham khảo phân loại BMI sức khỏe người lớn theo CDC, dùng công cụ BMI sức khỏe riêng.',
     otherLink: 'Mở BMI sức khỏe',
   },
   en: {
     brandHome: 'VINASIG home',
-    title: 'Vietnam Military BMI & Physique',
+    title: 'Vietnam Military BMI',
     description:
-      'Check Vietnam military recruitment BMI thresholds, physique scores and recorded measurements. Includes official sources, a self-measurement record and review guidance. No data collection.',
-    lead: 'Understand the rules. Check the measurements.',
+      'Calculate BMI and check Vietnam military physical requirements using height, weight and optional chest measurement. Clear explanations with official sources. Calculations stay in your browser.',
+    lead: 'Understand BMI and the physical requirements for recruitment.',
     intro:
-      'A reference for recruitment into the Vietnamese military. Scores the entered physique indicators. Does not replace a complete health examination or official record.',
-    formTitle: 'Your own measurements',
+      'Check height, weight and BMI against Vietnam military recruitment rules. This tool covers physical measurements and does not replace a complete health examination.',
+    formTitle: 'Your measurements',
     bmiFormula:
       'BMI uses only height and weight. Divide weight in kg by the square of height in metres.',
     height: 'Height in cm',
@@ -215,52 +179,63 @@ export const copy = {
       'Your result updates automatically as you enter measurements or change the physique table.',
     clear: 'Clear all',
     privacy: 'Local processing. Measurements are never sent or saved.',
-    resultTitle: 'Your comparison',
-    empty: 'Enter measurements to see BMI and physique scores.',
-    skip: 'Skip to the calculator',
+    resultTitle: 'Your result',
+    empty: 'Enter height and weight to see your result.',
+    skip: 'Go to the BMI calculator',
     navigation: 'Language',
     footer: 'A VINASIG tool.',
     sourceLink: 'View source',
     noScript:
       'Enable JavaScript to calculate locally. Standards and guidance remain readable without JavaScript.',
     error: 'Check the highlighted measurements.',
-    done: 'Entered indicators checked.',
+    done: 'Results updated from your measurements.',
     exact: 'BMI in more detail is',
     bmiExplanation: 'Why is the BMI number rounded?',
     bmiNote:
       'The BMI above is rounded to make it easier to read. Eligibility and BMI scoring still use the full number, so rounding alone cannot change the result.',
     rounding:
       'BMI displays 1 decimal place. Thresholds use the exact value. Height, weight and chest scores use whole units, with fractions of 0.5 rounded up - Circular 105/2023, Appendix I, Section IV.1.a. BMI uses only the entered height and weight, never chest.',
-    grade: 'Reference health grade from entered physique indicators',
     score: 'score',
     rounded: 'Scored with rounded measurement',
-    drivers: 'Indicators determining the grade',
+    conclusionTitle: 'Enlistment eligibility summary',
+    callupMet:
+      'BMI and entered physical measurements meet enlistment requirements',
+    callupRejected: 'Entered measurements do not meet enlistment requirements',
+    callupMetScope:
+      'This conclusion checks BMI and the physical measurements you entered. Passing this part means recruitment is possible, not that you will be called up. Other health requirements still need assessment at the official examination.',
+    callupRejectedScope:
+      'At least one BMI or physical requirement is not met. If the officially recorded measurements match your entries, you do not meet that enlistment requirement. Check that your measurements are recorded correctly during the examination. This result does not cancel an examination summons.',
+    scoringTitle: 'Why did I get this result?',
+    scoringIntro:
+      'Each measurement receives 1 to 6 points under the official table. The highest score becomes the physical grade. One measurement with 4 points therefore gives physical grade 4, even if the other measurements receive 1 or 2 points.',
+    physiqueRule:
+      'Recruitment requires health grade 1, 2 or 3 under point a of clause 3 of Article 4 of Circular 148/2018, amended by Circular 68/2025. Scoring and grading are set out in Article 6 of Circular 105/2023.',
     missing:
-      'Chest was not entered. The reference physique grade uses only height, weight and BMI. Adding chest can change the physique grade. BMI and the separate BMI-criterion conclusion remain unchanged.',
+      'Chest was not entered, so this result uses height, weight and BMI. Adding chest can change the physical grade. Chest is not used to calculate BMI.',
     eligible:
-      'Entered physique indicators meet grade 1, 2 or 3 under Article 4 - 3 - a of Circular 148/2018, amended by Circular 68/2025. This does not establish all recruitment requirements.',
+      'The entered measurements meet the grade 1, 2 or 3 physical requirement. Other parts of the health examination still need assessment.',
     ineligible:
-      'Physique grade 4, 5 or 6 does not meet the grade 1, 2 or 3 recruitment standard under Article 4 - 3 - a of Circular 148/2018, amended by Circular 68/2025.',
+      'Recruitment requires health grade 1, 2 or 3. A physical grade of 4, 5 or 6 does not meet that requirement.',
     uncertain:
-      'The printed table leaves a gap between decimal limits. The examining authority needs to clarify the BMI score before confirming a physique grade.',
+      'The physical grade cannot be confirmed because the table does not clearly assign a score to this BMI. The examining authority needs to confirm how it should be scored.',
     bmiWithin:
-      'For the entered measurements, BMI is between 18.0 and 29.9, so it is not directly excluded by the BMI criterion in point c of clause 3 of Article 4 of Circular 148/2018, amended by Circular 68/2025. Grade 1, 2 or 3 is still required.',
+      'Your BMI is from 18.0 to 29.9 and meets the separate BMI requirement under point c of clause 3 of Article 4 of Circular 148/2018, amended by Circular 68/2025. The physical result still needs to meet grade 1, 2 or 3.',
     bmiOutside:
       'Under point c of clause 3 of Article 4 of Circular 148/2018/TT-BQP, amended by Circular 68/2025/TT-BQP, BMI below 18.0 or above 29.9 falls within cases not called up for enlistment into the Vietnamese military.',
     lowGap:
-      'BMI from 18.0 to below 18.5 is not directly excluded by Circular 68/2025, but scores 4 under the Circular 105/2023 physique table and therefore does not meet the grade 1, 2 or 3 recruitment standard.',
+      'BMI from 18.0 to below 18.5 meets the separate BMI requirement, but receives 4 points in the Circular 105/2023 physical table. It therefore does not meet the grade 1, 2 or 3 recruitment requirement.',
     tableGap:
-      'The unrounded BMI falls between explicitly printed ranges. This tool does not invent an unsupported BMI rounding rule to assign a score. Other measurement scores and the enlistment-exclusion thresholds are checked independently.',
+      'The calculated BMI falls between two ranges printed in the table. This tool does not choose a BMI score without a supported rule. The examining authority needs to clarify how it is scored. Other measurements and the separate BMI requirement are still checked.',
     limitation:
-      'This is a reference physique grade, not an overall health grade. Eye, dental, ear-nose-throat, cardiovascular, neurological, mental-health and other examinations can increase the numerical grade, meaning a poorer classification. If recorded measurements differ from reality, request official remeasurement and correct recording.',
-    boundaryTitle: 'BMI thresholds and measurement uncertainty',
-    distance: 'Arithmetic distance to the threshold',
+      'This tool only checks physical measurements. The final health grade also depends on eye, heart and other examinations. Official conclusions use the measurements recorded at the examination.',
+    boundaryTitle: 'When measurements are near a BMI limit',
+    distance: 'Difference from your entered weight',
     boundaryNote:
-      'The kilogram thresholds below are for checking measurements, not weight-change goals. The assumed ±0.5 cm and ±0.5 kg variation illustrates uncertainty. It is not a legal measurement tolerance.',
+      'These weight limits help check measurements and are not targets for gaining or losing weight. The example below uses variation of 0.5 cm and 0.5 kg in both directions. This is not a legally allowed measurement error.',
     borderline:
-      'Boundary zone: this assumed variation can move BMI across a threshold. Request official remeasurement and verify that the measurements are correctly recorded.',
+      'Your measurements are near a BMI limit. A small measurement difference can move the result across it. Request official remeasurement and check the recorded values.',
     stable:
-      'Under this illustrative variation, BMI stays on the same side of the 18.0 and 29.9 thresholds. Official measurements still need verification.',
+      'In the example variation above, BMI stays on the same side of the 18.0 and 29.9 limits. The examination uses official measurements.',
     adviceTitle: 'Your weight and next steps',
     reference: 'At your height, the reference weight range is',
     weightMethod: 'How this weight range is calculated',
@@ -278,54 +253,6 @@ export const copy = {
       'Keep eating varied meals and staying active in a way that suits your health. Ask a doctor if your weight changes without trying to gain or lose it. A healthy BMI does not mean every military health requirement is met.',
     adviceDisclaimer:
       'This range is a reference, not a weight you must reach. The guidance does not replace medical care or advice tailored to you by a dietitian.',
-    comparisonTitle: 'Compare with an examination record',
-    comparisonIntro:
-      'Use your own measurements above and enter those recorded at the examination. A discrepancy alone does not prove misconduct. Check measurement conditions and request official remeasurement, recording or correction when needed.',
-    recordHeight: 'Recorded height in cm',
-    recordWeight: 'Recorded weight in kg',
-    recordChest: 'Recorded chest in cm if available',
-    automaticComparison:
-      'The comparison updates automatically as you enter recorded measurements.',
-    comparisonWaiting:
-      'Enter height and weight on both sides to compare the measurements.',
-    comparisonResult: 'Difference between the record and your own measurement',
-    self: 'Your own measurements give the following result',
-    record: 'Measurements in the examination record give the following result',
-    comparisonMissing:
-      'Chest measurements are needed on both sides to compare this indicator.',
-    printTitle: 'A self-measurement record',
-    date: 'Measurement date if available',
-    dateHint:
-      'Enter year-month-day or choose from the calendar. For example 2026-10-03.',
-    dateError: 'Enter a real date in year-month-day order, or leave it blank.',
-    dateOpen: 'Open measurement-date calendar',
-    dateTitle: 'Choose measurement date',
-    dateClose: 'Close calendar',
-    datePrevious: 'Previous month',
-    dateNext: 'Next month',
-    dateToday: 'Today',
-    dateClear: 'Clear date',
-    dateHelp:
-      'Use arrow keys to move between days and Page Up or Page Down to change month. Enter selects. Escape closes.',
-    weekdays: [
-      ['Su', 'Sunday'],
-      ['Mo', 'Monday'],
-      ['Tu', 'Tuesday'],
-      ['We', 'Wednesday'],
-      ['Th', 'Thursday'],
-      ['Fr', 'Friday'],
-      ['Sa', 'Saturday'],
-    ],
-    witness: 'Witness if available',
-    method: 'Measurement method and notes if available',
-    print: 'Print self-measurement record',
-    download: 'Download text record',
-    recordNotice:
-      'A personal measurement record, not an official examination form, medical certificate or recruitment conclusion. Nothing is saved or sent. You choose whether to keep a downloaded or printed copy.',
-    sheetTitle: 'VINASIG - Personal measurement record',
-    blank: 'Not entered',
-    methodDefault:
-      'Measure height barefoot while standing upright on a flat surface. For weight, check the scales on a flat surface and note measurement conditions. Measure the male chest at nipple level and average inhaling and exhaling. Note time, clothing and equipment for comparison.',
     tableTitle: 'Physique scoring table and rules',
     tableIntro:
       'Circular 105/2023/TT-BQP, Appendix I, Section I. Each indicator scores 1-6. The highest score determines the reference physique grade. Circular 106/2025 does not amend this table or the whole-unit rounding rule in Section IV.1.a.',
@@ -351,17 +278,17 @@ export const copy = {
     disclosure:
       'Article 6 - 3 - đ of Circular 148/2018, amended by Circular 68/2025, requires commune authorities to publish quotas, standards, call-up, deferral, exemption and eligible lists, preliminary screening and health classifications, and selected candidates at their offices and online portals. Check the information and request verification or correction of inaccurate measurements.',
     complaint:
-      'If you disagree with an examination conclusion, request medical assessment through the commune Military Service Council, which prepares the file for the provincial Medical Assessment Council under Ministry guidance. For suspected violations, submit a complaint or denunciation with factual supporting materials to the competent authority. Article 6 - 1 - e requires local authorities to receive and resolve them. A personal measurement record is supporting material and does not replace an examination conclusion.',
+      'If you disagree with an examination conclusion, request medical assessment through the commune Military Service Council, which prepares the file for the provincial Medical Assessment Council under Ministry guidance. For suspected violations, submit a complaint or denunciation with factual supporting materials to the competent authority. Article 6 - 1 - e requires local authorities to receive and resolve them.',
     privacyTitle: 'Privacy',
     privacyText:
-      'Calculations, comparisons and record generation happen in your browser. No account, cookies, analytics, measurement storage or measurements in URLs. Clear, change language or reload to remove data. The initial load needs an internet connection.',
+      'BMI and results are calculated in your browser. No account, activity tracking, stored measurements or measurements in URLs. Clear, change language or reload to remove data. The initial load needs an internet connection.',
     reviewed:
-      'Sources checked 3 October 2026. Circular 68/2025 effective 1 July 2025. Circular 105/2023 effective 1 January 2024. Circular 106/2025 effective 30 September 2025.',
+      'Presentation checked against sources on 5 October 2026. Circular 68/2025 effective 1 July 2025. Circular 105/2023 effective 1 January 2024. Circular 106/2025 effective 30 September 2025.',
     englishNote:
       'English text is an explanatory translation. The Vietnamese legal text is authoritative.',
     chooseTitle: 'Which tool should you use?',
     chooseMilitary:
-      'Use this tool for Vietnamese military physique standards and examination-record comparisons.',
+      'Use this tool to check BMI and physical requirements for Vietnamese military recruitment.',
     chooseAdult:
       'For CDC adult health BMI categories and a reference weight range, use the separate Adult BMI calculator.',
     otherLink: 'Open Adult BMI',
@@ -394,6 +321,6 @@ export function inputError(
         ? '1-1000 kg'
         : '10-300 cm';
   return lang === 'vi'
-    ? `Kiểm tra đơn vị. Khoảng nhập kỹ thuật: ${range}.`
-    : `Check the unit. Technical input range: ${range}.`;
+    ? `Kiểm tra đơn vị. Số đo cần nằm trong khoảng ${range}.`
+    : `Check the unit. Enter a measurement within ${range}.`;
 }

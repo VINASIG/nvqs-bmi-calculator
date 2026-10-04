@@ -267,37 +267,6 @@ td {
   min-width: 6.5rem;
 }
 
-.print-sheet {
-  display: none;
-}
-
-@media print {
-  .app-shell,
-  .skip-link {
-    display: none;
-  }
-
-  body {
-    color: #000;
-    background: #fff;
-  }
-
-  .print-sheet:not([hidden]) {
-    display: block;
-    padding: 1rem;
-  }
-
-  .print-sheet h1 {
-    font-size: 1.5rem;
-  }
-
-  .print-sheet pre {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    font: inherit;
-  }
-}
-
 input::placeholder {
   color: var(--color-input-placeholder);
   font-size: var(--font-size-small);
@@ -421,6 +390,11 @@ button:disabled {
 
 .category {
   font-weight: 600;
+}
+
+.result-summary .category {
+  font-size: var(--font-size-heading-small);
+  line-height: 1.5;
 }
 
 .category[data-state='info'] {
@@ -565,136 +539,6 @@ details p {
 .table-option input:focus-visible + span {
   outline: 3px solid var(--color-focus);
   outline-offset: 4px;
-}
-
-.date-input {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.5rem;
-}
-
-.date-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  min-height: 48px;
-  padding: 0;
-  flex-shrink: 0;
-  border-color: var(--color-border-strong);
-}
-
-.date-hint {
-  margin-top: 0.5rem;
-}
-
-.date-dialog {
-  width: min(25rem, calc(100vw - 2px));
-  max-width: none;
-  max-height: calc(100dvh - 32px);
-  inset-inline-start: 50vw;
-  margin-inline: 0;
-  transform: translateX(-50%);
-  padding: clamp(16px, 3vw, var(--space-6));
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.date-dialog::backdrop {
-  background: rgb(0 0 0 / 45%);
-}
-
-.date-title-row,
-.date-month-row,
-.date-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  padding: 0;
-  margin-block-end: var(--space-4);
-}
-
-.date-title-row h2 {
-  font-size: var(--font-size-body);
-  margin: 0;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.date-month-row p {
-  margin: 0;
-  text-align: center;
-  overflow-wrap: anywhere;
-  font-weight: 600;
-}
-
-.date-grid {
-  table-layout: fixed;
-  font-size: var(--font-size-body);
-}
-
-.date-grid th,
-.date-grid td {
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  text-align: center;
-}
-
-.date-grid th {
-  height: 2.5rem;
-  font-size: 0.75rem;
-  overflow-wrap: anywhere;
-}
-
-.date-grid abbr {
-  text-decoration: none;
-}
-
-.date-day {
-  width: 100%;
-  min-height: 44px;
-  padding: 0.3em 0;
-  margin-inline: 0;
-  border-radius: var(--radius-sm);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--font-size-small);
-  font-weight: 500;
-}
-
-.date-day[data-outside='true'] {
-  color: var(--color-text-muted);
-}
-
-.date-day[aria-current='date'] {
-  border-color: var(--color-info-accent);
-}
-
-.date-day:focus-visible {
-  outline-offset: -3px;
-}
-
-.date-grid td[aria-selected='true'] .date-day {
-  background: var(--color-info-accent);
-  color: #fff;
-}
-
-.date-footer {
-  flex-wrap: wrap;
-  margin-block-start: var(--space-4);
-}
-
-.date-help {
-  padding: 0;
-  margin: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {

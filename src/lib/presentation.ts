@@ -5,10 +5,9 @@ import {
   formatRatio,
   roundMeasurement,
 } from './math.ts';
-import type { Locale, Measurements, Ratio } from './math.ts';
-import { copy, indicatorLabels, sources } from './military-copy.ts';
-import { physique } from './military.ts';
-import type { Table } from './military.ts';
+import type { Locale, Ratio } from './math.ts';
+import { copy, indicatorLabels } from './military-copy.ts';
+import type { physique } from './military.ts';
 
 export const bmiThresholds = [
   180n,
@@ -24,15 +23,46 @@ export const bmiThresholds = [
   399n,
   400n,
 ] as const;
-export function gradeLabel(
+export function gradeExplanation(
   result: ReturnType<typeof physique>,
   lang: Locale,
 ): string {
-  const value =
-    result.grade === null
-      ? `${String(result.minimum)}-${String(result.maximum)}`
-      : String(result.grade);
-  return `${copy[lang].grade} ${value}${result.grade === null ? (lang === 'vi' ? ' - cần bổ sung chỉ tiêu' : ' - more indicators needed') : ''}`;
+  if (result.grade === null)
+    return lang === 'vi'
+      ? `Bảng quy định chưa ghi rõ điểm cho số BMI này, nên phần thể lực có thể là loại ${String(result.minimum)} hoặc ${String(result.maximum)}. Công cụ không tự chốt một loại.`
+      : `The table does not clearly assign a score to this BMI, so the physical grade could be ${String(result.minimum)} or ${String(result.maximum)}. The tool does not choose a grade without a stated rule.`;
+  const score = String(result.grade);
+  if (result.drivers.length === result.scores.length)
+    return lang === 'vi'
+      ? `Các số đo đã nhập đều được chấm ${score} điểm, tương ứng loại ${score} về thể lực.`
+      : `All entered measurements receive ${score} ${score === '1' ? 'point' : 'points'}, giving physical grade ${score}.`;
+  const labels = result.drivers.map((key) => {
+    const label = indicatorLabels[lang][key];
+    return key === 'bmi' ? label : label.toLocaleLowerCase(lang);
+  });
+  const subject = new Intl.ListFormat(lang, { type: 'conjunction' }).format(
+    labels,
+  );
+  const sentence = subject.charAt(0).toLocaleUpperCase(lang) + subject.slice(1);
+  return lang === 'vi'
+    ? `${sentence} được chấm ${score} điểm. Đây là số điểm cao nhất, nên phần thể lực tương ứng loại ${score}.`
+    : `${sentence} ${labels.length === 1 ? 'receives' : 'receive'} ${score} points. This is the highest score, giving physical grade ${score}.`;
+}
+export function callupSummary(
+  result: ReturnType<typeof physique>,
+  lang: Locale,
+): string {
+  return result.eligibleOnKnownCriteria
+    ? copy[lang].callupMet
+    : copy[lang].callupRejected;
+}
+export function callupScope(
+  result: ReturnType<typeof physique>,
+  lang: Locale,
+): string {
+  return result.eligibleOnKnownCriteria
+    ? copy[lang].callupMetScope
+    : copy[lang].callupRejectedScope;
 }
 export function scoreLines(
   result: ReturnType<typeof physique>,
@@ -41,11 +71,18 @@ export function scoreLines(
   const c = copy[lang];
   return result.scores.map((item) => {
     const label = indicatorLabels[lang][item.indicator];
-    const score = item.score === null ? '?' : String(item.score);
+    const score =
+      item.score === null
+        ? lang === 'vi'
+          ? 'chưa có điểm được ghi rõ trong bảng'
+          : 'no score explicitly assigned in the table'
+        : lang === 'vi'
+          ? `được chấm ${String(item.score)} điểm`
+          : `receives ${String(item.score)} points`;
     if (typeof item.value !== 'bigint')
-      return `${label} ${exactDisplay(item.value, bmiThresholds, lang)} → ${c.score} ${score}`;
+      return `${label} ${exactDisplay(item.value, bmiThresholds, lang)} ${score}.`;
     const unit = item.indicator === 'weight' ? 'kg' : 'cm';
-    return `${label} ${displayMeasurement(item.value, lang)} ${unit} → ${c.score} ${score}. ${c.rounded} ${String(roundMeasurement(item.value))} ${unit}.`;
+    return `${label} ${displayMeasurement(item.value, lang)} ${unit} ${score}. ${c.rounded} ${String(roundMeasurement(item.value))} ${unit}.`;
   });
 }
 export function physiqueConclusion(
@@ -63,12 +100,6 @@ export function bmiConclusion(
   lang: Locale,
 ): string {
   return result.outsideBmi ? copy[lang].bmiOutside : copy[lang].bmiWithin;
-}
-export function signedMeasurement(value: bigint, lang: Locale): string {
-  return (
-    (value < 0n ? '−' : value > 0n ? '+' : '') +
-    displayMeasurement(value < 0n ? -value : value, lang)
-  );
 }
 export function thresholdDistance(
   threshold: Ratio,
@@ -89,38 +120,4 @@ export function adviceText(bmi: Ratio, lang: Locale): string {
     : compare(bmi, 250n) >= 0
       ? copy[lang].overAdvice
       : copy[lang].normalAdvice;
-}
-export function outcome(
-  measurements: Measurements,
-  table: Table,
-  chest: bigint | null,
-  lang: Locale,
-): string {
-  const result = physique(measurements, table, chest);
-  return `BMI ${exactDisplay(measurements.bmi, bmiThresholds, lang)}. ${gradeLabel(result, lang)}. ${physiqueConclusion(result, lang)} ${bmiConclusion(result, lang)}${result.lowBmiGap ? ' ' + copy[lang].lowGap : ''}${result.tableGap ? ' ' + copy[lang].tableGap : ''}${result.missingChest ? ' ' + copy[lang].missing : ''}`;
-}
-export function measurementRecord(
-  measurements: Measurements,
-  table: Table,
-  chest: bigint | null,
-  lang: Locale,
-  details: { date: string; witness: string; method: string },
-): string {
-  const c = copy[lang];
-  return [
-    c.sheetTitle,
-    c.recordNotice,
-    `${c.date} ${details.date || c.blank}`,
-    `${c.table} ${table === 'male' ? c.male : c.female}`,
-    `${c.height} ${displayMeasurement(measurements.height, lang)}`,
-    `${c.weight} ${displayMeasurement(measurements.weight, lang)}`,
-    `${c.chest} ${chest === null ? c.blank : displayMeasurement(chest, lang)}`,
-    `BMI ${exactDisplay(measurements.bmi, bmiThresholds, lang)}`,
-    c.rounding,
-    `${c.witness} ${details.witness.trim() || c.blank}`,
-    `${c.method} ${details.method.trim() || c.methodDefault}`,
-    c.limitation,
-    sources.physique,
-    sources.recruitment,
-  ].join('\n\n');
 }

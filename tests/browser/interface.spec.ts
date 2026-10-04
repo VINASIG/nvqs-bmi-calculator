@@ -72,14 +72,10 @@ for (const route of ['', 'en/'])
               expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
             }
             await captureFullPage(page, info, 'result');
-            {
-              await page.locator('#record-height').fill('171');
-              await page.locator('#record-weight').fill('52');
-              await page.locator('#record-height').press('Enter');
-              expect(await page.evaluate(inspectInterface)).toEqual([]);
-              expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
-              await captureFullPage(page, info, 'comparison');
-            }
+            await page.locator('#scoring-explanation summary').click();
+            expect(await page.evaluate(inspectInterface)).toEqual([]);
+            expect(await page.evaluate(inspectControlSurfaces)).toEqual([]);
+            await captureFullPage(page, info, 'scoring-explanation');
           }
 
           const widths = await page.evaluate(() => [

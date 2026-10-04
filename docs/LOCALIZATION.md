@@ -4,7 +4,7 @@ Vietnamese `/` and English `/en/` are independently rendered translations of the
 
 ## Content maintenance
 
-Maintain both reviewed copy objects in `src/lib/copy.ts`. Translate errors, loading states and results as well as the initial page. Preserve file names, protocols, input values, source code, technical notation and user content.
+Maintain both reviewed copy objects in `src/lib/military-copy.ts`. Translate errors, loading states and results as well as the initial page. Preserve file names, protocols, input values, source code, technical notation and user content.
 
 Canonical URLs, reciprocal English and Vietnamese alternatives, document language and sitemap entries describe each real locale. Error pages are localized and remain excluded from indexing. Technical repository documentation and commits stay in English. New interface copy must pass the localization coverage test, rather than silently rely on English fallback.
 

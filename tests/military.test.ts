@@ -11,11 +11,7 @@ import {
   physique,
   sourceTable,
 } from '../src/lib/military.ts';
-import {
-  bmiConclusion,
-  measurementRecord,
-  physiqueConclusion,
-} from '../src/lib/presentation.ts';
+import { bmiConclusion, physiqueConclusion } from '../src/lib/presentation.ts';
 import { copy } from '../src/lib/military-copy.ts';
 for (const [h, w, table, grade, outside] of [
   ['170', '50', 'male', 4, true],
@@ -35,7 +31,7 @@ for (const [h, w, table, grade, outside] of [
     assert.equal(result.outsideBmi, outside);
     if (w === '52.6') {
       assert(result.lowBmiGap);
-      assert.match(bmiConclusion(result, 'vi'), /không bị loại trực tiếp/);
+      assert.equal(bmiConclusion(result, 'vi'), copy.vi.bmiWithin);
       assert.match(physiqueConclusion(result, 'vi'), /không đáp ứng/);
     }
   });
@@ -141,7 +137,7 @@ await test('illustrative uncertainty detects crossings, not a legal tolerance', 
   assert(answer.ok);
   assert.equal(boundaryCheck(answer.measurements).borderline, false);
 });
-await test('safe health-reference weights and local personal record', () => {
+await test('safe health-reference weights and advice', () => {
   for (const h of ['50', '155.499', '170', '170.125', '200', '300']) {
     const answer = calculate(h, '50');
     assert(answer.ok);
@@ -153,16 +149,6 @@ await test('safe health-reference weights and local personal record', () => {
       compare(bmiRatio(answer.measurements.height, range.upper), 249n) <= 0,
     );
   }
-  const answer = calculate('170', '50');
-  assert(answer.ok);
-  const record = measurementRecord(answer.measurements, 'male', null, 'vi', {
-    date: '2026-10-03',
-    witness: '<test>',
-    method: 'Measured twice',
-  });
-  assert.match(record, /2026-10-03/);
-  assert.match(record, /<test>/);
-  assert.match(record, /không phải phiếu khám chính thức/);
   assert.match(copy.vi.underAdvice, /Không tiếp tục giảm cân/);
   assert.match(copy.en.underAdvice, /Do not continue losing weight/);
 });
