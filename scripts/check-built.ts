@@ -42,7 +42,7 @@ for (const route of routes) {
   );
   assert(sitemap.includes('<loc>' + canonical + '</loc>'));
   assert.equal(
-    (html.match(/hreflang=/g) ?? []).length,
+    (html.match(/<link\b[^>]*\bhreflang=/g) ?? []).length,
     3,
     'Two actual translations and x-default',
   );

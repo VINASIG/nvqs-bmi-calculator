@@ -32,3 +32,9 @@ Typed strict ESLint, Astro strictest TypeScript with skipLibCheck false, Styleli
 Source and byte-preserved font/artwork notices stay in the project. A single Dependabot configuration proposes weekly updates for review and does not automatically merge. CI actions are pinned to reviewed official release commit IDs.
 
 npm 12 blocked an esbuild postinstall by default. The locked platform binary built this project successfully; no global installation or unrelated allowlist change was made. The dependency audit and raw registry rows are retained under output/research/.
+
+## Bilingual regression
+
+Read docs/LOCALIZATION.md. Language and appearance regression tests run through the existing browser command. They cover both built locales, native navigation without scripts, metadata, localized guidance, keyboard controls, theme persistence and blocked storage. Authored textarea guidance is translated while its content remains literal. The original core and responsive assertions remain enabled.
+
+The existing performance command measures both Vietnamese and English. Each locale keeps separate mobile and desktop reports, using the same configured runs and budgets. Lab results do not establish field interaction latency.

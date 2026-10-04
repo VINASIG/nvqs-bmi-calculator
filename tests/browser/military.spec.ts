@@ -474,7 +474,9 @@ test('locale navigation and history clear all health and record fields', async (
   await expand(page);
   await page.locator('#record-weight').fill('55');
   await page.locator('#witness').fill('Fixture');
-  await page.getByRole('link', { name: 'English', exact: true }).click();
+  await page
+    .getByRole('link', { name: 'Đọc trang này bằng tiếng Anh', exact: true })
+    .click();
   for (const id of ['height', 'record-weight', 'witness'])
     await expect(page.locator('#' + id)).toHaveValue('');
   await expect(page.locator('#result')).toBeHidden();
