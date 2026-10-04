@@ -358,6 +358,19 @@ button:disabled {
   color: var(--color-text-muted);
 }
 
+.clear-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-surface);
+  color: var(--color-info);
+  border-color: var(--color-info);
+}
+
+.clear-button svg {
+  flex-shrink: 0;
+}
+
 .privacy {
   margin-top: 1rem;
 }

@@ -39,7 +39,7 @@ export const copy = {
       'Vòng ngực chỉ dùng chấm điểm thể lực của bảng nam, không dùng tính BMI. Có thể để trống. Nếu nhập, dùng trung bình số đo khi hít vào và thở ra tối đa. Bảng nữ không chấm chỉ tiêu này.',
     hint: 'Nhập trực tiếp, dấu phẩy hoặc dấu chấm, tối đa 3 chữ số thập phân.',
     automatic: 'Kết quả tự cập nhật khi nhập số đo hoặc đổi bảng thể lực.',
-    clear: 'Xóa',
+    clear: 'Xóa tất cả',
     privacy: 'Xử lý tại chỗ. Không gửi hay lưu số đo.',
     resultTitle: 'Kết quả đối chiếu',
     empty: 'Nhập số đo để xem BMI và điểm thể lực.',
@@ -209,7 +209,7 @@ export const copy = {
     hint: 'Type directly, with a point or comma and up to 3 decimal places.',
     automatic:
       'Your result updates automatically as you enter measurements or change the physique table.',
-    clear: 'Clear',
+    clear: 'Clear all',
     privacy: 'Local processing. Measurements are never sent or saved.',
     resultTitle: 'Your comparison',
     empty: 'Enter measurements to see BMI and physique scores.',

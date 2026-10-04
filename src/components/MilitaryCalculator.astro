@@ -1,5 +1,5 @@
 ---
-import { Calculator } from '@lucide/astro';
+import { Calculator, Trash } from '@lucide/astro';
 import ThemeInit from './ThemeInit.astro';
 import SitePreferences from './SitePreferences.astro';
 import MeasurementDate from './MeasurementDate.astro';
@@ -225,8 +225,9 @@ const recordFields = [
                 <p class="field-error" id="chest-error" hidden></p>
               </div>
               <div class="form-actions">
-                <button id="clear" type="reset" class="quiet" disabled>
-                  {c.clear}
+                <button id="clear" type="reset" class="clear-button" disabled>
+                  <Trash size={18} aria-hidden="true" />
+                  <span>{c.clear}</span>
                 </button>
               </div>
               <p class="supporting privacy">{c.privacy}</p>

@@ -34,6 +34,21 @@ for (const lang of ['vi', 'en'] as const)
         if (width === 320)
           await page.addStyleTag({ content: 'html {font-size:200%}' });
         await expect(page.locator('#calculate')).toHaveCount(0);
+        const clearButton = page.getByRole('button', {
+          name: lang === 'vi' ? 'Xóa tất cả' : 'Clear all',
+          exact: true,
+        });
+        await expect(
+          clearButton.locator('svg[aria-hidden="true"]'),
+        ).toBeVisible();
+        const clearStyle = await clearButton.evaluate((node) => ({
+          border: getComputedStyle(node).borderTopWidth,
+          color: getComputedStyle(node).borderTopColor,
+          height: node.getBoundingClientRect().height,
+        }));
+        expect(Number.parseFloat(clearStyle.border)).toBeGreaterThanOrEqual(1);
+        expect(clearStyle.color).not.toMatch(/transparent|rgba\([^)]*, 0\)$/u);
+        expect(clearStyle.height).toBeGreaterThanOrEqual(44);
         await expect(page.locator('#compare')).toHaveCount(0);
         await page.locator('#height').fill('170');
         await expect(page.locator('#result')).toBeHidden();
@@ -54,7 +69,7 @@ for (const lang of ['vi', 'en'] as const)
         expect(await page.evaluate(() => scrollY)).toBe(scroll);
         await expect(page.locator('#category')).toContainText('1');
         expect(await page.evaluate(inspectInterface)).toEqual([]);
-        const folder = 'output/responsive/automatic-input-2026-10-04/after';
+        const folder = `output/responsive/${process.env['CAPTURE_RUN'] ?? 'automatic-input-2026-10-04'}/after`;
         await mkdir(folder, { recursive: true });
         await page.evaluate(async () => {
           await document.fonts.ready;
