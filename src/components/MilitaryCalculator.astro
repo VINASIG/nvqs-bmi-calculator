@@ -255,9 +255,6 @@ const recordFields = [
                 <span id="bmi-value"></span>
                 <span class="bmi-unit">kg/m²</span>
               </p>
-              <p class="supporting">
-                {c.exact} <span id="exact-bmi"></span>
-              </p>
               <p class="category" id="category"></p>
               <ul id="score-list" class="score-list"></ul>
               <p id="drivers"></p>
@@ -276,6 +273,13 @@ const recordFields = [
                 <a href={sources.recruitment}>Thông tư 68/2025/TT-BQP</a> -{' '}
                 <a href={sources.physique}>Thông tư 105/2023/TT-BQP</a>
               </p>
+              <details id="bmi-explanation">
+                <summary>{c.bmiExplanation}</summary>
+                <p>{c.bmiNote}</p>
+                <p>
+                  {c.exact} <span id="exact-bmi"></span>
+                </p>
+              </details>
             </div>
             <p class="result-scope">{c.limitation}</p>
           </section>
@@ -295,11 +299,15 @@ const recordFields = [
                 <p>
                   {c.reference} <strong id="weight-range"></strong>
                 </p>
-                <p class="supporting">{c.referenceNote}</p>
-                <p id="weight-distance"></p>
                 <p id="weight-change"></p>
                 <p id="health-advice"></p>
+                <p class="supporting">{c.healthScope}</p>
                 <p class="supporting">{c.adviceDisclaimer}</p>
+                <details id="weight-method">
+                  <summary>{c.weightMethod}</summary>
+                  <p>{c.referenceNote}</p>
+                  <p id="weight-distance"></p>
+                </details>
               </section>
             </div>
           </div>

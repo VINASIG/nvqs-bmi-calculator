@@ -46,6 +46,7 @@ CI verifies Ubuntu and Windows with Chromium, Firefox and WebKit, then deploys o
 - [Specialization verification](docs/audits/2026-10-03-specialization.md)
 - [Automatic input verification](docs/audits/automatic-input-2026-10-04.md)
 - [Clear all interface verification](docs/audits/inline-errors-clear-2026-10-04.md)
+- [Plain-language BMI guidance verification](docs/audits/plain-language-2026-10-04.md)
 
 VINASIG SI agent guidance is in `AGENTS.md` and the pinned local standards snapshot. Read [LICENSES.md](LICENSES.md) for the software, documentation, font and identity scopes.
 

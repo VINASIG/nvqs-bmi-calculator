@@ -47,4 +47,6 @@ Circular 148 Article 6(3)(đ), amended by Circular 68, requires commune publicat
 
 ## Maintenance
 
+On 4 October 2026, only the presentation of BMI precision and general adult-health guidance was simplified in Vietnamese and English. [CDC adult BMI categories](https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html), [NHS healthy weight gain](https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/healthy-ways-to-gain-weight/) and [NHS gradual weight-loss guidance](https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/tips-to-help-you-lose-weight/) were rechecked. The main health section states the reference weight and one plain-language comparison. Closed disclosures retain both health-range comparisons and inward rounding at BMI 18.5-24.9. Additional BMI precision is a finite rounded display that preserves threshold relations, not an infinite exact decimal. The general healthy BMI category below 25 remains separate from the narrower displayed reference range. No legal arithmetic, recruitment conclusion, threshold, record or official-measurement rule was changed.
+
 Update dates, visible text and fixtures together after law changes. Preserve research renders under ignored output/research/. No professional medical/legal review, device validation or representative survey is claimed. Measurements are neither stored nor sent.

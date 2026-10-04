@@ -1,18 +1,8 @@
-import {
-  calculate,
-  compare,
-  displayMeasurement,
-  exactDisplay,
-  formatRatio,
-} from '../lib/math.ts';
+import { calculate, exactDisplay, formatRatio } from '../lib/math.ts';
 import type { Locale, Measurements } from '../lib/math.ts';
-import {
-  boundaryCheck,
-  chestMeasurement,
-  healthyReference,
-  physique,
-} from '../lib/military.ts';
+import { boundaryCheck, chestMeasurement, physique } from '../lib/military.ts';
 import type { Table } from '../lib/military.ts';
+import { healthGuidance } from '../lib/health-guidance.ts';
 import { installMeasurementDate } from './measurement-date.ts';
 import { copy, indicatorLabels, inputError } from '../lib/military-copy.ts';
 import {
@@ -203,23 +193,10 @@ function refresh(validateAll = false): void {
     `BMI 18${lang === 'vi' ? ',0' : '.0'} ${lang === 'vi' ? 'tương ứng' : 'corresponds to'} ${thresholdDistance(boundary.lowerWeight, measurements.weight, lang)}. BMI ${lang === 'vi' ? '29,9' : '29.9'} ${lang === 'vi' ? 'tương ứng' : 'corresponds to'} ${thresholdDistance(boundary.upperWeight, measurements.weight, lang)}.`,
   );
   set('boundary-warning', boundary.borderline ? c.borderline : c.stable);
-  const reference = healthyReference(measurements);
-  set(
-    'weight-range',
-    `${displayMeasurement(reference.lower, lang)}-${displayMeasurement(reference.upper, lang)} kg`,
-  );
-  set(
-    'weight-distance',
-    `${c.distance} ${lang === 'vi' ? 'tới' : 'to'} BMI ${lang === 'vi' ? '18,5' : '18.5'} ${lang === 'vi' ? 'là' : 'is'} ${displayMeasurement(reference.distanceToLower, lang)} kg. ${c.distance} ${lang === 'vi' ? 'tới' : 'to'} BMI ${lang === 'vi' ? '24,9' : '24.9'} ${lang === 'vi' ? 'là' : 'is'} ${displayMeasurement(reference.distanceToUpper, lang)} kg.`,
-  );
-  set(
-    'weight-change',
-    compare(measurements.bmi, 185n) < 0
-      ? `${c.gain} ${displayMeasurement(reference.increaseToLower, lang)} kg.`
-      : compare(measurements.bmi, 250n) >= 0
-        ? `${c.lose} ${displayMeasurement(reference.decreaseToUpper, lang)} kg.`
-        : c.maintain,
-  );
+  const guidance = healthGuidance(measurements, lang);
+  set('weight-range', guidance.range);
+  set('weight-distance', guidance.distance);
+  set('weight-change', guidance.change);
   set('health-advice', adviceText(measurements.bmi, lang));
   empty.hidden = true;
   result.hidden = false;

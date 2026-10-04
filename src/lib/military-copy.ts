@@ -51,7 +51,10 @@ export const copy = {
       'Bật JavaScript để tính tại chỗ. Bảng tiêu chuẩn và hướng dẫn vẫn đọc được khi tắt JavaScript.',
     error: 'Kiểm tra các số đo được đánh dấu.',
     done: 'Đã đối chiếu các chỉ tiêu được nhập.',
-    exact: 'BMI dùng để so sánh',
+    exact: 'BMI chi tiết hơn là',
+    bmiExplanation: 'Vì sao số BMI được làm tròn?',
+    bmiNote:
+      'Số BMI ở trên được làm tròn cho dễ đọc. Việc xét điều kiện và chấm điểm BMI vẫn dùng số đầy đủ, nên kết quả không đổi chỉ vì làm tròn.',
     rounding:
       'BMI hiển thị 1 chữ số thập phân. So sánh ngưỡng trên giá trị chính xác. Chiều cao, cân nặng, vòng ngực khi chấm điểm được làm tròn đến đơn vị nguyên, phần lẻ từ 0,5 làm tròn lên - Phụ lục I, Mục IV.1.a, Thông tư 105/2023. BMI chỉ tính từ chiều cao và cân nặng bạn nhập, không dùng vòng ngực.',
     grade: 'Loại sức khỏe tham khảo theo thể lực đã nhập',
@@ -84,22 +87,23 @@ export const copy = {
       'Vùng biên: trong giả định sai số này, BMI có thể ở hai bên ngưỡng. Đề nghị đo lại chính thức, đối chiếu và ghi nhận số đo trong hồ sơ.',
     stable:
       'Trong giả định sai số minh họa này, BMI không đổi phía so với ngưỡng 18,0 và 29,9. Vẫn cần đối chiếu số đo chính thức.',
-    adviceTitle: 'Khoảng cân nặng và lời khuyên sức khỏe',
-    reference: 'Khoảng tham khảo BMI 18,5-24,9 theo chiều cao',
+    adviceTitle: 'Cân nặng và lời khuyên',
+    reference: 'Với chiều cao của bạn, cân nặng tham khảo là',
+    weightMethod: 'Cách tính khoảng cân nặng',
+    healthScope:
+      'Phần này dành cho người từ 20 tuổi, không dùng trong thai kỳ. Đây là thông tin sức khỏe, không phải tiêu chuẩn tuyển quân.',
     referenceNote:
-      'Cận thấp làm tròn lên, cận cao làm tròn xuống đến 0,1 kg. Đây là khoảng sức khỏe người lớn tham khảo, không phải mục tiêu để thay đổi diện tuyển quân.',
-    gain: 'Chênh lệch tới cận thấp của khoảng sức khỏe',
-    lose: 'Chênh lệch tới cận cao của khoảng sức khỏe',
+      'Khoảng cân nặng này được tính từ chiều cao của bạn, với BMI từ 18,5 đến 24,9. Hai đầu khoảng được làm tròn đến 0,1 kg, số nhỏ làm tròn lên và số lớn làm tròn xuống để vẫn nằm trong khoảng đó. Nhóm BMI bình thường kéo dài đến dưới 25, nên cân nặng hơi cao hơn số cuối khoảng vẫn có thể thuộc nhóm bình thường.',
     maintain:
-      'BMI đang trong khoảng bình thường. Không cần cố đạt một cân nặng duy nhất.',
+      'Cân nặng của bạn ở mức bình thường theo BMI. Không cần cố đạt một số cân duy nhất.',
     underAdvice:
-      'Nếu thiếu cân, yếu, mệt hoặc sụt cân không chủ ý, nên khám bác sĩ hoặc trao đổi với chuyên gia dinh dưỡng. Ăn đều, chia bữa nhỏ khi cần, bổ sung thực phẩm giàu dinh dưỡng và nguồn đạm. Không tiếp tục giảm cân.',
+      'Nên hỏi bác sĩ hoặc chuyên gia dinh dưỡng về cách tăng cân phù hợp, nhất là khi bạn yếu, mệt hoặc sụt cân dù không định giảm. Ăn đủ bữa, có thể thêm bữa nhỏ và các món như trứng, cá, thịt hoặc đậu. Không tiếp tục giảm cân.',
     overAdvice:
-      'Nếu BMI từ 25 trở lên, nên được chuyên gia y tế đánh giá thêm cơ, mỡ và sức khỏe. Ưu tiên ăn uống cân bằng, vận động phù hợp, tránh nhịn ăn hoặc giảm cân cấp tốc.',
+      'Nên hỏi bác sĩ để biết bạn có cần giảm cân hay không, vì BMI không phân biệt cơ và mỡ. Ăn đủ bữa, thêm rau và vận động phù hợp với sức khỏe. Nếu cần giảm cân, hãy thay đổi từ từ. Tránh nhịn ăn hoặc giảm cân cấp tốc.',
     normalAdvice:
-      'Duy trì ăn uống đa dạng và vận động phù hợp. BMI bình thường không bảo đảm tất cả chỉ tiêu khám sức khỏe đều đạt.',
+      'Tiếp tục ăn uống đa dạng và vận động phù hợp. Nếu cân nặng thay đổi dù bạn không định tăng hay giảm, hãy hỏi bác sĩ. BMI bình thường không có nghĩa là đã đạt mọi yêu cầu khám sức khỏe nghĩa vụ quân sự.',
     adviceDisclaimer:
-      'Tham khảo chung, không thay thế khám, chẩn đoán hoặc kế hoạch dinh dưỡng cá nhân. Phân loại người lớn không áp dụng cho người dưới 20 tuổi hoặc trong thai kỳ. Không đưa mục tiêu tăng chiều cao.',
+      'Khoảng này để tham khảo, không phải số cân bạn bắt buộc phải đạt. Lời khuyên không thay thế việc khám bác sĩ hoặc hướng dẫn riêng từ chuyên gia dinh dưỡng.',
     comparisonTitle: 'Đối chiếu với hồ sơ khám',
     comparisonIntro:
       'Dùng số tự đo ở trên và nhập số đã ghi trong hồ sơ. Chênh lệch không tự chứng minh có vi phạm. Hãy kiểm tra điều kiện đo và yêu cầu đo lại, ghi nhận hoặc đính chính khi có sai sót.',
@@ -221,7 +225,10 @@ export const copy = {
       'Enable JavaScript to calculate locally. Standards and guidance remain readable without JavaScript.',
     error: 'Check the highlighted measurements.',
     done: 'Entered indicators checked.',
-    exact: 'BMI used for comparison',
+    exact: 'BMI in more detail is',
+    bmiExplanation: 'Why is the BMI number rounded?',
+    bmiNote:
+      'The BMI above is rounded to make it easier to read. Eligibility and BMI scoring still use the full number, so rounding alone cannot change the result.',
     rounding:
       'BMI displays 1 decimal place. Thresholds use the exact value. Height, weight and chest scores use whole units, with fractions of 0.5 rounded up - Circular 105/2023, Appendix I, Section IV.1.a. BMI uses only the entered height and weight, never chest.',
     grade: 'Reference health grade from entered physique indicators',
@@ -254,22 +261,23 @@ export const copy = {
       'Boundary zone: this assumed variation can move BMI across a threshold. Request official remeasurement and verify that the measurements are correctly recorded.',
     stable:
       'Under this illustrative variation, BMI stays on the same side of the 18.0 and 29.9 thresholds. Official measurements still need verification.',
-    adviceTitle: 'Reference weight and health guidance',
-    reference: 'Weight reference at this height, BMI 18.5-24.9',
+    adviceTitle: 'Your weight and next steps',
+    reference: 'At your height, the reference weight range is',
+    weightMethod: 'How this weight range is calculated',
+    healthScope:
+      'This section is for adults aged 20 and older, outside pregnancy. It provides health information, not recruitment standards.',
     referenceNote:
-      'The lower weight is rounded up and the upper down to 0.1 kg. This is a general adult health reference, not a target for changing recruitment status.',
-    gain: 'Difference to the lower health-reference boundary',
-    lose: 'Difference to the upper health-reference boundary',
+      'This range uses your height and BMI from 18.5 to 24.9. Both ends are rounded to 0.1 kg, the smaller weight up and the larger weight down, to stay within that range. The healthy BMI category extends to below 25, so a weight slightly above the last number may still be in the healthy category.',
     maintain:
-      'BMI is in the healthy category. There is no single weight you need to reach.',
+      'Your weight is in the healthy BMI category. There is no single weight you need to reach.',
     underAdvice:
-      'If underweight, weak, tired or losing weight unintentionally, consult a doctor or dietitian. Eat regularly, consider smaller meals and include nutritious foods and protein. Do not continue losing weight.',
+      'Ask a doctor or dietitian about a suitable way to gain weight, especially if you feel weak, tired or lose weight without trying. Eat regular meals, add smaller meals if helpful, and include foods such as eggs, fish, meat or beans. Do not continue losing weight.',
     overAdvice:
-      'If BMI is 25 or higher, discuss muscle, body fat and overall health with a clinician. Favor balanced meals and suitable activity. Avoid fasting or rapid weight loss.',
+      'Ask a doctor whether you need to lose weight, because BMI cannot tell muscle from fat. Eat regular meals, include vegetables and stay active in a way that suits your health. If weight loss is needed, make gradual changes. Avoid fasting or rapid weight loss.',
     normalAdvice:
-      'Maintain varied meals and suitable activity. A healthy BMI does not guarantee that all examination criteria are met.',
+      'Keep eating varied meals and staying active in a way that suits your health. Ask a doctor if your weight changes without trying to gain or lose it. A healthy BMI does not mean every military health requirement is met.',
     adviceDisclaimer:
-      'General reference information, not a diagnosis or individual nutrition plan. Adult categories do not apply below age 20 or during pregnancy. No height-growth targets are suggested.',
+      'This range is a reference, not a weight you must reach. The guidance does not replace medical care or advice tailored to you by a dietitian.',
     comparisonTitle: 'Compare with an examination record',
     comparisonIntro:
       'Use your own measurements above and enter those recorded at the examination. A discrepancy alone does not prove misconduct. Check measurement conditions and request official remeasurement, recording or correction when needed.',

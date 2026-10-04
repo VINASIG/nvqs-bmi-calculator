@@ -46,8 +46,12 @@ export async function input(
   await page.locator('#weight').blur();
 }
 export async function expand(page: Page): Promise<void> {
-  for (const summary of await page.locator('summary').all())
-    await summary.click();
+  for (const disclosure of await page.locator('details').all()) {
+    if (!(await disclosure.isVisible())) continue;
+    if ((await disclosure.getAttribute('open')) === null)
+      await disclosure.locator('summary').click();
+    await expect(disclosure).toHaveAttribute('open', '');
+  }
 }
 export async function capture(
   page: Page,
@@ -55,7 +59,7 @@ export async function capture(
   scriptEnabled = true,
   scroll = true,
 ): Promise<void> {
-  const folder = 'output/responsive/automatic-input-2026-10-04/after';
+  const folder = `output/responsive/${process.env['CAPTURE_RUN'] ?? 'automatic-input-2026-10-04'}/after`;
   await mkdir(folder, { recursive: true });
   if (scriptEnabled) {
     await page.evaluate(async (shouldScroll) => {

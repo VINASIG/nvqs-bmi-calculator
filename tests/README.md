@@ -1,5 +1,9 @@
 # Verification coverage
 
+## Plain-language guidance regression
+
+`tests/plain-guidance.test.ts` covers both languages, lighter/heavier/exact-weight comparisons and healthy BMI immediately below 25 despite the conservative reference ending at 24.9. `tests/browser/plain-guidance.spec.ts` checks the concise main section, closed calculation/precision disclosures, keyboard opening and closing, all three health-advice states, exact-category behavior, full-page scrolling, width containment, styled controls, reset and no new requests from measurements. Each of Chromium, Firefox and WebKit covers both locales and themes at 320, 360, 390, 768, 1024 and 1440 px, with 200% text at 320 px. Screenshots are in `output/responsive/plain-language-2026-10-04/after`. The main health guidance does not replace medical care or prescribe an individual weight.
+
 ## Automatic input regression
 
 `tests/browser/automatic-input.spec.ts` checks calculation without a button, incomplete input, valid edits, focus and scroll preservation, immediate stale-result removal, blur validation, recovery, Clear, IME composition, decimal commas and Enter without navigation. Additional cases check automatic recorded-measurement differences, updates from either measurement group and table/chest changes without altering BMI. Both locales, both themes, all five required sizes and 320 px with 200% text run in all three engines. Evidence is saved to `output/responsive/automatic-input-2026-10-04/after` and must be opened.
