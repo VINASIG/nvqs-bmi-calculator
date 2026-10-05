@@ -1,4 +1,6 @@
 ---
+import SiteFooter from './SiteFooter.astro';
+import '../styles/site-chrome.css';
 import { Calculator, Trash } from '@lucide/astro';
 import ThemeInit from './ThemeInit.astro';
 import SitePreferences from './SitePreferences.astro';
@@ -89,8 +91,8 @@ const mainFields = [
     <a class="skip-link" href="#calculator">
       {c.skip}
     </a>
-    <div class="app-shell">
-      <header class="site-header">
+    <div class="app-shell" data-site-shell>
+      <header class="site-header" data-site-header>
         <a
           class="brand"
           href="https://vinasig.io.vn/"
@@ -415,12 +417,12 @@ const mainFields = [
           </a>
         </section>
       </main>
-      <footer class="site-footer">
-        <p>{c.footer}</p>
-        <a href="https://github.com/VINASIG/nvqs-bmi-calculator">
-          {c.sourceLink}
-        </a>
-      </footer>
+      <SiteFooter
+        lang={lang}
+        source="https://github.com/VINASIG/nvqs-bmi-calculator"
+        issues="https://github.com/VINASIG/nvqs-bmi-calculator/issues"
+        licenses={`${base}licenses/NOTICE.txt`}
+      />
     </div>
     <script>
       import '../scripts/military-calculator.ts';

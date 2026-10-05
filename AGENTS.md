@@ -21,6 +21,7 @@ The owner authorized the custom-domain migration on 4 October 2026. Publish this
 ## Language and appearance
 
 Read `docs/LOCALIZATION.md`. Both locales must include navigation, accessible names, validation, loading and result copy. Keep native reciprocal language links and locale metadata. Preserve technical identifiers, code and user content. Only the optional light or dark preference uses `vinasig-theme` storage. Never save or send measurements, files or generator content. Verify both locales and themes before publishing.
+Read docs/SITE_CHROME.md for shared header/footer and npm run test:chrome.
 
 <!-- VINASIG STANDARDS BEGIN -->
 ## VINASIG SI agent standards 0.1.0
