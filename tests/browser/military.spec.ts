@@ -65,6 +65,7 @@ for (const lang of ['vi', 'en'] as const) {
           browser,
         }, info) => {
           const context = await browser.newContext({
+            locale: 'vi-VN',
             viewport: { width, height },
             colorScheme: theme,
             reducedMotion: reduced,
@@ -274,6 +275,7 @@ for (const lang of ['vi', 'en'] as const) {
     browser,
   }, info) => {
     const context = await browser.newContext({
+      locale: 'vi-VN',
       viewport: { width: 390, height: 844 },
       hasTouch: true,
     });
@@ -327,6 +329,7 @@ for (const lang of ['vi', 'en'] as const) {
       browser,
     }, info) => {
       const context = await browser.newContext({
+        locale: 'vi-VN',
         viewport: { width: 390, height: 844 },
         javaScriptEnabled: mode !== 'disabled',
       });
