@@ -10,6 +10,7 @@ import type { Locale } from '../lib/math.ts';
 import '../styles/tokens.css';
 import '../styles/app.css';
 import '../styles/control-surfaces.css';
+import '../styles/destructive-actions.css';
 interface Props {
   lang: Locale;
 }
@@ -206,7 +207,13 @@ const mainFields = [
                 <p class="field-error" id="chest-error" hidden></p>
               </div>
               <div class="form-actions">
-                <button id="clear" type="reset" class="clear-button" disabled>
+                <button
+                  id="clear"
+                  type="reset"
+                  class="clear-button"
+                  disabled
+                  data-destructive-action
+                >
                   <Trash size={18} aria-hidden="true" />
                   <span>{c.clear}</span>
                 </button>
